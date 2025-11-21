@@ -38,9 +38,9 @@ const Footer = () => {
                             Официальный сайт Казахстанской федерации мини-футбола. Развитие и популяризация мини-футбола в Казахстане.
                         </p>
                         <div className="flex gap-4">
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors"><Instagram size={20} /></a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors"><Facebook size={20} /></a>
-                            <a href="#" className="text-gray-400 hover:text-white transition-colors"><Youtube size={20} /></a>
+                            <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1"><Instagram size={20} /></a>
+                            <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1"><Facebook size={20} /></a>
+                            <a href="#" className="text-gray-400 hover:text-white transition-all duration-300 hover:-translate-y-1"><Youtube size={20} /></a>
                         </div>
                     </div>
 

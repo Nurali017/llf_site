@@ -52,19 +52,19 @@ const Header = () => {
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center space-x-8">
-                        <Link href="/news" className="text-gray-300 hover:text-white font-medium transition-colors">
+                        <Link href="/news" className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:-translate-y-0.5">
                             Новости
                         </Link>
-                        <Link href="/matches" className="text-gray-300 hover:text-white font-medium transition-colors">
+                        <Link href="/matches" className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:-translate-y-0.5">
                             Матчи
                         </Link>
-                        <Link href="/tournaments" className="text-gray-300 hover:text-white font-medium transition-colors">
+                        <Link href="/tournaments" className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:-translate-y-0.5">
                             Турниры
                         </Link>
-                        <Link href="/about" className="text-gray-300 hover:text-white font-medium transition-colors">
+                        <Link href="/about" className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:-translate-y-0.5">
                             О нас
                         </Link>
-                        <a href="https://minifootball.eu/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white font-medium transition-colors">
+                        <a href="https://minifootball.eu/" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-white font-medium transition-all duration-300 hover:-translate-y-0.5">
                             EMF
                         </a>
                     </nav>

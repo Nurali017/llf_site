@@ -36,19 +36,19 @@ const AboutSection = () => {
 
                     {/* Stats / Visuals */}
                     <div className="flex-1 grid grid-cols-2 gap-4">
-                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center">
+                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                             <div className="text-4xl font-bold text-kmff-pink mb-2">4 932</div>
                             <div className="text-sm text-gray-500 font-medium">Команд</div>
                         </div>
-                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center mt-8">
+                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center mt-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                             <div className="text-4xl font-bold text-kmff-dark mb-2">32</div>
                             <div className="text-sm text-gray-500 font-medium">Филиалов</div>
                         </div>
-                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center">
+                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                             <div className="text-4xl font-bold text-kmff-blue mb-2">51 320</div>
                             <div className="text-sm text-gray-500 font-medium">Игроков</div>
                         </div>
-                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center mt-8">
+                        <div className="bg-white shadow-sm p-6 rounded-2xl text-center mt-8 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
                             <div className="text-4xl font-bold text-kmff-pink mb-2">2009</div>
                             <div className="text-sm text-gray-500 font-medium">Год основания</div>
                         </div>

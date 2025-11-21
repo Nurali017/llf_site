@@ -54,7 +54,7 @@ const MatchWidget = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                     {matches.map((match) => (
-                        <div key={match.id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow p-4 border border-gray-100">
+                        <div key={match.id} className="bg-white rounded-xl shadow-sm hover:shadow-2xl transition-all duration-300 p-4 border border-gray-100 hover:border-qjl-blue hover:-translate-y-2">
                             <div className="flex justify-between items-center text-xs text-gray-500 mb-4">
                                 <div className="flex items-center gap-1">
                                     <Calendar size={14} />

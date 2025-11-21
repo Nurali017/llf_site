@@ -13,8 +13,8 @@ const Hero = ({ title, description, date, category, image }: HeroProps) => {
     return (
         <section className="relative bg-white rounded-2xl overflow-hidden min-h-[300px] md:min-h-[350px] flex flex-col md:flex-row">
             {/* Image - Top on Mobile, Right on Desktop */}
-            <div className="relative md:absolute md:top-0 md:right-0 w-full md:w-[55%] h-[250px] md:h-full order-1 md:order-2">
-                <div className="relative w-full h-full">
+            <div className="relative md:absolute md:top-0 md:right-0 w-full md:w-[55%] h-[250px] md:h-full order-1 md:order-2 group overflow-hidden">
+                <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-105">
                     <Image
                         src={image}
                         alt={title}
@@ -56,7 +56,7 @@ const Hero = ({ title, description, date, category, image }: HeroProps) => {
                 <div className="flex flex-wrap gap-4">
                     <Link
                         href="/register"
-                        className="bg-kmff-dark text-white px-8 py-3 rounded-full font-bold hover:bg-blue-900 transition-colors"
+                        className="bg-kmff-dark text-white px-8 py-3 rounded-full font-bold hover:bg-blue-900 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                     >
                         Заявить команду
                     </Link>

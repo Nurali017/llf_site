@@ -10,7 +10,7 @@ const TopScorers = () => {
     ];
 
     return (
-        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
             <div className="flex items-center justify-between mb-6">
                 <h3 className="font-bold text-xl text-kmff-dark">Бомбардиры</h3>
                 <button className="text-kmff-blue text-sm font-bold hover:underline">Все</button>
@@ -18,7 +18,7 @@ const TopScorers = () => {
 
             <div className="space-y-6">
                 {/* Top Scorer Highlight */}
-                <div className="relative bg-gradient-to-br from-kmff-blue to-blue-600 rounded-xl p-4 text-white overflow-hidden">
+                <div className="relative bg-gradient-to-br from-kmff-blue to-blue-600 rounded-xl p-4 text-white overflow-hidden group hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
                     <div className="relative z-10 w-2/3">
                         <div className="text-4xl font-bold mb-1">{scorers[0].goals}</div>
                         <div className="text-xs opacity-80 mb-2">голов</div>
@@ -32,7 +32,7 @@ const TopScorers = () => {
                             src={scorers[0].image || '/player-1.png'}
                             alt={scorers[0].name}
                             fill
-                            className="object-contain object-bottom drop-shadow-lg"
+                            className="object-contain object-bottom drop-shadow-lg transition-transform duration-500 group-hover:scale-110"
                         />
                     </div>
                 </div>
@@ -40,7 +40,7 @@ const TopScorers = () => {
                 {/* List */}
                 <div className="space-y-3">
                     {scorers.slice(1).map((player, index) => (
-                        <div key={player.id} className="flex items-center justify-between text-sm">
+                        <div key={player.id} className="flex items-center justify-between text-sm p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 cursor-default">
                             <div className="flex items-center gap-3">
                                 <span className="text-gray-400 font-bold w-4">{index + 2}</span>
                                 <div className="flex flex-col">

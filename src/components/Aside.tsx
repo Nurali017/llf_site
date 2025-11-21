@@ -34,7 +34,7 @@ export default function Aside() {
                     { id: 11, name: "Кызылжар", games: 22, points: 16, logo: "🟠" },
                     { id: 12, name: "Окжетпес", games: 22, points: 12, logo: "🟢" },
                 ].map((team) => (
-                    <div key={team.id} className="grid grid-cols-12 items-center text-sm font-bold text-qjl-dark hover:bg-gray-50 p-2 rounded-lg transition-colors cursor-pointer">
+                    <div key={team.id} className="grid grid-cols-12 items-center text-sm font-bold text-qjl-dark hover:bg-gray-50 p-2 rounded-lg transition-all duration-300 hover:shadow-md hover:-translate-y-1 cursor-pointer">
                         <div className="col-span-1 text-gray-400">{team.id}</div>
                         <div className="col-span-7 flex items-center gap-2">
                             <span className="w-6 h-6 flex items-center justify-center bg-gray-100 rounded-full text-xs">{team.logo}</span>
