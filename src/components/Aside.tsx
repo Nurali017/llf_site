@@ -66,10 +66,10 @@ export default function Aside() {
             </div>
 
             {/* Top Scorers Section */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+            <div className="bg-gradient-to-br from-[#1e3a8a] via-[#172554] to-[#1e3a8a] rounded-2xl p-6 shadow-lg border border-white/10">
                 <div className="flex flex-col gap-4 mb-6">
                     <div>
-                        <h3 className="font-bold text-xl text-qjl-dark">
+                        <h3 className="font-bold text-xl text-white">
                             Бомбардиры
                         </h3>
                     </div>

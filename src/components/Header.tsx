@@ -47,7 +47,7 @@ const Header = () => {
                                 <Image
                                     src="/kllf-logo-cropped.png"
                                     alt="ҚЛЛF Logo"
-                                    width={90}
+                                    width={55}
                                     height={24}
                                     className="object-contain brightness-0 invert"
                                     style={{ width: 'auto', height: 'auto' }}

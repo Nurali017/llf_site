@@ -8,7 +8,7 @@ const Footer = () => {
             <div className="container mx-auto px-4">
 
                 {/* Top Section: Logo & About */}
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
                     <div className="col-span-1 md:col-span-1">
                         <div className="flex flex-col gap-4 mb-6">
                             <div className="flex items-center gap-3">
@@ -45,16 +45,7 @@ const Footer = () => {
                         </div>
                     </div>
 
-                    {/* Links Column 1 */}
-                    <div>
-                        <h4 className="font-bold text-lg mb-6">Турниры</h4>
-                        <ul className="space-y-3 text-sm text-gray-400">
-                            <li><Link href="#" className="hover:text-kmff-pink transition-colors">Премьер-лига</Link></li>
-                            <li><Link href="#" className="hover:text-kmff-pink transition-colors">Первая лига</Link></li>
-                            <li><Link href="#" className="hover:text-kmff-pink transition-colors">Кубок РК</Link></li>
-                            <li><Link href="#" className="hover:text-kmff-pink transition-colors">Любительская лига</Link></li>
-                        </ul>
-                    </div>
+
 
                     {/* Links Column 2 */}
                     <div>
