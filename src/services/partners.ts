@@ -1,6 +1,6 @@
 import { Partner } from '@/types/api';
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'https://1sportkz.com';
 
 export async function getPartners(organizationId?: number): Promise<Partner[]> {
     try {

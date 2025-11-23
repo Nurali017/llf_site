@@ -15,7 +15,7 @@ export function getImageUrl(path: string | null | undefined): string {
         return path;
     }
 
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://1sportkz.com';
 
     // Ensure path starts with /
     const cleanPath = path.startsWith('/') ? path : `/${path}`;
