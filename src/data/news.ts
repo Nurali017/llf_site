@@ -6,6 +6,7 @@ export interface NewsItem {
   image: string;
   description: string;
   featured?: boolean;
+  branch: string;
 }
 
 export const newsData: NewsItem[] = [
@@ -16,7 +17,8 @@ export const newsData: NewsItem[] = [
     date: "21 ноября 2024",
     image: "/llf-application-banner.png",
     description: "Открыт прием заявок команд на участие в новом сезоне любительской лиги. Успейте зарегистрироваться!",
-    featured: false
+    featured: false,
+    branch: 'astana'
   },
   {
     id: 7,
@@ -25,7 +27,8 @@ export const newsData: NewsItem[] = [
     date: "21 ноября 2024",
     image: "/llf-application-banner.png",
     description: "Открыт прием заявок команд на участие в новом сезоне любительской лиги. Успейте зарегистрироваться!",
-    featured: true
+    featured: true,
+    branch: 'astana'
   },
   {
     id: 2,
@@ -33,7 +36,8 @@ export const newsData: NewsItem[] = [
     category: "Награды",
     date: "1 ноября 2025",
     image: "/news-1-optimized.png",
-    description: "Объявлена символическая сборная сезона Freedom QJ League 2025"
+    description: "Объявлена символическая сборная сезона Freedom QJ League 2025",
+    branch: 'astana'
   },
   {
     id: 3,
@@ -41,34 +45,68 @@ export const newsData: NewsItem[] = [
     category: "События",
     date: "1 ноября 2025",
     image: "/news-2-optimized.png",
-    description: "Завершился яркий сезон любительской лиги мини-футбола Казахстана"
+    description: "Завершился яркий сезон любительской лиги мини-футбола Казахстана",
+    featured: true,
+    branch: 'almaty'
   },
   {
     id: 4,
-    title: "Старт заявочной кампании на сезон 2025",
-    category: "Лига",
+    title: "Старт заявочной кампании на сезон 2025 в Шымкенте",
+    category: "ГЛАВНОЕ",
     date: "21 ноября 2024",
     image: "/news-3.png",
-    description: "Открыт прием заявок команд на участие в новом сезоне Freedom QJ League"
+    description: "Открыт прием заявок команд на участие в новом сезоне Freedom QJ League в Шымкенте",
+    featured: true,
+    branch: 'shymkent'
   },
   {
     id: 5,
-    title: "Итоги финального этапа Кубка РК",
-    category: "Турниры",
+    title: "Актобе принимает финал Кубка Республики",
+    category: "ГЛАВНОЕ",
     date: "20 ноября 2024",
     image: "/news-4.png",
-    description: "Определился победитель главного кубкового турнира страны"
+    description: "Определился победитель главного кубкового турнира страны в Актобе",
+    featured: true,
+    branch: 'aktobe'
   },
   {
     id: 6,
-    title: "Интервью с лучшим бомбардиром сезона",
-    category: "Интервью",
+    title: "Шахтер Караганда - Чемпион сезона 2024!",
+    category: "ГЛАВНОЕ",
     date: "19 ноября 2024",
     image: "/news-1-optimized.png",
-    description: "Эксклюзивное интервью с игроком, забившим больше всех голов в сезоне"
+    description: "Караганда празднует победу в чемпионате Казахстана по мини-футболу",
+    featured: true,
+    branch: 'karaganda'
+  },
+  {
+    id: 8,
+    title: "Иртыш одержал победу в домашнем матче",
+    category: "События",
+    date: "20 ноября 2024",
+    image: "/news-2-optimized.png",
+    description: "Павлодарский Иртыш продолжает радовать болельщиков яркой игрой",
+    featured: true,
+    branch: 'pavlodar'
   }
 ];
 
+// Получить все новости по филиалу
+export const getNewsByBranch = (branch: string): NewsItem[] => {
+  return newsData.filter(news => news.branch === branch);
+};
+
+// Получить главную новость филиала
+export const getFeaturedNewsByBranch = (branch: string): NewsItem | undefined => {
+  return newsData.find(news => news.featured && news.branch === branch);
+};
+
+// Получить обычные новости (не featured) филиала
+export const getRegularNewsByBranch = (branch: string): NewsItem[] => {
+  return newsData.filter(news => !news.featured && news.branch === branch);
+};
+
+// Оригинальные функции (deprecated, оставлены для совместимости)
 export const getFeaturedNews = (): NewsItem | undefined => {
   return newsData.find(news => news.featured);
 };

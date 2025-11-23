@@ -17,7 +17,8 @@ const Footer = () => {
                                         src="/kmff-logo.jpg"
                                         alt="KMFF Logo"
                                         fill
-                                        className="object-cover"
+                                        sizes="(max-width: 768px) 100vw, 33vw"
+                                        className="object-contain"
                                     />
                                 </div>
                                 <span className="font-bold text-xl">KMFF</span>

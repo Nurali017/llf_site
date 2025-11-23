@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { getImageUrl } from '@/utils/image';
 import Link from 'next/link';
 
 interface HeroProps {
@@ -11,15 +12,16 @@ interface HeroProps {
 
 const Hero = ({ title, description, date, category, image }: HeroProps) => {
     return (
-        <section className="relative bg-white rounded-2xl overflow-hidden min-h-[300px] md:min-h-[350px] flex flex-col md:flex-row">
+        <section className="relative bg-white rounded-2xl overflow-hidden min-h-[400px] md:min-h-[450px] flex flex-col md:flex-row">
             {/* Image - Top on Mobile, Right on Desktop */}
-            <div className="relative md:absolute md:top-0 md:right-0 w-full md:w-[55%] h-[250px] md:h-full order-1 md:order-2 group overflow-hidden">
+            <div className="relative md:absolute md:top-0 md:right-0 w-full md:w-[55%] h-[250px] md:h-[350px] order-1 md:order-2 group overflow-hidden">
                 <div className="relative w-full h-full transition-transform duration-700 group-hover:scale-105">
                     <Image
-                        src={image}
+                        src={getImageUrl(image)}
                         alt={title}
                         fill
-                        className="object-cover md:object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        className="object-cover"
                         style={{
                             maskImage: "url('/mask-news-hero.png')",
                             maskSize: "100% 100%",
@@ -34,7 +36,7 @@ const Hero = ({ title, description, date, category, image }: HeroProps) => {
             </div>
 
             {/* Content - Bottom on Mobile, Left on Desktop */}
-            <div className="w-full md:w-[45%] px-8 pt-8 pb-8 md:p-12 flex flex-col md:justify-center z-10 order-2 md:order-1">
+            <div className="w-full md:w-[45%] px-10 py-10 md:px-14 md:py-12 flex flex-col md:justify-center z-10 order-2 md:order-1">
                 {/* Category Badge */}
                 <div className="inline-flex mb-4 md:mb-6">
                     <span className="text-kmff-blue font-bold text-sm uppercase tracking-wider">
@@ -43,12 +45,12 @@ const Hero = ({ title, description, date, category, image }: HeroProps) => {
                 </div>
 
                 {/* Title */}
-                <h1 className="text-kmff-dark text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 leading-tight">
+                <h1 className="text-kmff-dark text-2xl md:text-3xl lg:text-4xl font-bold mb-4 md:mb-6 leading-[1.2]">
                     {title}
                 </h1>
 
                 {/* Date */}
-                <div className="text-gray-400 text-sm mb-6 md:mb-8 font-medium">
+                <div className="text-gray-600 text-sm mb-6 md:mb-8 font-medium">
                     {date}
                 </div>
 

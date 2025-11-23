@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Manrope, Montserrat } from "next/font/google";
 import "./globals.css";
+import { OrganizationProvider } from "@/contexts/OrganizationContext";
 
 const manrope = Manrope({
   variable: "--font-sans",
@@ -13,8 +14,13 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  title: "Freedom QJ League – Главная страница",
-  description: "Результаты матчей. Турнирная таблица. Новости. Анонсы.",
+  title: "KMFF - Казахстанская Лига Любительского Футбола",
+  description: "Результаты матчей, турнирные таблицы, новости и статистика KMFF.",
+  icons: {
+    icon: "/kmff-logo.jpg",
+    shortcut: "/kmff-logo.jpg",
+    apple: "/kmff-logo.jpg",
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +33,9 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${montserrat.variable} antialiased font-sans`}
       >
-        {children}
+        <OrganizationProvider>
+          {children}
+        </OrganizationProvider>
       </body>
     </html>
   );
