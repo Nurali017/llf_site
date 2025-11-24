@@ -20,44 +20,52 @@ const NewsGrid = ({ news }: NewsGridProps) => {
                     </h2>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    {news.map((item) => (
-                        <div key={item.id} className="group">
-                            <article className="flex items-start p-4 bg-white hover:bg-gray-50 transition-all duration-300 rounded-xl border border-gray-100 hover:shadow-lg hover:border-kmff-blue/20 h-full">
-                                {/* Image - Standard rounded */}
-                                <div className="relative w-28 h-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
-                                    <Image
-                                        src={getImageUrl(item.image)}
-                                        alt={item.title}
-                                        fill
-                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                                        sizes="(max-width: 768px) 100px, 112px"
-                                        onError={(e) => {
-                                            // Fallback handled by next/image if configured, or we can use a placeholder
-                                            // For now, relying on getImageUrl to provide valid URL or fallback
-                                        }}
-                                    />
-                                </div>
+                {news.length === 0 ? (
+                    <div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="text-6xl mb-4">📰</div>
+                        <p className="text-gray-500 font-medium">Новостей пока нет</p>
+                        <p className="text-gray-400 text-sm mt-2">Загляните позже</p>
+                    </div>
+                ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {news.map((item) => (
+                            <div key={item.id} className="group">
+                                <article className="flex items-start p-4 bg-white hover:bg-gray-50 transition-all duration-300 rounded-xl border border-gray-100 hover:shadow-lg hover:border-kmff-blue/20 h-full">
+                                    {/* Image - Standard rounded */}
+                                    <div className="relative w-28 h-28 flex-shrink-0 overflow-hidden rounded-lg bg-gray-100">
+                                        <Image
+                                            src={getImageUrl(item.image)}
+                                            alt={item.title}
+                                            fill
+                                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                                            sizes="(max-width: 768px) 100px, 112px"
+                                            onError={(e) => {
+                                                // Fallback handled by next/image if configured, or we can use a placeholder
+                                                // For now, relying on getImageUrl to provide valid URL or fallback
+                                            }}
+                                        />
+                                    </div>
 
-                                {/* Content */}
-                                <div className="flex flex-col justify-between pl-4 h-28 py-1">
-                                    {/* Title */}
-                                    <h3 className="text-base font-bold text-gray-900 group-hover:text-kmff-blue transition-colors line-clamp-3 leading-snug">
-                                        {item.title}
-                                    </h3>
+                                    {/* Content */}
+                                    <div className="flex flex-col justify-between pl-4 h-28 py-1">
+                                        {/* Title */}
+                                        <h3 className="text-base font-bold text-gray-900 group-hover:text-kmff-blue transition-colors line-clamp-3 leading-snug">
+                                            {item.title}
+                                        </h3>
 
-                                    {/* Date */}
-                                    {item.date && (
-                                        <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium mt-auto">
-                                            <Calendar className="w-3.5 h-3.5" />
-                                            {item.date}
-                                        </div>
-                                    )}
-                                </div>
-                            </article>
-                        </div>
-                    ))}
-                </div>
+                                        {/* Date */}
+                                        {item.date && (
+                                            <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium mt-auto">
+                                                <Calendar className="w-3.5 h-3.5" />
+                                                {item.date}
+                                            </div>
+                                        )}
+                                    </div>
+                                </article>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
         </section>
     );

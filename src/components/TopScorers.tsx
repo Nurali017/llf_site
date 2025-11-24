@@ -48,12 +48,12 @@ const TopScorers = () => {
     return (
         <div className="space-y-6">
             {/* Top Scorer Highlight */}
-            <div className="relative bg-white rounded-xl p-4 overflow-hidden group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+            <div className="relative bg-white/5 rounded-xl p-4 overflow-hidden group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-white/10">
                 <div className="relative z-10 w-2/3">
-                    <div className="text-4xl font-bold mb-1 text-kmff-blue">{scorers[0].goals}</div>
-                    <div className="text-xs mb-2 text-gray-600">голов</div>
-                    <div className="font-bold text-lg leading-tight mb-1 text-gray-900">{scorers[0].name}</div>
-                    <div className="text-xs text-gray-600">{scorers[0].team}</div>
+                    <div className="text-4xl font-bold mb-1 text-blue-400">{scorers[0].goals}</div>
+                    <div className="text-xs mb-2 text-gray-400">голов</div>
+                    <div className="font-bold text-lg leading-tight mb-1 text-white">{scorers[0].name}</div>
+                    <div className="text-xs text-gray-400">{scorers[0].team}</div>
                 </div>
 
                 {/* Cutout Image */}
@@ -75,15 +75,15 @@ const TopScorers = () => {
             {/* List */}
             <div className="space-y-3">
                 {scorers.slice(1).map((player, index) => (
-                    <div key={player.id} className="flex items-center justify-between text-sm p-2 rounded-lg hover:bg-white/5 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 cursor-default">
+                    <div key={player.id} className="flex items-center justify-between text-sm p-2 rounded-lg hover:bg-white/5 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 cursor-default border border-transparent hover:border-white/10">
                         <div className="flex items-center gap-3">
-                            <span className="text-gray-400 font-bold w-4">{index + 2}</span>
+                            <span className="text-gray-500 font-bold w-4">{index + 2}</span>
                             <div className="flex flex-col">
-                                <span className="font-bold text-white">{player.name}</span>
-                                <span className="text-xs text-gray-400">{player.team}</span>
+                                <span className="font-bold text-gray-200">{player.name}</span>
+                                <span className="text-xs text-gray-500">{player.team}</span>
                             </div>
                         </div>
-                        <span className="font-bold text-white">{player.goals}</span>
+                        <span className="font-bold text-blue-400">{player.goals}</span>
                     </div>
                 ))}
             </div>

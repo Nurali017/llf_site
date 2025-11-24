@@ -1,3 +1,31 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Новости мини-футбола Казахстана | КФМФ',
+    description: 'Последние новости, анонсы матчей и события из мира мини-футбола Казахстана. Официальные новости Казахстанской Федерации Мини-Футбола.',
+    keywords: [
+        'новости мини-футбола',
+        'новости КФМФ',
+        'футзал Казахстан',
+        'анонсы матчей',
+        'спортивные новости Казахстан',
+    ],
+    openGraph: {
+        title: 'Новости мини-футбола | КФМФ',
+        description: 'Последние новости и события из мира казахстанского мини-футбола',
+        type: 'website',
+        url: 'https://yourdomain.com/news',
+    },
+    twitter: {
+        card: 'summary',
+        title: 'Новости мини-футбола',
+        description: 'Последние новости КФМФ',
+    },
+    alternates: {
+        canonical: 'https://yourdomain.com/news',
+    },
+};
+
 export default function NewsPage() {
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">

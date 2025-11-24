@@ -222,8 +222,10 @@ const MatchWidget = () => {
                             ))}
                         </div>
                     ) : filteredMatches.length === 0 ? (
-                        <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-gray-100">
-                            Нет матчей для отображения
+                        <div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-100">
+                            <div className="text-6xl mb-4">⚽</div>
+                            <p className="text-gray-500 font-medium">Матчи пока не запланированы</p>
+                            <p className="text-gray-400 text-sm mt-2">Следите за обновлениями</p>
                         </div>
                     ) : (
                         <div

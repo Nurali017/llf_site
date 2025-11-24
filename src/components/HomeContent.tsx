@@ -33,7 +33,7 @@ export default function HomeContent() {
         <div className="container mx-auto px-4 py-8">
             <div className="flex flex-col lg:flex-row gap-6">
                 {/* Desktop Sidebar - Sticky on the left */}
-                <div className="hidden lg:block w-full lg:w-[30%]">
+                <div className="hidden lg:block w-full lg:w-[30%] sticky top-24 h-fit">
                     <Aside />
                 </div>
 

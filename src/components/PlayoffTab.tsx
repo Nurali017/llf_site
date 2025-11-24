@@ -42,8 +42,8 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                         key={stage.id}
                         onClick={() => setSelectedStageId(stage.id)}
                         className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 flex-shrink-0 ${selectedStageId === stage.id
-                            ? 'bg-kmff-blue text-white shadow-md'
-                            : 'bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-900'
+                            ? 'bg-blue-500 text-white shadow-md'
+                            : 'bg-white/10 text-gray-400 hover:bg-white/20 hover:text-white'
                             }`}
                     >
                         {stage.name}
@@ -59,7 +59,7 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                     {matches.map((match) => (
                         <div
                             key={match.id}
-                            className="bg-white border border-gray-100 rounded-xl p-4 hover:shadow-md hover:border-kmff-blue/30 transition-all duration-300 group"
+                            className="bg-white/5 border border-white/10 rounded-xl p-4 hover:shadow-md hover:border-blue-400/30 transition-all duration-300 group"
                         >
                             <div className="flex items-center justify-between gap-4">
                                 {/* Team 1 */}
@@ -75,18 +75,18 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                                             }}
                                         />
                                     </div>
-                                    <span className="font-bold text-xs text-gray-900 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-kmff-blue transition-colors">
+                                    <span className="font-bold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
                                         {match.team_1.name}
                                     </span>
                                 </div>
 
                                 {/* Score */}
                                 <div className="flex flex-col items-center shrink-0">
-                                    <div className="text-3xl font-black text-kmff-dark whitespace-nowrap tracking-tight">
-                                        {match.team_1.goals} <span className="text-gray-300 mx-1">:</span> {match.team_2.goals}
+                                    <div className="text-3xl font-black text-white whitespace-nowrap tracking-tight">
+                                        {match.team_1.goals} <span className="text-gray-500 mx-1">:</span> {match.team_2.goals}
                                     </div>
                                     {match.penalty_status && (
-                                        <div className="text-[10px] text-gray-500 font-bold uppercase tracking-wider mt-1 bg-gray-100 px-2 py-0.5 rounded-full">
+                                        <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1 bg-white/5 px-2 py-0.5 rounded-full">
                                             пен. {match.team_1.penalty_goals}:{match.team_2.penalty_goals}
                                         </div>
                                     )}
@@ -105,7 +105,7 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                                             }}
                                         />
                                     </div>
-                                    <span className="font-bold text-xs text-gray-900 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-kmff-blue transition-colors">
+                                    <span className="font-bold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
                                         {match.team_2.name}
                                     </span>
                                 </div>

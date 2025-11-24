@@ -1,3 +1,32 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'О КФМФ - Казахстанская Федерация Мини-Футбола',
+    description: 'История, миссия и цели Казахстанской Федерации Мини-Футбола. Развитие футзала в Казахстане, структура организации и контактная информация.',
+    keywords: [
+        'КФМФ',
+        'о федерации',
+        'мини-футбол Казахстан',
+        'история КФМФ',
+        'футзал',
+        'федерация футбола',
+    ],
+    openGraph: {
+        title: 'О КФМФ',
+        description: 'Казахстанская Федерация Мини-Футбола - развитие футзала в Казахстане',
+        type: 'website',
+        url: 'https://yourdomain.com/about',
+    },
+    twitter: {
+        card: 'summary',
+        title: 'О КФМФ',
+        description: 'История и миссия федерации мини-футбола',
+    },
+    alternates: {
+        canonical: 'https://yourdomain.com/about',
+    },
+};
+
 export default function AboutPage() {
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">

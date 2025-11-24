@@ -31,7 +31,7 @@ const StandingsWidget = () => {
     return (
         <div className="space-y-2">
             {/* Table Header */}
-            <div className="grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center text-xs text-gray-400 font-medium px-2 py-2 border-b border-gray-100">
+            <div className="grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center text-xs text-gray-400 font-medium px-2 py-2 border-b border-white/10">
                 <div className="text-center">#</div>
                 <div>Команда</div>
                 <div className="text-center">И</div>
@@ -60,9 +60,9 @@ const StandingsWidget = () => {
                     return (
                         <div
                             key={standing.team.id || index}
-                            className={`grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center ${borderClass} bg-transparent hover:bg-gray-50 transition-colors duration-200 py-2 px-2 rounded-r-lg cursor-pointer group`}
+                            className={`grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center ${borderClass} bg-transparent hover:bg-white/5 transition-colors duration-200 py-2 px-2 rounded-r-lg cursor-pointer group border-y border-transparent hover:border-white/10`}
                         >
-                            <div className="text-gray-500 font-medium text-xs text-center">{index + 1}</div>
+                            <div className="text-gray-400 font-medium text-xs text-center">{index + 1}</div>
                             <div className="flex items-center gap-2 min-w-0">
                                 <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-full p-0.5 overflow-hidden border border-gray-200">
                                     <img
@@ -75,13 +75,13 @@ const StandingsWidget = () => {
                                         }}
                                     />
                                 </span>
-                                <span className="text-gray-900 font-bold text-sm truncate group-hover:text-kmff-blue transition-colors">{standing.team.name}</span>
+                                <span className="text-gray-200 font-bold text-sm truncate group-hover:text-white transition-colors">{standing.team.name}</span>
                             </div>
-                            <div className="text-gray-500 text-xs text-center">{standing.game_count}</div>
+                            <div className="text-gray-400 text-xs text-center">{standing.game_count}</div>
                             <div className={`text-xs font-bold text-center ${diffColor}`}>
                                 {diffText}
                             </div>
-                            <div className="text-kmff-dark font-black text-base text-center">{standing.point}</div>
+                            <div className="text-white font-black text-base text-center">{standing.point}</div>
                         </div>
                     );
                 })}

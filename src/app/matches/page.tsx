@@ -1,3 +1,32 @@
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    title: 'Матчи мини-футбола - Результаты и Расписание | КФМФ',
+    description: 'Расписание и результаты матчей мини-футбола по всему Казахстану. Live трансляции, прошедшие игры и предстоящие матчи чемпионата КФМФ.',
+    keywords: [
+        'матчи мини-футбола',
+        'расписание матчей',
+        'результаты игр',
+        'live матчи',
+        'футзал Казахстан',
+        'календарь игр КФМФ',
+    ],
+    openGraph: {
+        title: 'Матчи мини-футбола | КФМФ',
+        description: 'Расписание и результаты матчей по всему Казахстану',
+        type: 'website',
+        url: 'https://yourdomain.com/matches',
+    },
+    twitter: {
+        card: 'summary',
+        title: 'Матчи мини-футбола',
+        description: 'Расписание и результаты игр',
+    },
+    alternates: {
+        canonical: 'https://yourdomain.com/matches',
+    },
+};
+
 export default function MatchesPage() {
     return (
         <div className="min-h-screen bg-gray-50 flex items-center justify-center">

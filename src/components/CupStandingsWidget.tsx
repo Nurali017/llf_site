@@ -46,8 +46,8 @@ const CupStandingsWidget = ({ cupId }: CupStandingsWidgetProps) => {
                     <button
                         onClick={() => setActiveTab('groups')}
                         className={`px-6 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${activeTab === 'groups'
-                            ? 'bg-white text-qjl-dark shadow-sm'
-                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                            ? 'bg-blue-500 text-white shadow-sm'
+                            : 'text-gray-400 hover:text-white hover:bg-white/10'
                             }`}
                     >
                         Группы
@@ -57,8 +57,8 @@ const CupStandingsWidget = ({ cupId }: CupStandingsWidgetProps) => {
                     <button
                         onClick={() => setActiveTab('playoff')}
                         className={`px-6 py-1.5 rounded-full text-xs font-bold transition-all duration-300 ${activeTab === 'playoff'
-                            ? 'bg-white text-qjl-dark shadow-sm'
-                            : 'text-gray-400 hover:text-white hover:bg-white/5'
+                            ? 'bg-blue-500 text-white shadow-sm'
+                            : 'text-gray-400 hover:text-white hover:bg-white/10'
                             }`}
                     >
                         Плэй-офф
