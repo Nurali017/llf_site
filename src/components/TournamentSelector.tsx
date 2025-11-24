@@ -23,7 +23,7 @@ export default function TournamentSelector() {
         };
     }, []);
 
-    console.log('TournamentSelector tournaments:', tournaments);
+
     if (tournaments.length <= 1) return null;
 
     return (

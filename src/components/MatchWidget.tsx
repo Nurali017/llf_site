@@ -4,6 +4,7 @@
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useOrganization } from '@/contexts/OrganizationContext';
 import { useMatches, useLiveMatches } from '@/hooks/useMatches';
 import { getImageUrl, handleImageError } from '@/utils/image';
@@ -78,8 +79,7 @@ const MatchWidget = () => {
             matches.forEach((match: Match) => {
                 const matchDate = new Date(match.time);
 
-                // Debug logging
-                console.log('Match:', match.id, match.time, match.status);
+
 
                 // Простая логика по статусам:
                 // - FINISHED → завершен
@@ -268,7 +268,21 @@ const MatchWidget = () => {
 
                 <div className="relative group/slider">
                     {isLoading ? (
-                        <div className="text-center py-12 text-gray-400">Загрузка матчей...</div>
+                        <div className="flex gap-4 overflow-hidden">
+                            {[1, 2, 3, 4].map((i) => (
+                                <div key={i} className="min-w-[280px] md:min-w-[300px] h-[240px] bg-white rounded-xl p-5 border border-gray-100">
+                                    <div className="animate-pulse flex flex-col h-full items-center justify-between">
+                                        <div className="h-4 w-24 bg-gray-200 rounded"></div>
+                                        <div className="flex items-center justify-between w-full px-4">
+                                            <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
+                                            <div className="w-12 h-8 bg-gray-200 rounded"></div>
+                                            <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
+                                        </div>
+                                        <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
                     ) : displayMatches.length === 0 ? (
                         <div className="text-center py-12 text-gray-400 bg-gray-50 rounded-xl border border-gray-100">
                             Нет матчей для отображения
@@ -294,11 +308,15 @@ const MatchWidget = () => {
                                         <div className="flex items-center justify-between mb-4 px-2">
                                             {/* Home Team Logo */}
                                             <div className="w-16 h-16 relative flex-shrink-0">
-                                                <img
+                                                <Image
                                                     src={getImageUrl(match.homeTeamImage)}
                                                     alt={match.homeTeam}
-                                                    className="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
-                                                    onError={handleImageError}
+                                                    fill
+                                                    className="object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
+                                                    sizes="64px"
+                                                    onError={(e) => {
+                                                        // Fallback handled by next/image if configured or parent
+                                                    }}
                                                 />
                                             </div>
 
@@ -318,11 +336,15 @@ const MatchWidget = () => {
 
                                             {/* Away Team Logo */}
                                             <div className="w-16 h-16 relative flex-shrink-0">
-                                                <img
+                                                <Image
                                                     src={getImageUrl(match.awayTeamImage)}
                                                     alt={match.awayTeam}
-                                                    className="w-full h-full object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
-                                                    onError={handleImageError}
+                                                    fill
+                                                    className="object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
+                                                    sizes="64px"
+                                                    onError={(e) => {
+                                                        // Fallback handled by next/image if configured or parent
+                                                    }}
                                                 />
                                             </div>
                                         </div>

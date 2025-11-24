@@ -14,7 +14,7 @@ export async function getPartners(organizationId?: number): Promise<Partner[]> {
         }
         return response.json();
     } catch (error) {
-        console.error('Error fetching partners:', error);
+
         return [];
     }
 }

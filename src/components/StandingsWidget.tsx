@@ -31,7 +31,7 @@ const StandingsWidget = () => {
     return (
         <div className="space-y-2">
             {/* Table Header */}
-            <div className="grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center text-xs text-gray-400 font-medium px-2 py-2">
+            <div className="grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center text-xs text-gray-400 font-medium px-2 py-2 border-b border-gray-100">
                 <div className="text-center">#</div>
                 <div>Команда</div>
                 <div className="text-center">И</div>
@@ -54,17 +54,17 @@ const StandingsWidget = () => {
 
                     // Goal Difference Calculation
                     const diff = standing.scored - standing.missed;
-                    const diffColor = diff > 0 ? 'text-emerald-400' : diff < 0 ? 'text-red-400' : 'text-gray-400';
+                    const diffColor = diff > 0 ? 'text-emerald-600' : diff < 0 ? 'text-red-500' : 'text-gray-400';
                     const diffText = diff > 0 ? `+${diff}` : `${diff}`;
 
                     return (
                         <div
                             key={standing.team.id || index}
-                            className={`grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center ${borderClass} bg-transparent hover:bg-white/5 transition-colors duration-200 py-2 px-2 rounded-r-lg cursor-pointer`}
+                            className={`grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center ${borderClass} bg-transparent hover:bg-gray-50 transition-colors duration-200 py-2 px-2 rounded-r-lg cursor-pointer group`}
                         >
-                            <div className="text-gray-400 font-medium text-xs text-center">{index + 1}</div>
+                            <div className="text-gray-500 font-medium text-xs text-center">{index + 1}</div>
                             <div className="flex items-center gap-2 min-w-0">
-                                <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-white/10 rounded-full p-0.5 overflow-hidden">
+                                <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-full p-0.5 overflow-hidden border border-gray-200">
                                     <img
                                         src={getImageUrl(standing.team.image)}
                                         alt={standing.team.name}
@@ -75,13 +75,13 @@ const StandingsWidget = () => {
                                         }}
                                     />
                                 </span>
-                                <span className="text-white font-semibold text-sm truncate">{standing.team.name}</span>
+                                <span className="text-gray-900 font-bold text-sm truncate group-hover:text-kmff-blue transition-colors">{standing.team.name}</span>
                             </div>
-                            <div className="text-gray-400 text-xs text-center">{standing.game_count}</div>
-                            <div className={`text-xs font-medium text-center ${diffColor}`}>
+                            <div className="text-gray-500 text-xs text-center">{standing.game_count}</div>
+                            <div className={`text-xs font-bold text-center ${diffColor}`}>
                                 {diffText}
                             </div>
-                            <div className="text-white font-bold text-base text-center">{standing.point}</div>
+                            <div className="text-kmff-dark font-black text-base text-center">{standing.point}</div>
                         </div>
                     );
                 })}

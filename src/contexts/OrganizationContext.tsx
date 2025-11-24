@@ -74,7 +74,7 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({
                 .then((response) => {
                     if (response && response.length > 0) {
                         const currentSeason = response[0];
-                        console.log('Current Season Data:', currentSeason);
+
 
                         // Collect all tournaments
                         const leagues: Tournament[] = (currentSeason.leagues || []).map(l => ({
@@ -119,7 +119,7 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({
                     }
                 })
                 .catch((error) => {
-                    console.error('Failed to fetch current season:', error);
+
                     setLeagueId(undefined);
                     setCupId(undefined);
                     setTournaments([]);
