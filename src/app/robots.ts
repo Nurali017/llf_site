@@ -23,6 +23,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/api/', '/debug/'],
             },
         ],
-        sitemap: 'https://yourdomain.com/sitemap.xml',
+        sitemap: 'https://llfsite.vercel.app/sitemap.xml',
     };
 }

@@ -63,13 +63,13 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
         openGraph: {
             title: `Мини-футбол ${cityName} | КФМФ`,
             description: description,
-            url: `https://yourdomain.com/${citySlug}`,
+            url: `https://llfsite.vercel.app/${citySlug}`,
             type: 'website',
             locale: 'ru_RU',
             siteName: 'КФМФ',
             images: [
                 {
-                    url: `https://yourdomain.com/og-image.png`,
+                    url: `https://llfsite.vercel.app/og-image.png`,
                     width: 1200,
                     height: 630,
                     alt: `Мини-футбол ${cityName}`,
@@ -84,7 +84,7 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
         },
 
         alternates: {
-            canonical: `https://yourdomain.com/${citySlug}`,
+            canonical: `https://llfsite.vercel.app/${citySlug}`,
         },
     };
 }

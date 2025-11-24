@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://yourdomain.com';
+    const baseUrl = 'https://llfsite.vercel.app';
 
     // Статические страницы
     const staticPages: MetadataRoute.Sitemap = [

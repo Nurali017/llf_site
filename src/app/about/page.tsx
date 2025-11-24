@@ -15,7 +15,7 @@ export const metadata: Metadata = {
         title: 'О КФМФ',
         description: 'Казахстанская Федерация Мини-Футбола - развитие футзала в Казахстане',
         type: 'website',
-        url: 'https://yourdomain.com/about',
+        url: 'https://llfsite.vercel.app/about',
     },
     twitter: {
         card: 'summary',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         description: 'История и миссия федерации мини-футбола',
     },
     alternates: {
-        canonical: 'https://yourdomain.com/about',
+        canonical: 'https://llfsite.vercel.app/about',
     },
 };
 

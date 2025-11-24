@@ -15,7 +15,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://yourdomain.com'), // TODO: Replace with real domain
+  metadataBase: new URL('https://llfsite.vercel.app'), // TODO: Replace with real domain
   title: "KMFF - Казахстанская Лига Любительского Футбола",
   description: "Результаты матчей, турнирные таблицы, новости и статистика KMFF.",
   icons: {
@@ -36,8 +36,8 @@ export default function RootLayout({
     '@type': 'SportsOrganization',
     name: 'Казахстанская Федерация Мини-Футбола',
     alternateName: 'КФМФ',
-    url: 'https://yourdomain.com',
-    logo: 'https://yourdomain.com/kmff-logo.jpg',
+    url: 'https://llfsite.vercel.app',
+    logo: 'https://llfsite.vercel.app/kmff-logo.jpg',
     description: 'Официальная платформа Казахстанской Федерации Мини-Футбола. Результаты матчей, турнирные таблицы и статистика.',
     foundingDate: '2010',
     address: {
