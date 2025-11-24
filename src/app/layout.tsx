@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Manrope, Montserrat } from "next/font/google";
 import "./globals.css";
 import { OrganizationProvider } from "@/contexts/OrganizationContext";
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 const manrope = Manrope({
   variable: "--font-sans",
@@ -33,9 +34,11 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${montserrat.variable} antialiased font-sans`}
       >
-        <OrganizationProvider>
-          {children}
-        </OrganizationProvider>
+        <ErrorBoundary>
+          <OrganizationProvider>
+            {children}
+          </OrganizationProvider>
+        </ErrorBoundary>
       </body>
     </html>
   );

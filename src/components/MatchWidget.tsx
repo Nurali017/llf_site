@@ -30,6 +30,7 @@ type FilterType = 'all' | 'finished' | 'upcoming';
 
 const MatchWidget = () => {
     const { selectedOrganization } = useOrganization();
+
     const { matches, isLoading: matchesLoading } = useMatches(selectedOrganization?.id);
     const { liveMatches, isLoading: liveLoading } = useLiveMatches(selectedOrganization?.id);
     const [activeFilter, setActiveFilter] = useState<FilterType>('all');

@@ -7,6 +7,7 @@ import Aside from "@/components/Aside";
 import { useOrganization } from "@/contexts/OrganizationContext";
 import { getFeaturedNewsByBranch } from "@/data/news";
 import { useNews } from "@/hooks/useNews";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function HomeContent() {
     const { selectedOrganization, isLoading } = useOrganization();
@@ -50,7 +51,9 @@ export default function HomeContent() {
                     )}
 
                     {/* Match Widget */}
-                    <MatchWidget />
+                    <ErrorBoundary fallback={<div className="p-4 text-center text-gray-500 bg-white rounded-xl">Ошибка загрузки матчей</div>}>
+                        <MatchWidget />
+                    </ErrorBoundary>
 
                     {/* Mobile Sidebar - Appears between Match and News on mobile */}
                     <div className="block lg:hidden">

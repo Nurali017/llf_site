@@ -4,6 +4,7 @@ import { useOrganization } from '@/contexts/OrganizationContext';
 import TopScorers from './TopScorers';
 import StandingsWidget from './StandingsWidget';
 import TournamentSelector from './TournamentSelector';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 export default function Aside() {
     const { selectedOrganization, activeTournament } = useOrganization();
@@ -35,7 +36,9 @@ export default function Aside() {
                         <TournamentSelector />
                     </div>
                 </div>
-                <StandingsWidget />
+                <ErrorBoundary fallback={<div className="p-4 text-center text-gray-500">Ошибка загрузки таблицы</div>}>
+                    <StandingsWidget />
+                </ErrorBoundary>
 
                 {/* Legend */}
                 <div className="flex flex-wrap gap-3 mt-4 pt-4 border-t border-gray-100 text-xs text-gray-500">
