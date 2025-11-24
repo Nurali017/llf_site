@@ -67,8 +67,9 @@ const StandingsWidget = () => {
                                 <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-full p-0.5 overflow-hidden border border-gray-200">
                                     <img
                                         src={getImageUrl(standing.team.image)}
-                                        alt={standing.team.name}
+                                        alt={`Логотип команды ${standing.team.name}`}
                                         className="w-full h-full object-cover"
+                                        loading="lazy"
                                         onError={(e) => {
                                             const target = e.target as HTMLImageElement;
                                             target.src = '/llf-logo.png';

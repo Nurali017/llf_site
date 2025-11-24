@@ -43,10 +43,11 @@ export function MatchCard({ match }: MatchCardProps) {
                     <div className="w-16 h-16 relative flex-shrink-0">
                         <Image
                             src={getImageUrl(match.homeTeamImage)}
-                            alt={match.homeTeam}
+                            alt={`Логотип команды ${match.homeTeam}`}
                             fill
                             className="object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
                             sizes="64px"
+                            loading="lazy"
                             onError={(e) => {
                                 // Fallback handled by next/image if configured or parent
                             }}
@@ -71,10 +72,11 @@ export function MatchCard({ match }: MatchCardProps) {
                     <div className="w-16 h-16 relative flex-shrink-0">
                         <Image
                             src={getImageUrl(match.awayTeamImage)}
-                            alt={match.awayTeam}
+                            alt={`Логотип команды ${match.awayTeam}`}
                             fill
                             className="object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
                             sizes="64px"
+                            loading="lazy"
                             onError={(e) => {
                                 // Fallback handled by next/image if configured or parent
                             }}

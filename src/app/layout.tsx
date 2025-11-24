@@ -15,6 +15,7 @@ const montserrat = Montserrat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://yourdomain.com'), // TODO: Replace with real domain
   title: "KMFF - Казахстанская Лига Любительского Футбола",
   description: "Результаты матчей, турнирные таблицы, новости и статистика KMFF.",
   icons: {
