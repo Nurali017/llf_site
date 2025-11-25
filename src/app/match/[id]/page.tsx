@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: MatchPageProps): Promise<Meta
             title: `Матч #${matchId}`,
             description: `Информация о матче мини-футбола в Казахстане`,
             type: 'article',
-            url: `https://yourdomain.com/match/${matchId}`,
+            url: `https://llfsite.vercel.app/match/${matchId}`,
         },
         twitter: {
             card: 'summary',
@@ -30,7 +30,7 @@ export async function generateMetadata({ params }: MatchPageProps): Promise<Meta
             description: `Детали матча мини-футбола`,
         },
         alternates: {
-            canonical: `https://yourdomain.com/match/${matchId}`,
+            canonical: `https://llfsite.vercel.app/match/${matchId}`,
         },
     };
 }

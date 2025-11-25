@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         title: 'Новости мини-футбола | КФМФ',
         description: 'Последние новости и события из мира казахстанского мини-футбола',
         type: 'website',
-        url: 'https://yourdomain.com/news',
+        url: 'https://llfsite.vercel.app/news',
     },
     twitter: {
         card: 'summary',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         description: 'Последние новости КФМФ',
     },
     alternates: {
-        canonical: 'https://yourdomain.com/news',
+        canonical: 'https://llfsite.vercel.app/news',
     },
 };
 

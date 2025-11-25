@@ -15,7 +15,7 @@ export const metadata: Metadata = {
         title: 'Матчи мини-футбола | КФМФ',
         description: 'Расписание и результаты матчей по всему Казахстану',
         type: 'website',
-        url: 'https://yourdomain.com/matches',
+        url: 'https://llfsite.vercel.app/matches',
     },
     twitter: {
         card: 'summary',
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         description: 'Расписание и результаты игр',
     },
     alternates: {
-        canonical: 'https://yourdomain.com/matches',
+        canonical: 'https://llfsite.vercel.app/matches',
     },
 };
 

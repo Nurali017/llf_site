@@ -14,7 +14,7 @@ export const metadata: Metadata = {
         title: 'Турниры мини-футбола | КФМФ',
         description: 'Календарь турниров и чемпионатов по мини-футболу в Казахстане',
         type: 'website',
-        url: 'https://yourdomain.com/tournaments',
+        url: 'https://llfsite.vercel.app/tournaments',
     },
     twitter: {
         card: 'summary',
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
         description: 'Актуальные турниры КФМФ',
     },
     alternates: {
-        canonical: 'https://yourdomain.com/tournaments',
+        canonical: 'https://llfsite.vercel.app/tournaments',
     },
 };
 

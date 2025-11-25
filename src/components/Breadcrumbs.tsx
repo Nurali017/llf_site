@@ -21,7 +21,7 @@ export function Breadcrumbs() {
             '@type': 'ListItem',
             position: index + 1,
             name: item.label,
-            item: `https://yourdomain.com${item.href}`,
+            item: `https://llfsite.vercel.app${item.href}`,
         })),
     };
 

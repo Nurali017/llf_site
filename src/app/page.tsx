@@ -20,13 +20,13 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     locale: 'ru_RU',
-    url: 'https://yourdomain.com/',
+    url: 'https://llfsite.vercel.app/',
     siteName: 'КФМФ',
     title: 'КФМФ - Казахстанская Федерация Мини-Футбола',
     description: 'Результаты матчей, турнирные таблицы и статистика мини-футбола Казахстана',
     images: [
       {
-        url: 'https://yourdomain.com/og-image.png',
+        url: 'https://llfsite.vercel.app/og-image.png',
         width: 1200,
         height: 630,
         alt: 'КФМФ - Мини-футбол Казахстана',
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: 'КФМФ - Мини-футбол Казахстана',
     description: 'Результаты матчей, турнирные таблицы и статистика',
-    images: ['https://yourdomain.com/og-image.png'],
+    images: ['https://llfsite.vercel.app/og-image.png'],
   },
 
   robots: {
