@@ -8,6 +8,7 @@ import { Match, LiveMatch } from '@/types/api';
 import { MatchCard, DisplayMatch } from './MatchCard';
 import { MatchFilters } from './MatchFilters';
 import { useMatchFiltering, FilterType } from '@/hooks/useMatchFiltering';
+import { formatDate, formatTime } from '@/utils/formatting';
 
 const MatchWidget = () => {
     const { selectedOrganization } = useOrganization();
@@ -218,27 +219,5 @@ const MatchWidget = () => {
         </section>
     );
 };
-
-// Форматирование даты: "22 НОЯБ. ПТ"
-function formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    const months = [
-        'ЯНВ.', 'ФЕВ.', 'МАРТ', 'АПР.', 'МАЯ', 'ИЮНЯ',
-        'ИЮЛЯ', 'АВГ.', 'СЕНТ.', 'ОКТ.', 'НОЯБ.', 'ДЕК.'
-    ];
-    const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
-
-    const day = date.getUTCDate();
-    const month = months[date.getUTCMonth()];
-    const weekDay = days[date.getUTCDay()];
-
-    return `${day} ${month} ${weekDay}`;
-}
-
-// Форматирование времени: "18:00"
-function formatTime(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
-}
 
 export default MatchWidget;

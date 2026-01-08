@@ -9,9 +9,9 @@ import { MatchFilters } from './MatchFilters';
 import { useMatchFiltering, FilterType } from '@/hooks/useMatchFiltering';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Skeleton } from '@/components/ui/Skeleton';
+import { formatDate, formatTime } from '@/utils/formatting';
+import { ITEMS_PER_PAGE } from '@/utils/constants';
 import { mutate } from 'swr';
-
-const ITEMS_PER_PAGE = 12;
 
 function MatchGridSkeleton() {
     return (
@@ -63,34 +63,12 @@ function ErrorState({ onRetry }: { onRetry: () => void }) {
     );
 }
 
-// Форматирование даты: "22 НОЯБ. ВС"
-function formatDate(dateString: string): string {
-    const date = new Date(dateString);
-    const months = [
-        'ЯНВ.', 'ФЕВ.', 'МАРТ', 'АПР.', 'МАЯ', 'ИЮНЯ',
-        'ИЮЛЯ', 'АВГ.', 'СЕНТ.', 'ОКТ.', 'НОЯБ.', 'ДЕК.'
-    ];
-    const days = ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'];
-
-    const day = date.getUTCDate();
-    const month = months[date.getUTCMonth()];
-    const weekDay = days[date.getUTCDay()];
-
-    return `${day} ${month} ${weekDay}`;
-}
-
-// Форматирование времени: "18:00"
-function formatTime(dateString: string): string {
-    const date = new Date(dateString);
-    return date.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', timeZone: 'UTC' });
-}
-
 export default function MatchesPageContent() {
     const { selectedOrganization, isLoading: orgLoading } = useOrganization();
     const { matches, isLoading: matchesLoading, isError: matchesError } = useMatches(selectedOrganization?.id);
     const { liveMatches, isLoading: liveLoading } = useLiveMatches(selectedOrganization?.id);
     const [activeFilter, setActiveFilter] = useState<FilterType>('all');
-    const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+    const [visibleCount, setVisibleCount] = useState<number>(ITEMS_PER_PAGE.MATCHES);
 
     const displayMatches = useMemo(() => {
         const allMatches: DisplayMatch[] = [];
@@ -165,12 +143,12 @@ export default function MatchesPageContent() {
     const hasMore = visibleCount < filteredMatches.length;
 
     const handleLoadMore = () => {
-        setVisibleCount(prev => prev + ITEMS_PER_PAGE);
+        setVisibleCount(prev => prev + ITEMS_PER_PAGE.MATCHES);
     };
 
     const handleFilterChange = (filter: FilterType) => {
         setActiveFilter(filter);
-        setVisibleCount(ITEMS_PER_PAGE);
+        setVisibleCount(ITEMS_PER_PAGE.MATCHES);
     };
 
     const handleRetry = () => {

@@ -5,6 +5,8 @@ import { MatchEvent, MatchProtocol } from '@/types/api';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { getImageUrl } from '@/utils/image';
+import { formatMatchDate, formatTime } from '@/utils/formatting';
+import { getStatusBadge as getStatusBadgeData } from '@/utils/match';
 import Image from 'next/image';
 import Link from 'next/link';
 import { MapPin, Calendar, Users } from 'lucide-react';
@@ -60,43 +62,23 @@ function ErrorState({ onRetry }: { onRetry: () => void }) {
     );
 }
 
-function formatMatchDate(dateString: string): string {
-    const date = new Date(dateString);
-    const months = [
-        'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
-    ];
-    const day = date.getUTCDate();
-    const month = months[date.getUTCMonth()];
-    const year = date.getUTCFullYear();
-    const hours = date.getUTCHours().toString().padStart(2, '0');
-    const minutes = date.getUTCMinutes().toString().padStart(2, '0');
-
-    return `${day} ${month} ${year}, ${hours}:${minutes}`;
-}
-
 function getStatusBadge(status: string) {
-    switch (status) {
-        case 'LIVE':
-            return (
-                <span className="inline-flex items-center gap-1.5 bg-red-500 text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse">
-                    <span className="w-2 h-2 bg-white rounded-full"></span>
-                    LIVE
-                </span>
-            );
-        case 'FINISHED':
-            return (
-                <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">
-                    Завершён
-                </span>
-            );
-        default:
-            return (
-                <span className="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">
-                    Предстоящий
-                </span>
-            );
+    const { text, color } = getStatusBadgeData(status);
+
+    if (status === 'FIRST_TIME' || status === 'SECOND_TIME' || status === 'OVERTIME' || status === 'PENALTIES') {
+        return (
+            <span className={`inline-flex items-center gap-1.5 ${color} text-white px-3 py-1 rounded-full text-sm font-bold animate-pulse`}>
+                <span className="w-2 h-2 bg-white rounded-full"></span>
+                {text}
+            </span>
+        );
     }
+
+    return (
+        <span className={`${color} text-white px-3 py-1 rounded-full text-sm font-medium`}>
+            {text}
+        </span>
+    );
 }
 
 function EventIcon({ type }: { type: string }) {
@@ -416,7 +398,7 @@ export default function MatchDetailContent({ matchId }: MatchDetailContentProps)
                             <div className="flex flex-wrap items-center justify-center gap-4 md:gap-6 mt-6 pt-6 border-t border-gray-100">
                                 <div className="flex items-center gap-2 text-gray-600">
                                     <Calendar className="w-4 h-4" />
-                                    <span className="text-sm">{formatMatchDate(match.time)}</span>
+                                    <span className="text-sm">{formatMatchDate(match.time)}, {formatTime(match.time)}</span>
                                 </div>
                                 {match.address && (
                                     <div className="flex items-center gap-2 text-gray-600">

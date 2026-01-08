@@ -5,6 +5,8 @@ import { useTeam } from '@/hooks/useTeam';
 import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { getImageUrl } from '@/utils/image';
+import { formatBirthday, calculateAge } from '@/utils/formatting';
+import { getPositionLabel } from '@/utils/player';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Instagram, Users, Trophy } from 'lucide-react';
@@ -55,44 +57,6 @@ function ErrorState({ onRetry }: { onRetry: () => void }) {
             </button>
         </div>
     );
-}
-
-function formatBirthday(dateString: string | null): { age: number; formatted: string } | null {
-    if (!dateString) return null;
-
-    const date = new Date(dateString);
-    const today = new Date();
-    let age = today.getFullYear() - date.getFullYear();
-    const monthDiff = today.getMonth() - date.getMonth();
-
-    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < date.getDate())) {
-        age--;
-    }
-
-    const months = [
-        'января', 'февраля', 'марта', 'апреля', 'мая', 'июня',
-        'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'
-    ];
-
-    const day = date.getUTCDate();
-    const month = months[date.getUTCMonth()];
-    const year = date.getUTCFullYear();
-
-    return {
-        age,
-        formatted: `${day.toString().padStart(2, '0')} ${month} ${year}`
-    };
-}
-
-function getPositionLabel(position: string | null | undefined): string {
-    if (!position) return '';
-    const labels: Record<string, string> = {
-        FORWARD: 'Нападающий',
-        MIDFIELDER: 'Полузащитник',
-        DEFENDER: 'Защитник',
-        GOALKEEPER: 'Вратарь',
-    };
-    return labels[position] || position;
 }
 
 function TeamBadge({ teamId }: { teamId: number }) {
@@ -182,7 +146,10 @@ export default function PlayerPageContent({ playerId }: PlayerPageContentProps) 
     };
 
     const playerImage = player?.image?.[0]?.url || null;
-    const birthday = formatBirthday(player?.birthday || null);
+    const birthday = player?.birthday ? {
+        age: calculateAge(player.birthday),
+        formatted: formatBirthday(player.birthday)
+    } : null;
 
     return (
         <div className="min-h-screen bg-gray-50">

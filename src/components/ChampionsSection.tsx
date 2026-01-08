@@ -84,7 +84,7 @@ export default function ChampionsSection() {
                     {/* Year Selector - Brutalist */}
                     {years.length > 1 ? (
                         <select
-                            value={displayYear}
+                            value={displayYear ?? ''}
                             onChange={(e) => setSelectedYear(Number(e.target.value))}
                             className="font-mono text-h2 font-bold bg-transparent border-2 border-mono-100 px-4 py-2 transition-opacity hover:opacity-70"
                         >

@@ -7,12 +7,11 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { NewsItem } from '@/types/api';
 import { getImageUrl } from '@/utils/image';
+import { ITEMS_PER_PAGE } from '@/utils/constants';
 import Image from 'next/image';
 import { Calendar } from 'lucide-react';
 import { useState } from 'react';
 import { mutate } from 'swr';
-
-const ITEMS_PER_PAGE = 8;
 
 function NewsGridSkeleton() {
     return (
@@ -105,13 +104,13 @@ const NewsCard = React.memo(function NewsCard({ item }: { item: NewsItem }) {
 export default function NewsPageContent() {
     const { selectedOrganization, isLoading: orgLoading } = useOrganization();
     const { news, isLoading, isError } = useNews(selectedOrganization?.id);
-    const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+    const [visibleCount, setVisibleCount] = useState<number>(ITEMS_PER_PAGE.NEWS);
 
     const visibleNews = news.slice(0, visibleCount);
     const hasMore = visibleCount < news.length;
 
     const handleLoadMore = () => {
-        setVisibleCount(prev => prev + ITEMS_PER_PAGE);
+        setVisibleCount(prev => prev + ITEMS_PER_PAGE.NEWS);
     };
 
     const handleRetry = () => {
