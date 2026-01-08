@@ -131,3 +131,31 @@ a {
 .animate-marquee:hover {
   animation-play-state: paused;
 }
+
+/* ========================================
+   BRUTALLY MINIMAL: Accessibility & Resets
+   ======================================== */
+
+/* Accessibility: Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Focus states - Brutalist */
+*:focus-visible {
+  outline: 2px solid var(--mono-100);
+  outline-offset: 2px;
+}
+
+/* Selection - Lime accent */
+::selection {
+  background-color: var(--accent-lime);
+  color: var(--mono-100);
+}
