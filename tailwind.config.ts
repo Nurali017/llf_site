@@ -8,45 +8,71 @@ const config: Config = {
     ],
     theme: {
         extend: {
-            // Brutally Minimal Typography System
+            // Minimalist Typography System
             fontSize: {
-                'hero': ['7rem', { lineHeight: '0.9', letterSpacing: '-0.02em' }],      // 112px - Match scores
-                'display': ['5rem', { lineHeight: '1', letterSpacing: '-0.02em' }],     // 80px - Hero headlines
-                'h1': ['3.5rem', { lineHeight: '1.1', letterSpacing: '-0.01em' }],      // 56px - Section headers
-                'h2': ['2.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],      // 40px - Card headers
-                'h3': ['1.75rem', { lineHeight: '1.3', letterSpacing: '0' }],           // 28px - Subsections
-                'body-lg': ['1.125rem', { lineHeight: '1.6', letterSpacing: '0' }],     // 18px - Large body
-                'body': ['1rem', { lineHeight: '1.6', letterSpacing: '0' }],            // 16px - Default
-                'label': ['0.875rem', { lineHeight: '1.4', letterSpacing: '0.05em' }],  // 14px - Mono labels
-                'micro': ['0.75rem', { lineHeight: '1.3', letterSpacing: '0.05em' }],   // 12px - Metadata
+                'hero': ['4rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],      // 64px - Match scores (was 112px)
+                'display': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }],  // 48px - Hero headlines (was 80px)
+                'h1': ['2.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],      // 40px - Section headers (was 56px)
+                'h2': ['1.875rem', { lineHeight: '1.3', letterSpacing: '0' }],          // 30px - Card headers (was 40px)
+                'h3': ['1.5rem', { lineHeight: '1.4', letterSpacing: '0' }],            // 24px - Subsections (was 28px)
+                'body-lg': ['1.125rem', { lineHeight: '1.7', letterSpacing: '0' }],     // 18px - Large body
+                'body': ['1rem', { lineHeight: '1.7', letterSpacing: '0' }],            // 16px - Default
+                'label': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0' }],       // 14px - Labels
+                'micro': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0' }],        // 12px - Metadata
             },
 
-            // Brutally Minimal Color System
+            // Minimalist Blue Color System
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
 
-                // Monochrome palette
-                mono: {
-                    100: 'var(--mono-100)',  // Pure black
-                    95: 'var(--mono-95)',    // Near-black
-                    90: 'var(--mono-90)',    // Dark surfaces
-                    10: 'var(--mono-10)',    // Light surfaces
-                    5: 'var(--mono-05)',     // Light backgrounds
-                    0: 'var(--mono-00)',     // Pure white
+                // Primary Blue Palette
+                primary: {
+                    50: '#EFF6FF',
+                    100: '#DBEAFE',
+                    200: '#BFDBFE',
+                    300: '#93C5FD',
+                    400: '#60A5FA',
+                    500: '#3B82F6',   // Main brand blue
+                    600: '#2563EB',
+                    700: '#1D4ED8',
+                    800: '#1E40AF',
+                    900: '#1E3A8A',
+                    DEFAULT: '#3B82F6',
+                    foreground: '#FFFFFF',
                 },
 
-                // Accent colors
+                // Neutral Grays
+                neutral: {
+                    50: '#FAFAFA',
+                    100: '#F5F5F5',
+                    200: '#E5E5E5',
+                    300: '#D4D4D4',
+                    400: '#A3A3A3',
+                    500: '#737373',
+                    600: '#525252',
+                    700: '#404040',
+                    800: '#262626',
+                    900: '#171717',
+                },
+
+                // Accent Colors
                 accent: {
-                    lime: 'var(--accent-lime)',
-                    'lime-glow': 'var(--accent-lime-glow)',
-                    red: 'var(--accent-red)',
-                    'red-dim': 'var(--accent-red-dim)',
-                    blue: 'var(--accent-blue)',
-                    'blue-dim': 'var(--accent-blue-dim)',
+                    blue: '#3B82F6',
+                    green: '#10B981',
+                    red: '#EF4444',
+                    amber: '#F59E0B',
                 },
 
-                // Legacy colors (for gradual migration)
+                // Legacy colors for backward compatibility (keep temporarily)
+                mono: {
+                    100: '#000000',  // Map to black for backward compat
+                    95: '#0D0D0D',
+                    90: '#1A1A1A',
+                    10: '#E6E6E6',
+                    5: '#F5F5F5',
+                    0: '#FFFFFF',
+                },
                 "qjl-dark": "#011236",
                 "qjl-pink": "#e8247a",
                 "qjl-blue": "#0472af",
@@ -60,13 +86,9 @@ const config: Config = {
                     dark: '#0a192f',
                     light: '#f8f9fa',
                 },
-                primary: {
-                    DEFAULT: 'var(--accent-lime)', // New primary: lime
-                    foreground: 'var(--mono-100)',
-                },
                 secondary: {
-                    DEFAULT: 'var(--accent-blue)',
-                    foreground: 'var(--mono-100)',
+                    DEFAULT: '#60A5FA',
+                    foreground: '#FFFFFF',
                 },
             },
 
@@ -85,43 +107,49 @@ const config: Config = {
                 '4': '4px',
             },
 
-            // Disable rounded corners by default (brutalist principle)
+            // Minimalist rounded corners
             borderRadius: {
                 'none': '0',
-                'sm': '0',
-                DEFAULT: '0',
-                'md': '0',
-                'lg': '0',
-                'xl': '0',
-                '2xl': '0',
-                '3xl': '0',
-                'full': '9999px', // Keep full for circles only
+                'sm': '4px',      // Small elements (badges, tags)
+                DEFAULT: '8px',   // Standard cards, buttons
+                'md': '12px',     // Medium cards
+                'lg': '16px',     // Large cards, sections
+                'xl': '20px',     // Hero sections
+                '2xl': '24px',    // Special features
+                '3xl': '32px',    // Extra large
+                'full': '9999px', // Pills, avatars, circles
             },
 
-            // Minimal shadows (prefer borders)
+            // Soft shadows for depth
             boxShadow: {
                 'none': 'none',
-                'sm': 'none',
-                DEFAULT: 'none',
-                'md': 'none',
-                'lg': 'none',
-                'xl': 'none',
-                '2xl': 'none',
+                'sm': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+                DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+                'md': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+                'lg': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+                'xl': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+                '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+                'inner': 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
             },
 
-            // Fast transitions (brutalist motion)
+            // Smooth transitions
             transitionDuration: {
-                DEFAULT: '150ms',
+                DEFAULT: '200ms',
                 '75': '75ms',
                 '100': '100ms',
                 '150': '150ms',
                 '200': '200ms',
+                '300': '300ms',
+                '500': '500ms',
             },
 
-            // Linear easing only (no curves)
+            // Smooth easing curves
             transitionTimingFunction: {
-                DEFAULT: 'linear',
+                DEFAULT: 'cubic-bezier(0.4, 0, 0.2, 1)', // ease-out
                 'linear': 'linear',
+                'in': 'cubic-bezier(0.4, 0, 1, 1)',
+                'out': 'cubic-bezier(0, 0, 0.2, 1)',
+                'in-out': 'cubic-bezier(0.4, 0, 0.2, 1)',
             },
         },
     },
