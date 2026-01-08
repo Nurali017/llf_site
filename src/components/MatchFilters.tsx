@@ -9,31 +9,34 @@ interface MatchFiltersProps {
 
 export function MatchFilters({ currentFilter, onFilterChange }: MatchFiltersProps) {
     return (
-        <div className="flex gap-2 md:gap-3 overflow-x-auto scrollbar-hide pb-2 md:pb-0">
+        <div className="flex gap-1 overflow-x-auto scrollbar-hide pb-2 md:pb-0 border-2 border-mono-100">
             <button
                 onClick={() => onFilterChange('all')}
-                className={`px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm font-bold transition-all duration-200 whitespace-nowrap ${currentFilter === 'all'
-                    ? 'bg-kmff-blue text-white shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
+                className={`px-6 py-3 font-mono text-micro font-bold uppercase tracking-wider transition-colors duration-150 whitespace-nowrap border-r-2 border-mono-100 last:border-r-0 ${
+                    currentFilter === 'all'
+                        ? 'bg-accent-lime text-mono-100'
+                        : 'bg-mono-0 text-mono-100 hover:bg-mono-10'
+                }`}
             >
                 Все матчи
             </button>
             <button
                 onClick={() => onFilterChange('upcoming')}
-                className={`px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm font-bold transition-all duration-200 whitespace-nowrap ${currentFilter === 'upcoming'
-                    ? 'bg-kmff-blue text-white shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
+                className={`px-6 py-3 font-mono text-micro font-bold uppercase tracking-wider transition-colors duration-150 whitespace-nowrap border-r-2 border-mono-100 last:border-r-0 ${
+                    currentFilter === 'upcoming'
+                        ? 'bg-accent-lime text-mono-100'
+                        : 'bg-mono-0 text-mono-100 hover:bg-mono-10'
+                }`}
             >
                 Предстоящие
             </button>
             <button
                 onClick={() => onFilterChange('finished')}
-                className={`px-5 py-2.5 md:px-6 md:py-3 rounded-full text-sm font-bold transition-all duration-200 whitespace-nowrap ${currentFilter === 'finished'
-                    ? 'bg-kmff-blue text-white shadow-md'
-                    : 'bg-white text-gray-700 hover:bg-gray-50'
-                    }`}
+                className={`px-6 py-3 font-mono text-micro font-bold uppercase tracking-wider transition-colors duration-150 whitespace-nowrap ${
+                    currentFilter === 'finished'
+                        ? 'bg-accent-lime text-mono-100'
+                        : 'bg-mono-0 text-mono-100 hover:bg-mono-10'
+                }`}
             >
                 Прошедшие
             </button>
