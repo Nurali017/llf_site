@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { getImageUrl } from '@/utils/image';
@@ -25,77 +26,95 @@ interface MatchCardProps {
     match: DisplayMatch;
 }
 
-export function MatchCard({ match }: MatchCardProps) {
+/**
+ * Brutally Minimal Match Card
+ * Horizontal layout with giant scores (180px), 2px borders, grayscale logos
+ */
+export const MatchCard = React.memo(function MatchCard({ match }: MatchCardProps) {
     return (
-        <Link href={`/match/${match.id}`} className="min-w-[280px] md:min-w-[300px] snap-center block group h-full">
-            <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm group-hover:shadow-lg group-hover:border-kmff-blue transition-all duration-300 transform group-hover:-translate-y-1 h-full flex flex-col relative overflow-hidden">
+        <Link href={`/match/${match.id}`} className="min-w-[340px] md:min-w-[400px] snap-center block group">
+            <div className="border-2 border-mono-100 bg-mono-0 hover:bg-accent-lime transition-colors relative">
 
-                {/* Date - Top Center */}
-                <div className="text-center mb-4">
-                    <span className="text-sm font-bold text-kmff-dark uppercase tracking-wide">
+                {/* Floating Rotated Date Label - Brutalist Detail */}
+                <div className="absolute -left-2 top-6 -rotate-90 origin-left z-10">
+                    <span className="font-mono text-micro uppercase tracking-wider bg-mono-100 text-mono-0 px-2 py-1 inline-block">
                         {match.date}
                     </span>
                 </div>
 
-                {/* Main Content: Logos and Score */}
-                <div className="flex items-center justify-between mb-4 px-2">
-                    {/* Home Team Logo */}
-                    <div className="w-16 h-16 relative flex-shrink-0">
-                        <Image
-                            src={getImageUrl(match.homeTeamImage)}
-                            alt={`Логотип команды ${match.homeTeam}`}
-                            fill
-                            className="object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
-                            sizes="64px"
-                            loading="lazy"
-                            onError={(e) => {
-                                // Fallback handled by next/image if configured or parent
-                            }}
-                        />
+                {/* Main Content - Horizontal Layout */}
+                <div className="flex items-center justify-between p-8 min-h-[180px]">
+
+                    {/* Home Team - Left */}
+                    <div className="flex flex-col items-center gap-3 w-[100px] flex-shrink-0">
+                        <div className="w-20 h-20 relative">
+                            <Image
+                                src={getImageUrl(match.homeTeamImage)}
+                                alt={match.homeTeam}
+                                fill
+                                className="object-contain grayscale group-hover:grayscale-0 transition-all"
+                                sizes="80px"
+                                loading="lazy"
+                            />
+                        </div>
+                        <span className="font-display text-sm font-bold uppercase text-center leading-tight">
+                            {match.homeTeam}
+                        </span>
                     </div>
 
-                    {/* Score */}
-                    <div className="flex flex-col items-center mx-4">
-                        <div className={`text-4xl font-black tracking-tighter ${match.status === 'live' ? 'text-red-600 animate-pulse' : 'text-kmff-dark'}`}>
-                            {match.status === 'upcoming' ? (
-                                <span className="text-2xl">{match.time}</span>
-                            ) : (
-                                `${match.homeScore}-${match.awayScore}`
-                            )}
-                        </div>
-                        {match.status === 'live' && (
-                            <span className="text-[10px] font-bold text-white bg-red-600 px-2 py-0.5 rounded-full mt-1">LIVE</span>
+                    {/* Score - Giant Typography Center */}
+                    <div className="flex flex-col items-center flex-1 mx-4">
+                        {match.status === 'upcoming' ? (
+                            <div className="font-mono text-h3 font-medium tracking-wider">
+                                {match.time}
+                            </div>
+                        ) : (
+                            <>
+                                <div className={`font-display font-bold tracking-tighter ${
+                                    match.status === 'live'
+                                        ? 'text-accent-red animate-pulse text-[7rem] md:text-[8rem] leading-none'
+                                        : 'text-[7rem] md:text-[8rem] leading-none'
+                                }`}>
+                                    {match.homeScore}
+                                    <span className="mx-2 md:mx-4">—</span>
+                                    {match.awayScore}
+                                </div>
+                                {match.status === 'live' && (
+                                    <div className="mt-2 bg-accent-red text-mono-0 px-3 py-1 font-mono text-micro uppercase">
+                                        LIVE
+                                    </div>
+                                )}
+                            </>
                         )}
                     </div>
 
-                    {/* Away Team Logo */}
-                    <div className="w-16 h-16 relative flex-shrink-0">
-                        <Image
-                            src={getImageUrl(match.awayTeamImage)}
-                            alt={`Логотип команды ${match.awayTeam}`}
-                            fill
-                            className="object-contain drop-shadow-md group-hover:scale-110 transition-transform duration-300"
-                            sizes="64px"
-                            loading="lazy"
-                            onError={(e) => {
-                                // Fallback handled by next/image if configured or parent
-                            }}
-                        />
+                    {/* Away Team - Right */}
+                    <div className="flex flex-col items-center gap-3 w-[100px] flex-shrink-0">
+                        <div className="w-20 h-20 relative">
+                            <Image
+                                src={getImageUrl(match.awayTeamImage)}
+                                alt={match.awayTeam}
+                                fill
+                                className="object-contain grayscale group-hover:grayscale-0 transition-all"
+                                sizes="80px"
+                                loading="lazy"
+                            />
+                        </div>
+                        <span className="font-display text-sm font-bold uppercase text-center leading-tight">
+                            {match.awayTeam}
+                        </span>
                     </div>
+
                 </div>
 
-                {/* Footer: Team Names & Stadium */}
-                <div className="text-center mt-auto space-y-1">
-                    <div className="flex items-center justify-center gap-2 text-sm font-black text-gray-800 leading-tight">
-                        <span className="truncate max-w-[100px]" title={match.homeTeam}>{match.homeTeam}</span>
-                        <span className="text-black">—</span>
-                        <span className="truncate max-w-[100px]" title={match.awayTeam}>{match.awayTeam}</span>
-                    </div>
-                    <div className="text-xs text-black font-bold truncate px-4">
+                {/* Stadium Bar - Bottom with Monospace */}
+                <div className="border-t-2 border-mono-100 bg-mono-5 px-8 py-3">
+                    <span className="font-mono text-micro uppercase tracking-wider text-mono-100">
                         {match.stadium}
-                    </div>
+                    </span>
                 </div>
+
             </div>
         </Link>
     );
-}
+});

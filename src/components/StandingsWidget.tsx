@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useOrganization } from '@/contexts/OrganizationContext';
 import { useStandings } from '@/hooks/useStandings';
 import { getImageUrl } from '@/utils/image';
@@ -9,7 +10,6 @@ const StandingsWidget = () => {
     const { activeTournament } = useOrganization();
 
     const leagueId = activeTournament?.type === 'league' ? activeTournament.id : undefined;
-    // We handle cups separately with CupStandingsWidget, so we don't need to fetch standings here for cups
     const { standings, isLoading, isError } = useStandings(leagueId, undefined);
 
     if (activeTournament?.type === 'cup' && activeTournament.id) {
@@ -17,21 +17,39 @@ const StandingsWidget = () => {
     }
 
     if (isLoading) {
-        return <div className="text-center py-8 text-gray-400">Загрузка...</div>;
+        return (
+            <div className="border-2 border-mono-100 p-8">
+                <div className="font-mono text-micro uppercase tracking-wider text-center">
+                    Загрузка...
+                </div>
+            </div>
+        );
     }
 
     if (isError) {
-        return <div className="text-center py-8 text-red-500">Ошибка загрузки данных</div>;
+        return (
+            <div className="border-2 border-mono-100 p-8">
+                <div className="font-mono text-micro uppercase tracking-wider text-center text-accent-red">
+                    Ошибка загрузки
+                </div>
+            </div>
+        );
     }
 
     if (!standings || standings.length === 0) {
-        return <div className="text-center py-8 text-gray-400">Нет данных</div>;
+        return (
+            <div className="border-2 border-mono-100 p-8">
+                <div className="font-mono text-micro uppercase tracking-wider text-center">
+                    Нет данных
+                </div>
+            </div>
+        );
     }
 
     return (
-        <div className="space-y-2">
-            {/* Table Header */}
-            <div className="grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center text-xs text-gray-400 font-medium px-2 py-2 border-b border-white/10">
+        <div className="border-2 border-mono-100">
+            {/* Table Header - Black Background */}
+            <div className="grid grid-cols-[40px_1fr_40px_60px_60px] gap-4 bg-mono-100 text-mono-0 p-4 font-mono text-micro uppercase tracking-wider">
                 <div className="text-center">#</div>
                 <div>Команда</div>
                 <div className="text-center">И</div>
@@ -40,53 +58,62 @@ const StandingsWidget = () => {
             </div>
 
             {/* Table Rows */}
-            <div className="space-y-1">
-                {standings.map((standing, index) => {
-                    if (!standing.team) return null;
+            {standings.map((standing, index) => {
+                if (!standing.team) return null;
 
-                    // Qualification zones logic
-                    let borderClass = 'border-l-4 border-transparent'; // Default
+                // Goal Difference
+                const diff = standing.scored - standing.missed;
+                const diffText = diff > 0 ? `+${diff}` : `${diff}`;
 
-                    if (index === 0) borderClass = 'border-l-4 border-yellow-400'; // Gold
-                    else if (index === 1) borderClass = 'border-l-4 border-gray-300'; // Silver
-                    else if (index === 2) borderClass = 'border-l-4 border-amber-600'; // Bronze
-                    else if (index >= standings.length - 3) borderClass = 'border-l-4 border-red-500/50'; // Relegation (Last 3)
+                // 1st place gets lime background
+                const isFirst = index === 0;
+                const bgClass = isFirst ? 'bg-accent-lime' : 'bg-mono-0';
 
-                    // Goal Difference Calculation
-                    const diff = standing.scored - standing.missed;
-                    const diffColor = diff > 0 ? 'text-emerald-600' : diff < 0 ? 'text-red-500' : 'text-gray-400';
-                    const diffText = diff > 0 ? `+${diff}` : `${diff}`;
-
-                    return (
+                return (
+                    <Link key={standing.team.id || index} href={`/team/${standing.team.id}`}>
                         <div
-                            key={standing.team.id || index}
-                            className={`grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center ${borderClass} bg-transparent hover:bg-white/5 transition-colors duration-200 py-2 px-2 rounded-r-lg cursor-pointer group border-y border-transparent hover:border-white/10`}
+                            className={`grid grid-cols-[40px_1fr_40px_60px_60px] gap-4 p-4 border-b border-mono-100 ${bgClass} hover:bg-accent-lime transition-colors group`}
                         >
-                            <div className="text-gray-400 font-medium text-xs text-center">{index + 1}</div>
-                            <div className="flex items-center gap-2 min-w-0">
-                                <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-full p-0.5 overflow-hidden border border-gray-200">
-                                    <img
-                                        src={getImageUrl(standing.team.image)}
-                                        alt={`Логотип команды ${standing.team.name}`}
-                                        className="w-full h-full object-cover"
-                                        loading="lazy"
-                                        onError={(e) => {
-                                            const target = e.target as HTMLImageElement;
-                                            target.src = '/llf-logo.png';
-                                        }}
-                                    />
-                                </span>
-                                <span className="text-gray-200 font-bold text-sm truncate group-hover:text-white transition-colors">{standing.team.name}</span>
+                            {/* Position */}
+                            <div className="font-mono text-body font-bold text-center">
+                                {index + 1}
                             </div>
-                            <div className="text-gray-400 text-xs text-center">{standing.game_count}</div>
-                            <div className={`text-xs font-bold text-center ${diffColor}`}>
+
+                            {/* Team */}
+                            <div className="flex items-center gap-3">
+                                <img
+                                    src={getImageUrl(standing.team.image)}
+                                    alt={standing.team.name}
+                                    className="w-8 h-8 object-contain grayscale"
+                                    loading="lazy"
+                                    onError={(e) => {
+                                        const target = e.target as HTMLImageElement;
+                                        target.src = '/llf-logo.png';
+                                    }}
+                                />
+                                <span className="font-display text-body font-bold uppercase truncate">
+                                    {standing.team.name}
+                                </span>
+                            </div>
+
+                            {/* Games Played */}
+                            <div className="font-mono text-body text-center">
+                                {standing.game_count}
+                            </div>
+
+                            {/* Goal Difference */}
+                            <div className="font-mono text-body text-center font-bold">
                                 {diffText}
                             </div>
-                            <div className="text-white font-black text-base text-center">{standing.point}</div>
+
+                            {/* Points - Large Typography */}
+                            <div className="font-display text-h3 font-bold text-center">
+                                {standing.point}
+                            </div>
                         </div>
-                    );
-                })}
-            </div>
+                    </Link>
+                );
+            })}
         </div>
     );
 };

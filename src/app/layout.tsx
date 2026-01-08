@@ -1,17 +1,22 @@
 import type { Metadata } from "next";
-import { Manrope, Montserrat } from "next/font/google";
+import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { OrganizationProvider } from "@/contexts/OrganizationContext";
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
-const manrope = Manrope({
-  variable: "--font-sans",
+// Brutally Minimal Typography System
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin", "cyrillic"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
+const jetBrainsMono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin", "cyrillic"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -69,7 +74,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${manrope.variable} ${montserrat.variable} antialiased font-sans`}
+        className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} antialiased font-display`}
       >
         <ErrorBoundary>
           <OrganizationProvider>
