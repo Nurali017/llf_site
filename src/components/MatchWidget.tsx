@@ -79,6 +79,7 @@ const MatchWidget = () => {
                     time: formatTime(match.time),
                     stadium: stadiumName,
                     status: isFinished ? 'finished' : 'upcoming',
+                    isLive: false,
                     rawDate: matchDate,
                 });
             });
@@ -89,24 +90,25 @@ const MatchWidget = () => {
 
     const filteredMatches = useMatchFiltering(displayMatches, activeFilter);
 
-    // Auto-scroll logic
+    // Auto-scroll to appropriate position when filter changes
     useEffect(() => {
-        if (!scrollContainerRef.current) return;
+        if (!scrollContainerRef.current || filteredMatches.length === 0) return;
 
-        if (activeFilter === 'all' && filteredMatches.length > 0) {
-            // Find index of first live or upcoming match
-            const firstActiveIndex = filteredMatches.findIndex(m => m.status === 'live' || m.status === 'upcoming');
+        if (activeFilter === 'all') {
+            // Scroll to first live match if exists, else scroll to first upcoming
+            const firstLiveIndex = filteredMatches.findIndex(m => m.isLive);
+            const firstUpcomingIndex = filteredMatches.findIndex(m => m.status === 'upcoming');
 
-            if (firstActiveIndex !== -1) {
-                const cardWidth = 300;
-                const gap = 16;
-                const scrollPos = firstActiveIndex * (cardWidth + gap);
-
-                // Scroll so the previous match is partially visible
-                const offset = scrollPos - 50;
-
+            if (firstLiveIndex !== -1) {
+                // Scroll to first live match
                 scrollContainerRef.current.scrollTo({
-                    left: Math.max(0, offset),
+                    left: firstLiveIndex * 320,
+                    behavior: 'smooth'
+                });
+            } else if (firstUpcomingIndex !== -1) {
+                // Scroll to first upcoming
+                scrollContainerRef.current.scrollTo({
+                    left: firstUpcomingIndex * 320,
                     behavior: 'smooth'
                 });
             } else {
@@ -117,36 +119,6 @@ const MatchWidget = () => {
                 });
             }
         } else if (activeFilter === 'finished') {
-            // For 'finished', we want to show the most recent matches (which are at the beginning of the list because of descending sort)
-            // Wait, useMatchFiltering returns finished matches sorted Descending (New -> Old).
-            // So the most recent match is at index 0.
-            // So we should scroll to 0.
-
-            // BUT, the original logic was:
-            // "Return Oldest -> Newest so that "Right" is "Most Recent" and scrolling "Left" goes to "Past""
-            // And then it scrolled to the end.
-
-            // Let's check useMatchFiltering logic for 'finished':
-            // return matches.filter(...).sort((a, b) => (b.rawDate) - (a.rawDate)); // Descending (New -> Old)
-
-            // If we want the UI to show "Most Recent" on the right, we should sort Ascending (Old -> New) and scroll to end?
-            // Or show "Most Recent" on the left?
-            // Usually "Past" matches are shown with most recent on the left or top.
-            // The original code had: `return [...finished].reverse();` (Old -> New) and scrolled to end.
-            // My useMatchFiltering has Descending (New -> Old).
-
-            // If I want to match original behavior:
-            // Original: Finished tab -> Oldest -> Newest. Scroll to End (Newest).
-            // My Hook: Finished tab -> Newest -> Oldest.
-
-            // If I want to keep the "Timeline" feel where Right = Future/Newer, Left = Past/Older:
-            // Finished matches should be Old -> New.
-
-            // Let's adjust the scroll logic to match the hook's output.
-            // Hook returns Newest -> Oldest.
-            // So index 0 is Newest.
-            // So we should scroll to 0.
-
             scrollContainerRef.current.scrollTo({
                 left: 0,
                 behavior: 'smooth'
@@ -177,29 +149,32 @@ const MatchWidget = () => {
     };
 
     return (
-        <section className="py-8 bg-white">
+        <section className="py-8 bg-mono-0">
             <div className="w-full">
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 mb-8">
+                {/* Brutalist Header with Filters */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 mb-8 pb-6 border-b-4 border-mono-100">
                     <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                        <h2 className="text-3xl font-bold text-kmff-dark uppercase italic tracking-tight whitespace-nowrap">Матч-центр</h2>
+                        <h2 className="font-display text-h1 font-bold uppercase tracking-tight whitespace-nowrap">
+                            Матч-центр
+                        </h2>
 
                         {/* Filters */}
                         <MatchFilters currentFilter={activeFilter} onFilterChange={setActiveFilter} />
                     </div>
 
-                    {/* Navigation Arrows */}
-                    <div className="flex gap-3 hidden md:flex">
+                    {/* Navigation Arrows - Brutalist Square */}
+                    <div className="flex gap-2 hidden md:flex">
                         <button
                             onClick={() => scroll('left')}
-                            className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-kmff-dark hover:bg-gray-50 transition-colors shadow-sm border border-gray-100"
+                            className="w-12 h-12 bg-mono-0 border-2 border-mono-100 flex items-center justify-center text-mono-100 hover:bg-mono-100 hover:text-mono-0 transition-colors duration-150"
                         >
-                            <ChevronLeft size={24} strokeWidth={2.5} />
+                            <ChevronLeft size={24} strokeWidth={2} />
                         </button>
                         <button
                             onClick={() => scroll('right')}
-                            className="w-12 h-12 bg-white rounded-full flex items-center justify-center text-kmff-dark hover:bg-gray-50 transition-colors shadow-sm border border-gray-100"
+                            className="w-12 h-12 bg-mono-0 border-2 border-mono-100 flex items-center justify-center text-mono-100 hover:bg-mono-100 hover:text-mono-0 transition-colors duration-150"
                         >
-                            <ChevronRight size={24} strokeWidth={2.5} />
+                            <ChevronRight size={24} strokeWidth={2} />
                         </button>
                     </div>
                 </div>
@@ -208,24 +183,24 @@ const MatchWidget = () => {
                     {isLoading ? (
                         <div className="flex gap-4 overflow-hidden">
                             {[1, 2, 3, 4].map((i) => (
-                                <div key={i} className="min-w-[280px] md:min-w-[300px] h-[240px] bg-white rounded-xl p-5 border border-gray-100">
+                                <div key={i} className="min-w-[280px] md:min-w-[300px] h-[240px] border-2 border-mono-100 p-5">
                                     <div className="animate-pulse flex flex-col h-full items-center justify-between">
-                                        <div className="h-4 w-24 bg-gray-200 rounded"></div>
+                                        <div className="h-4 w-24 bg-mono-10"></div>
                                         <div className="flex items-center justify-between w-full px-4">
-                                            <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
-                                            <div className="w-12 h-8 bg-gray-200 rounded"></div>
-                                            <div className="w-16 h-16 bg-gray-200 rounded-full"></div>
+                                            <div className="w-16 h-16 bg-mono-10"></div>
+                                            <div className="w-12 h-8 bg-mono-10"></div>
+                                            <div className="w-16 h-16 bg-mono-10"></div>
                                         </div>
-                                        <div className="h-4 w-32 bg-gray-200 rounded"></div>
+                                        <div className="h-4 w-32 bg-mono-10"></div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     ) : filteredMatches.length === 0 ? (
-                        <div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-100">
+                        <div className="text-center py-16 border-2 border-mono-100">
                             <div className="text-6xl mb-4">⚽</div>
-                            <p className="text-gray-500 font-medium">Матчи пока не запланированы</p>
-                            <p className="text-gray-400 text-sm mt-2">Следите за обновлениями</p>
+                            <p className="font-display text-body font-bold mb-2">Матчи пока не запланированы</p>
+                            <p className="font-mono text-micro uppercase opacity-60">Следите за обновлениями</p>
                         </div>
                     ) : (
                         <div
@@ -244,7 +219,7 @@ const MatchWidget = () => {
     );
 };
 
-// Форматирование даты: "22 Ноября"
+// Форматирование даты: "22 НОЯБ. ПТ"
 function formatDate(dateString: string): string {
     const date = new Date(dateString);
     const months = [

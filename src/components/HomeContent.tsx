@@ -1,69 +1,73 @@
 "use client";
 
-import Hero from "@/components/Hero";
 import MatchWidget from "@/components/MatchWidget";
-import NewsGrid from "@/components/NewsGrid";
 import Aside from "@/components/Aside";
+import LiveBar from "@/components/LiveBar";
+import QuickStatsBar from "@/components/QuickStatsBar";
+import ChampionsSection from "@/components/ChampionsSection";
+import FeaturedMatch from "@/components/FeaturedMatch";
 import { useOrganization } from "@/contexts/OrganizationContext";
-import { getFeaturedNewsByBranch } from "@/data/news";
-import { useNews } from "@/hooks/useNews";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 export default function HomeContent() {
-    const { selectedOrganization, isLoading } = useOrganization();
-    const { news: apiNews } = useNews(selectedOrganization?.id);
-
-    // Hero использует mock data (другой API)
-    const featuredNews = selectedOrganization ? getFeaturedNewsByBranch(selectedOrganization.slug) : null;
-
-    // NewsGrid использует API data
-    const regularNews = apiNews || [];
+    const { isLoading } = useOrganization();
 
     if (isLoading) {
         return (
             <div className="container mx-auto px-4 py-8">
-                <div className="text-center py-12">
-                    <div className="text-gray-500">Загрузка...</div>
+                <div className="border-2 border-mono-100 p-12">
+                    <div className="font-mono text-micro uppercase tracking-wider text-center">
+                        Загрузка...
+                    </div>
                 </div>
             </div>
         );
     }
 
     return (
-        <div className="container mx-auto px-4 py-8">
-            <div className="flex flex-col lg:flex-row gap-6">
-                {/* Desktop Sidebar - Sticky on the left */}
-                <div className="hidden lg:block w-full lg:w-[30%] sticky top-24 h-fit">
-                    <Aside />
-                </div>
+        <>
+            {/* Live Bar - Shows live matches ticker */}
+            <LiveBar />
 
-                {/* Main Content Area */}
-                <div className="w-full lg:w-[70%] flex flex-col gap-6">
-                    {/* Hero Section */}
-                    {featuredNews && (
-                        <Hero
-                            title={featuredNews.title}
-                            description={featuredNews.description}
-                            date={featuredNews.date}
-                            category={featuredNews.category}
-                            image={featuredNews.image}
-                        />
-                    )}
+            {/* Quick Stats Bar - Dashboard stats */}
+            <QuickStatsBar />
 
-                    {/* Match Widget */}
-                    <ErrorBoundary fallback={<div className="p-4 text-center text-gray-500 bg-white rounded-xl">Ошибка загрузки матчей</div>}>
-                        <MatchWidget />
-                    </ErrorBoundary>
+            {/* Main Content Area - Brutalist Grid */}
+            <div className="container mx-auto px-4 py-12">
+                <div className="flex flex-col lg:flex-row gap-1">
+                    {/* Main Content LEFT (70%) */}
+                    <div className="w-full lg:w-[70%] flex flex-col gap-8">
+                        {/* Champions Section - Hall of Fame */}
+                        <ChampionsSection />
 
-                    {/* Mobile Sidebar - Appears between Match and News on mobile */}
-                    <div className="block lg:hidden">
-                        <Aside />
+                        {/* Match Widget */}
+                        <ErrorBoundary
+                            fallback={
+                                <div className="border-2 border-mono-100 p-8">
+                                    <div className="font-mono text-micro uppercase tracking-wider text-center text-accent-red">
+                                        Ошибка загрузки матчей
+                                    </div>
+                                </div>
+                            }
+                        >
+                            <MatchWidget />
+                        </ErrorBoundary>
+
+                        {/* Featured Match - SLIDER category */}
+                        <FeaturedMatch />
                     </div>
 
-                    {/* News Grid */}
-                    <NewsGrid news={regularNews} />
+                    {/* Sidebar RIGHT (30%) - Desktop only with black border separator */}
+                    <div className="hidden lg:block w-full lg:w-[30%] sticky top-24 h-fit border-l-4 border-mono-100 pl-1">
+                        <Aside />
+                    </div>
+                </div>
+
+                {/* Mobile Sidebar - Appears after matches on mobile */}
+                <div className="block lg:hidden mt-8 pt-8 border-t-4 border-mono-100">
+                    <Aside />
                 </div>
             </div>
-        </div>
+        </>
     );
 }

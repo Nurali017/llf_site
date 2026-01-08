@@ -1,7 +1,22 @@
-import useSWR from 'swr';
+/**
+ * Hooks для работы с матчами
+ */
+
+import { useAPI, useAPIArray } from './useAPI';
 import { getMatches, getLiveMatches } from '@/services/matches';
 import { Match, LiveMatch } from '@/types/api';
+import { CACHE_STRATEGIES } from '@/config/cache';
+import useSWR from 'swr';
 
+/**
+ * Hook для получения списка матчей (предстоящие + завершенные)
+ *
+ * @param organizationId - ID организации
+ * @returns Объект с массивом матчей и состоянием загрузки
+ *
+ * @example
+ * const { matches, isLoading, isError } = useMatches(1);
+ */
 export function useMatches(organizationId?: number) {
   const formatDate = (date: Date) => date.toISOString().split('T')[0];
 
@@ -13,9 +28,8 @@ export function useMatches(organizationId?: number) {
       return getMatches(organizationId!);
     },
     {
-      revalidateOnFocus: false,
-      dedupingInterval: 15000,
-      revalidateOnReconnect: true,
+      ...CACHE_STRATEGIES.RECENT,
+      dedupingInterval: 15000, // Специфичная настройка для матчей
     }
   );
 
@@ -32,9 +46,8 @@ export function useMatches(organizationId?: number) {
       return getMatches(organizationId!, formatDate(start), formatDate(end));
     },
     {
-      revalidateOnFocus: false,
+      ...CACHE_STRATEGIES.RECENT,
       dedupingInterval: 15000,
-      revalidateOnReconnect: true,
     }
   );
 
@@ -49,22 +62,27 @@ export function useMatches(organizationId?: number) {
   };
 }
 
+/**
+ * Hook для получения live матчей (матчи идущие сейчас)
+ *
+ * @param organizationId - ID организации
+ * @returns Объект с массивом live матчей и состоянием загрузки
+ *
+ * @example
+ * const { liveMatches, isLoading, refresh } = useLiveMatches(1);
+ */
 export function useLiveMatches(organizationId?: number) {
-  const { data, error, isLoading } = useSWR<LiveMatch[]>(
-    organizationId ? `/api/page/tape/live?organization=${organizationId}` : null,
+  const result = useAPIArray<LiveMatch>(
+    organizationId ? `live-matches-${organizationId}` : null,
     () => getLiveMatches(organizationId!),
-    {
-      revalidateOnFocus: false,
-      dedupingInterval: 5000, // Кеш на 5 секунд для live обновлений
-      revalidateOnReconnect: true,
-      refreshInterval: 10000, // Автообновление каждые 10 секунд
-    }
+    CACHE_STRATEGIES.LIVE
   );
 
   return {
-    liveMatches: data,
-    isLoading,
-    isError: !!error,
-    error,
+    liveMatches: result.data,
+    isLoading: result.isLoading,
+    isError: result.isError,
+    error: result.error,
+    refresh: result.refresh,
   };
 }

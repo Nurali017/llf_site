@@ -1,24 +1,41 @@
-import useSWR from 'swr';
+/**
+ * Hook для работы с бомбардирами
+ */
+
+import { useAPIArray } from './useAPI';
 import { getScorers } from '@/services/scorers';
 import { Scorer } from '@/types/api';
+import { CACHE_STRATEGIES } from '@/config/cache';
 
+/**
+ * Hook для получения списка бомбардиров турнира
+ *
+ * @param leagueId - ID лиги (для лиги)
+ * @param cupId - ID кубка (для кубка)
+ * @returns Объект с массивом бомбардиров и состоянием загрузки
+ *
+ * @example
+ * const { scorers, isLoading, isError } = useScorers(1); // League
+ * const { scorers, isLoading, isError } = useScorers(undefined, 5); // Cup
+ */
 export function useScorers(leagueId?: number, cupId?: number) {
   const shouldFetch = leagueId || cupId;
 
-  const { data, error, isLoading } = useSWR<Scorer[]>(
-    shouldFetch ? (cupId ? `/api/page/table/table/scorers?cup=${cupId}` : `/api/page/table/table/scorers?league=${leagueId}`) : null,
+  const cacheKey = shouldFetch
+    ? (cupId ? `scorers-cup-${cupId}` : `scorers-league-${leagueId}`)
+    : null;
+
+  const result = useAPIArray<Scorer>(
+    cacheKey,
     () => getScorers(leagueId, cupId),
-    {
-      revalidateOnFocus: false,
-      dedupingInterval: 30000, // Кеш на 30 секунд
-      revalidateOnReconnect: true,
-    }
+    CACHE_STRATEGIES.STATIC
   );
 
   return {
-    scorers: data,
-    isLoading,
-    isError: !!error,
-    error,
+    scorers: result.data,
+    isLoading: result.isLoading,
+    isError: result.isError,
+    error: result.error,
+    refresh: result.refresh,
   };
 }

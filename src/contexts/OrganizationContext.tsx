@@ -1,9 +1,11 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
+import { mutate } from 'swr';
 import { useOrganizations } from '@/hooks/useOrganizations';
 import { getCurrentSeason } from '@/services/seasons';
 import { OrganizationWithSlug, SeasonLeague, SeasonCup } from '@/types/api';
+import { getStoredOrgSlug, setStoredOrgSlug, removeStoredOrgSlug } from '@/utils/localStorage';
 
 export type TournamentType = 'league' | 'cup';
 
@@ -21,6 +23,7 @@ interface OrganizationContextType {
     organizations: OrganizationWithSlug[];
     isLoading: boolean;
     isError: boolean;
+    isHydrated: boolean;
     leagueId?: number;
     cupId?: number;
     tournaments: Tournament[];
@@ -32,34 +35,76 @@ const OrganizationContext = createContext<OrganizationContextType | undefined>(u
 
 interface OrganizationProviderProps {
     children: ReactNode;
-    initialSlug?: string;
 }
 
 export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({
-    children,
-    initialSlug
+    children
 }) => {
     const { organizations, isLoading, isError } = useOrganizations();
-    const [selectedOrganization, setSelectedOrganization] = useState<OrganizationWithSlug | null>(null);
+    const [selectedOrganization, setSelectedOrganizationState] = useState<OrganizationWithSlug | null>(null);
+    const [isHydrated, setIsHydrated] = useState(false);
 
-    // Инициализация выбранной организации
+    // Кастомный сеттер который также сохраняет в localStorage
+    // и инвалидирует SWR кеш
+    const setSelectedOrganization = useCallback((org: OrganizationWithSlug) => {
+        setSelectedOrganizationState(org);
+        setStoredOrgSlug(org.slug);
+
+        // Инвалидируем все кеши, связанные с организацией
+        // Это заставит все hooks перезагрузить данные для новой организации
+        mutate(
+            (key) => {
+                if (typeof key === 'string') {
+                    // Инвалидируем кеши которые зависят от организации
+                    return (
+                        key.includes('news-') ||
+                        key.includes('matches-') ||
+                        key.includes('live-matches-') ||
+                        key.includes('standings-') ||
+                        key.includes('scorers-') ||
+                        key.includes('cards-')
+                    );
+                }
+                // Для array keys (используется в useMatches)
+                if (Array.isArray(key)) {
+                    return key[0] === 'matches-upcoming' || key[0] === 'matches-finished';
+                }
+                return false;
+            },
+            undefined,
+            { revalidate: true }
+        );
+    }, []);
+
+    // Эффект гидратации - запускается только на клиенте
     useEffect(() => {
-        if (!organizations || organizations.length === 0) return;
+        setIsHydrated(true);
+    }, []);
 
-        if (initialSlug) {
-            // Ищем организацию по slug из URL
-            const org = organizations.find(o => o.slug === initialSlug);
-            if (org) {
-                setSelectedOrganization(org);
+    // Инициализация выбранной организации из localStorage
+    useEffect(() => {
+        if (!organizations || organizations.length === 0 || !isHydrated) return;
+
+        // Если организация уже выбрана, не перезаписываем
+        if (selectedOrganization) return;
+
+        // Приоритет 1: Сохранённый slug из localStorage
+        const storedSlug = getStoredOrgSlug();
+        if (storedSlug) {
+            const orgFromStorage = organizations.find(o => o.slug === storedSlug);
+            if (orgFromStorage) {
+                setSelectedOrganizationState(orgFromStorage);
                 return;
             }
+            // Невалидный сохранённый slug - очищаем
+            removeStoredOrgSlug();
         }
 
-        // Если не нашли или не передан initialSlug, используем первую
-        if (!selectedOrganization) {
-            setSelectedOrganization(organizations[0]);
-        }
-    }, [organizations, initialSlug, selectedOrganization]);
+        // Приоритет 2: По умолчанию - первая организация с городом (у них обычно есть контент)
+        const defaultOrg = organizations.find(org => org.city !== null) || organizations[0];
+        setSelectedOrganizationState(defaultOrg);
+        setStoredOrgSlug(defaultOrg.slug);
+    }, [organizations, isHydrated, selectedOrganization]);
 
 
 
@@ -136,6 +181,7 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({
                 organizations: organizations || [],
                 isLoading,
                 isError,
+                isHydrated,
                 leagueId,
                 cupId,
                 tournaments,

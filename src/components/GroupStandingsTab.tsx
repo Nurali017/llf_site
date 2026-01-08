@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { CupGroup } from '@/types/api';
 import { getImageUrl } from '@/utils/image';
 
@@ -38,31 +39,32 @@ const GroupStandingsTab = ({ groups }: GroupStandingsTabProps) => {
                             const diffText = diff > 0 ? `+${diff}` : `${diff}`;
 
                             return (
-                                <div
-                                    key={standing.team.id}
-                                    className={`grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center ${borderClass} bg-transparent hover:bg-white/5 transition-colors duration-200 py-2 px-2 rounded-r-lg cursor-pointer group border-y border-transparent hover:border-white/10`}
-                                >
-                                    <div className="text-gray-400 font-medium text-xs text-center">{index + 1}</div>
-                                    <div className="flex items-center gap-2 min-w-0">
-                                        <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-full p-0.5 overflow-hidden border border-gray-200">
-                                            <img
-                                                src={getImageUrl(standing.team.image)}
-                                                alt={standing.team.name}
-                                                className="w-full h-full object-cover"
-                                                onError={(e) => {
-                                                    const target = e.target as HTMLImageElement;
-                                                    target.src = '/llf-logo.png';
-                                                }}
-                                            />
-                                        </span>
-                                        <span className="text-gray-200 font-bold text-sm truncate group-hover:text-white transition-colors">{standing.team.name}</span>
+                                <Link key={standing.team.id} href={`/team/${standing.team.id}`}>
+                                    <div
+                                        className={`grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center ${borderClass} bg-transparent hover:bg-white/5 transition-colors duration-200 py-2 px-2 rounded-r-lg cursor-pointer group border-y border-transparent hover:border-white/10`}
+                                    >
+                                        <div className="text-gray-400 font-medium text-xs text-center">{index + 1}</div>
+                                        <div className="flex items-center gap-2 min-w-0">
+                                            <span className="w-6 h-6 flex-shrink-0 flex items-center justify-center bg-gray-100 rounded-full p-0.5 overflow-hidden border border-gray-200">
+                                                <img
+                                                    src={getImageUrl(standing.team.image)}
+                                                    alt={standing.team.name}
+                                                    className="w-full h-full object-cover"
+                                                    onError={(e) => {
+                                                        const target = e.target as HTMLImageElement;
+                                                        target.src = '/llf-logo.png';
+                                                    }}
+                                                />
+                                            </span>
+                                            <span className="text-gray-200 font-bold text-sm truncate group-hover:text-white transition-colors">{standing.team.name}</span>
+                                        </div>
+                                        <div className="text-gray-400 text-xs text-center">{standing.game_count}</div>
+                                        <div className={`text-xs font-bold text-center ${diffColor}`}>
+                                            {diffText}
+                                        </div>
+                                        <div className="text-white font-black text-base text-center">{standing.point}</div>
                                     </div>
-                                    <div className="text-gray-400 text-xs text-center">{standing.game_count}</div>
-                                    <div className={`text-xs font-bold text-center ${diffColor}`}>
-                                        {diffText}
-                                    </div>
-                                    <div className="text-white font-black text-base text-center">{standing.point}</div>
-                                </div>
+                                </Link>
                             );
                         })}
                     </div>

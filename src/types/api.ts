@@ -205,3 +205,174 @@ export interface PlayoffMatch {
     penalty_goals: number;
   };
 }
+
+// Match Protocol (детали матча)
+export interface MatchEvent {
+  id: number;
+  time: string;
+  type: 'goal' | 'yellow' | 'red' | 'own_goal' | 'penalty';
+  game_time: 'FIRST' | 'SECOND' | 'PENALTY';
+  success?: boolean; // для пенальти
+  number?: number; // номер пенальти
+  match_player: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    player_number: number;
+    team_id: number;
+    goldCardStatus: boolean;
+  };
+}
+
+export interface MatchPlayer {
+  player_number: number;
+  position: 'FORWARD' | 'DEFENDER' | 'MIDFIELDER' | 'GOALKEEPER';
+  id: number;
+  firstname: string;
+  lastname: string;
+  goldCardStatus: boolean;
+}
+
+export interface MatchProtocolTeam {
+  id: number;
+  name: string;
+  image: string;
+  uniform_color: string | null;
+  goals: number;
+  penalty_goals: number;
+  players: MatchPlayer[];
+  team_players: { player: { id: number; firstname: string; lastname: string; image: string | null } }[];
+}
+
+export interface MatchProtocol {
+  id: number;
+  status: 'FINISHED' | 'NOT_STARTED' | 'LIVE';
+  type: string;
+  time: string;
+  video: string;
+  league_tour?: { league: { id: number; name: string } };
+  cup_tour?: { cup: { id: number; name: string } };
+  cup_playoff?: { id: number; name: string };
+  tournament_name: string;
+  tournament_id: number;
+  isCup: boolean;
+  team_1: MatchProtocolTeam;
+  team_2: MatchProtocolTeam;
+  address: { id: number; name: string } | null;
+  referees: { id: number; name: string }[];
+  first_time_events: MatchEvent[];
+  second_time_events: MatchEvent[];
+  penalty_events: MatchEvent[];
+  penalty_status: boolean;
+  disqualified_players: { id: number; firstname: string; lastname: string }[];
+}
+
+// Player (Игрок - полные данные)
+export interface PlayerTeamMembership {
+  id: number;
+  team_id: number;
+  player_id: number;
+  position: 'FORWARD' | 'DEFENDER' | 'MIDFIELDER' | 'GOALKEEPER' | null;
+  active: boolean;
+  joined: string;
+  left: string | null;
+  captain: boolean;
+  is_banned: boolean;
+}
+
+export interface Player {
+  id: number;
+  user_id: number;
+  firstname: string;
+  lastname: string;
+  patronymic: string;
+  birthday: string | null;
+  growth: number | null;
+  weight: number | null;
+  foot_size: number | null;
+  favorite_club: string | null;
+  image: { url: string }[] | null;
+  instagram: string | null;
+  position: string | null;
+  goldCardStatus: boolean;
+  total_matches: number;
+  wins: number;
+  draws: number;
+  losses: number;
+  teams: PlayerTeamMembership[];
+}
+
+export interface PlayerTournamentStats {
+  name: string;
+  type: 'LEAGUE' | 'CUP';
+  teamPosition: number;
+  totalTeams: number;
+  playerGoals: number;
+  playerMatches: number;
+}
+
+export interface PlayerStats {
+  playerId: number;
+  playerName: string;
+  position: string | null;
+  age: number;
+  totalMatches: number;
+  totalGoals: number;
+  yellowCards: number;
+  redCards: number;
+  cleanSheets: number;
+  goalsConceded: number;
+  wins: number;
+  draws: number;
+  losses: number;
+  teamWinRate: number;
+  tournaments: PlayerTournamentStats[];
+}
+
+// Team (Команда - полные данные)
+export interface TeamPlayer {
+  player: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    image: string | null;
+    position: string | null;
+  };
+}
+
+export interface Team {
+  id: number;
+  name: string;
+  image: string | null;
+  instagram: string | null;
+  uniform_color: string | null;
+  players: TeamPlayer[];
+}
+
+export interface TeamStats {
+  teamId: number;
+  teamName: string;
+  totalMatches: number;
+  wins: number;
+  draws: number;
+  losses: number;
+  goalsScored: number;
+  goalsConceded: number;
+  yellowCards: number;
+  redCards: number;
+  cleanSheets: number;
+  tournaments: number;
+  recentMatches: TeamRecentMatch[];
+}
+
+export interface TeamRecentMatch {
+  id: number;
+  date: string;
+  opponentId: number;
+  opponentName: string;
+  opponentImage: string | null;
+  homeScore: number;
+  awayScore: number;
+  isHome: boolean;
+  result: 'W' | 'L' | 'D';
+}

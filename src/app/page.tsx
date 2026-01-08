@@ -1,5 +1,5 @@
-import { redirect } from 'next/navigation';
 import type { Metadata } from 'next';
+import HomeRedirect from '@/components/HomeRedirect';
 
 export const metadata: Metadata = {
   title: 'КФМФ - Казахстанская Федерация Мини-Футбола',
@@ -55,6 +55,5 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  // Редирект на Астану по умолчанию
-  redirect('/astana');
+  return <HomeRedirect />;
 }

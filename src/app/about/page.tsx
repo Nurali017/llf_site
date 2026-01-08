@@ -1,26 +1,30 @@
 import type { Metadata } from 'next';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import AboutPageContent from '@/components/AboutPageContent';
+import { BackToTop } from '@/components/BackToTop';
 
 export const metadata: Metadata = {
-    title: 'О КФМФ - Казахстанская Федерация Мини-Футбола',
-    description: 'История, миссия и цели Казахстанской Федерации Мини-Футбола. Развитие футзала в Казахстане, структура организации и контактная информация.',
+    title: 'О KLLF - Казахстанская Лига Любителей Футбола',
+    description: 'История, миссия и цели Казахстанской Лиги Любителей Футбола. Развитие любительского мини-футбола в Казахстане, структура организации и контактная информация.',
     keywords: [
-        'КФМФ',
-        'о федерации',
+        'KLLF',
+        'о лиге',
         'мини-футбол Казахстан',
-        'история КФМФ',
+        'любительский футбол',
         'футзал',
-        'федерация футбола',
+        'лига футбола',
     ],
     openGraph: {
-        title: 'О КФМФ',
-        description: 'Казахстанская Федерация Мини-Футбола - развитие футзала в Казахстане',
+        title: 'О KLLF',
+        description: 'Казахстанская Лига Любителей Футбола - развитие любительского мини-футбола в Казахстане',
         type: 'website',
         url: 'https://llfsite.vercel.app/about',
     },
     twitter: {
         card: 'summary',
-        title: 'О КФМФ',
-        description: 'История и миссия федерации мини-футбола',
+        title: 'О KLLF',
+        description: 'История и миссия лиги любителей футбола',
     },
     alternates: {
         canonical: 'https://llfsite.vercel.app/about',
@@ -29,18 +33,13 @@ export const metadata: Metadata = {
 
 export default function AboutPage() {
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-            <div className="text-center">
-                <div className="text-6xl mb-6">🚧</div>
-                <h1 className="text-4xl font-bold text-kmff-dark mb-4">Страница в разработке</h1>
-                <p className="text-gray-600 text-lg mb-8">Раздел "О нас" скоро будет доступен</p>
-                <a
-                    href="/"
-                    className="inline-block bg-kmff-blue text-white px-8 py-3 rounded-lg font-medium hover:bg-kmff-blue/90 transition-colors"
-                >
-                    Вернуться на главную
-                </a>
-            </div>
+        <div className="min-h-screen flex flex-col bg-white">
+            <Header />
+            <main className="flex-grow">
+                <AboutPageContent />
+            </main>
+            <Footer />
+            <BackToTop />
         </div>
     );
 }

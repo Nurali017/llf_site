@@ -1,5 +1,20 @@
+/**
+ * Утилиты для работы с изображениями
+ */
+
 import { SyntheticEvent } from 'react';
 
+/**
+ * Получает полный URL изображения с обработкой различных форматов
+ *
+ * @param path - Путь к изображению (может быть null или undefined)
+ * @returns Полный URL изображения или fallback
+ *
+ * @example
+ * getImageUrl('/images/team.jpg') // 'https://1sportkz.com/images/team.jpg'
+ * getImageUrl('https://example.com/img.jpg') // 'https://example.com/img.jpg'
+ * getImageUrl(null) // '/kmff-logo.jpg'
+ */
 export function getImageUrl(path: string | null | undefined): string {
     if (!path) return '/kmff-logo.jpg';
 
@@ -29,6 +44,38 @@ export function getImageUrl(path: string | null | undefined): string {
     return `${apiUrl}/images${cleanPath}`;
 }
 
+/**
+ * Обработчик ошибки загрузки изображения (устанавливает fallback на logo)
+ *
+ * @param e - Событие ошибки
+ *
+ * @example
+ * <img src={teamLogo} onError={handleImageError} />
+ */
 export const handleImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
     e.currentTarget.src = '/kmff-logo.jpg';
+};
+
+/**
+ * Обработчик ошибки загрузки изображения игрока
+ *
+ * @param e - Событие ошибки
+ *
+ * @example
+ * <img src={playerPhoto} onError={handlePlayerImageError} />
+ */
+export const handlePlayerImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/player-default.png';
+};
+
+/**
+ * Обработчик ошибки загрузки изображения команды
+ *
+ * @param e - Событие ошибки
+ *
+ * @example
+ * <img src={teamLogo} onError={handleTeamImageError} />
+ */
+export const handleTeamImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
+    e.currentTarget.src = '/llf-logo.png';
 };

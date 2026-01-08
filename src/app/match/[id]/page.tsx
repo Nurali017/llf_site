@@ -1,4 +1,8 @@
 import type { Metadata } from 'next';
+import Header from '@/components/Header';
+import Footer from '@/components/Footer';
+import MatchDetailContent from '@/components/MatchDetailContent';
+import { BackToTop } from '@/components/BackToTop';
 
 interface MatchPageProps {
     params: { id: string };
@@ -7,8 +11,6 @@ interface MatchPageProps {
 export async function generateMetadata({ params }: MatchPageProps): Promise<Metadata> {
     const matchId = params.id;
 
-    // TODO: Fetch real match data when API is integrated
-    // For now, using generic metadata
     return {
         title: `Матч #${matchId} | КФМФ`,
         description: `Детали матча мини-футбола, результаты и статистика. Казахстанская Федерация Мини-Футбола.`,
@@ -36,12 +38,16 @@ export async function generateMetadata({ params }: MatchPageProps): Promise<Meta
 }
 
 export default function MatchPage({ params }: MatchPageProps) {
+    const matchId = parseInt(params.id, 10);
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50">
-            <div className="text-center">
-                <h1 className="text-2xl font-bold text-gray-800 mb-2">Матч #{params.id}</h1>
-                <p className="text-gray-500">Страница матча в разработке</p>
-            </div>
+        <div className="min-h-screen flex flex-col bg-white">
+            <Header />
+            <main className="flex-grow">
+                <MatchDetailContent matchId={matchId} />
+            </main>
+            <Footer />
+            <BackToTop />
         </div>
     );
 }

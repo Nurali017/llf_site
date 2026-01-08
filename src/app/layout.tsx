@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Unbounded, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { OrganizationProvider } from "@/contexts/OrganizationContext";
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 // Brutally Minimal Typography System
-const spaceGrotesk = Space_Grotesk({
+// Unbounded: Geometric display font with full Cyrillic support
+const unbounded = Unbounded({
   variable: "--font-display",
   subsets: ["latin", "cyrillic"],
   weight: ["400", "700"],
@@ -74,7 +75,7 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${spaceGrotesk.variable} ${jetBrainsMono.variable} antialiased font-display`}
+        className={`${unbounded.variable} ${jetBrainsMono.variable} antialiased font-display`}
       >
         <ErrorBoundary>
           <OrganizationProvider>

@@ -1,13 +1,25 @@
-import useSWR from 'swr';
-import { getCupGroups } from '@/services/standings';
+/**
+ * Hook для работы с группами кубка
+ */
 
+import { useAPIArray } from './useAPI';
+import { getCupGroups } from '@/services/standings';
+import { CACHE_STRATEGIES } from '@/config/cache';
+import { CupGroup } from '@/types/api';
+
+/**
+ * Hook для получения групп кубка
+ *
+ * @param cupId - ID кубка
+ * @returns Объект с группами кубка и состоянием загрузки
+ *
+ * @example
+ * const { data: groups, isLoading, isError } = useCupGroups(5);
+ */
 export function useCupGroups(cupId: number | null) {
-    return useSWR(
+    return useAPIArray<CupGroup>(
         cupId ? `cup-groups-${cupId}` : null,
         () => cupId ? getCupGroups(cupId) : Promise.resolve([]),
-        {
-            revalidateOnFocus: false,
-            dedupingInterval: 30000
-        }
+        CACHE_STRATEGIES.STATIC
     );
 }

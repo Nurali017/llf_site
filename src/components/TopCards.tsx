@@ -1,6 +1,7 @@
 "use client";
 
 import Image from 'next/image';
+import Link from 'next/link';
 import { useOrganization } from '@/contexts/OrganizationContext';
 import { useCards } from '@/hooks/useCards';
 import { useMemo, useState } from 'react';
@@ -54,41 +55,43 @@ const TopCards = () => {
             ) : (
                 <div className="space-y-3">
                     {cards.map((player, index) => (
-                        <div key={player.id} className="flex items-center justify-between text-sm p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 cursor-default">
-                            <div className="flex items-center gap-3">
-                                <span className="text-gray-400 font-bold w-4">{index + 1}</span>
-                                <div className="w-8 h-8 relative rounded-full overflow-hidden bg-gray-100">
-                                    {player.image ? (
-                                        <Image
-                                            src={getImageUrl(player.image)}
-                                            alt={player.name}
-                                            fill
-                                            sizes="32px"
-                                            className="object-cover"
-                                            onError={(e) => {
-                                                const target = e.target as HTMLImageElement;
-                                                target.style.display = 'none';
-                                                const parent = target.parentElement;
-                                                if (parent) {
-                                                    parent.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">👤</div>';
-                                                }
-                                            }}
-                                        />
-                                    ) : (
-                                        <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
-                                            👤
-                                        </div>
-                                    )}
+                        <Link key={player.id} href={`/player/${player.id}`}>
+                            <div className="flex items-center justify-between text-sm p-2 rounded-lg hover:bg-gray-50 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5 cursor-pointer">
+                                <div className="flex items-center gap-3">
+                                    <span className="text-gray-400 font-bold w-4">{index + 1}</span>
+                                    <div className="w-8 h-8 relative rounded-full overflow-hidden bg-gray-100">
+                                        {player.image ? (
+                                            <Image
+                                                src={getImageUrl(player.image)}
+                                                alt={player.name}
+                                                fill
+                                                sizes="32px"
+                                                className="object-cover"
+                                                onError={(e) => {
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.style.display = 'none';
+                                                    const parent = target.parentElement;
+                                                    if (parent) {
+                                                        parent.innerHTML = '<div class="w-full h-full flex items-center justify-center text-gray-400 text-xs">👤</div>';
+                                                    }
+                                                }}
+                                            />
+                                        ) : (
+                                            <div className="w-full h-full flex items-center justify-center text-gray-400 text-xs">
+                                                👤
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex flex-col">
+                                        <span className="font-bold text-gray-800">{player.name}</span>
+                                        <span className="text-xs text-gray-500">{player.team}</span>
+                                    </div>
                                 </div>
-                                <div className="flex flex-col">
-                                    <span className="font-bold text-gray-800">{player.name}</span>
-                                    <span className="text-xs text-gray-500">{player.team}</span>
-                                </div>
+                                <span className={`font-bold ${cardType === 'yellow' ? 'text-yellow-600' : 'text-red-600'}`}>
+                                    {player.count}
+                                </span>
                             </div>
-                            <span className={`font-bold ${cardType === 'yellow' ? 'text-yellow-600' : 'text-red-600'}`}>
-                                {player.count}
-                            </span>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             )}
