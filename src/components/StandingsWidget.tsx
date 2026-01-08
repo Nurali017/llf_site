@@ -18,8 +18,8 @@ const StandingsWidget = () => {
 
     if (isLoading) {
         return (
-            <div className="border-2 border-mono-100 p-8">
-                <div className="font-mono text-micro uppercase tracking-wider text-center">
+            <div className="rounded-lg shadow-md bg-white p-8">
+                <div className="font-display text-sm text-center text-neutral-600">
                     Загрузка...
                 </div>
             </div>
@@ -28,8 +28,8 @@ const StandingsWidget = () => {
 
     if (isError) {
         return (
-            <div className="border-2 border-mono-100 p-8">
-                <div className="font-mono text-micro uppercase tracking-wider text-center text-accent-red">
+            <div className="rounded-lg shadow-md bg-white p-8">
+                <div className="font-display text-sm text-center text-accent-red">
                     Ошибка загрузки
                 </div>
             </div>
@@ -38,8 +38,8 @@ const StandingsWidget = () => {
 
     if (!standings || standings.length === 0) {
         return (
-            <div className="border-2 border-mono-100 p-8">
-                <div className="font-mono text-micro uppercase tracking-wider text-center">
+            <div className="rounded-lg shadow-md bg-white p-8">
+                <div className="font-display text-sm text-center text-neutral-600">
                     Нет данных
                 </div>
             </div>
@@ -47,9 +47,9 @@ const StandingsWidget = () => {
     }
 
     return (
-        <div className="border-2 border-mono-100">
-            {/* Table Header - Black Background */}
-            <div className="grid grid-cols-[40px_1fr_40px_60px_60px] gap-4 bg-mono-100 text-mono-0 p-4 font-mono text-micro uppercase tracking-wider">
+        <div className="rounded-lg shadow-md bg-white overflow-hidden">
+            {/* Table Header - Blue Background */}
+            <div className="grid grid-cols-[40px_1fr_40px_60px_60px] gap-4 bg-neutral-800 text-white p-4 font-display text-sm font-medium">
                 <div className="text-center">#</div>
                 <div>Команда</div>
                 <div className="text-center">И</div>
@@ -65,17 +65,17 @@ const StandingsWidget = () => {
                 const diff = standing.scored - standing.missed;
                 const diffText = diff > 0 ? `+${diff}` : `${diff}`;
 
-                // 1st place gets lime background
+                // 1st place gets blue background
                 const isFirst = index === 0;
-                const bgClass = isFirst ? 'bg-accent-lime' : 'bg-mono-0';
+                const bgClass = isFirst ? 'bg-primary-50' : 'bg-white';
 
                 return (
                     <Link key={standing.team.id || index} href={`/team/${standing.team.id}`}>
                         <div
-                            className={`grid grid-cols-[40px_1fr_40px_60px_60px] gap-4 p-4 border-b border-mono-100 ${bgClass} hover:bg-accent-lime transition-colors group`}
+                            className={`grid grid-cols-[40px_1fr_40px_60px_60px] gap-4 p-4 border-b border-neutral-200 last:border-b-0 ${bgClass} hover:bg-neutral-50 transition-colors group`}
                         >
                             {/* Position */}
-                            <div className="font-mono text-body font-bold text-center">
+                            <div className="font-display text-base font-bold text-center text-neutral-900">
                                 {index + 1}
                             </div>
 
@@ -84,30 +84,30 @@ const StandingsWidget = () => {
                                 <img
                                     src={getImageUrl(standing.team.image)}
                                     alt={standing.team.name}
-                                    className="w-8 h-8 object-contain grayscale"
+                                    className="w-8 h-8 object-contain"
                                     loading="lazy"
                                     onError={(e) => {
                                         const target = e.target as HTMLImageElement;
                                         target.src = '/llf-logo.png';
                                     }}
                                 />
-                                <span className="font-display text-body font-bold uppercase truncate">
+                                <span className="font-display text-base font-semibold truncate text-neutral-800">
                                     {standing.team.name}
                                 </span>
                             </div>
 
                             {/* Games Played */}
-                            <div className="font-mono text-body text-center">
+                            <div className="font-display text-base text-center text-neutral-700">
                                 {standing.game_count}
                             </div>
 
                             {/* Goal Difference */}
-                            <div className="font-mono text-body text-center font-bold">
+                            <div className="font-display text-base text-center font-semibold text-neutral-800">
                                 {diffText}
                             </div>
 
-                            {/* Points - Large Typography */}
-                            <div className="font-display text-h3 font-bold text-center">
+                            {/* Points - Emphasized */}
+                            <div className="font-display text-2xl font-bold text-center text-primary-600">
                                 {standing.point}
                             </div>
                         </div>

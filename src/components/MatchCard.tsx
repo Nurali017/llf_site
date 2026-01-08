@@ -27,23 +27,23 @@ interface MatchCardProps {
 }
 
 /**
- * Brutally Minimal Match Card
- * Horizontal layout with giant scores (180px), 2px borders, grayscale logos
+ * Minimalist Match Card
+ * Horizontal layout with moderate scores (64px), rounded corners, soft shadows
  */
 export const MatchCard = React.memo(function MatchCard({ match }: MatchCardProps) {
     return (
         <Link href={`/match/${match.id}`} className="min-w-[340px] md:min-w-[400px] snap-center block group">
-            <div className="border-2 border-mono-100 bg-mono-0 hover:bg-accent-lime transition-colors relative">
+            <div className="rounded-lg shadow-md bg-white hover:shadow-xl transition-shadow relative">
 
-                {/* Floating Rotated Date Label - Brutalist Detail */}
+                {/* Date Label */}
                 <div className="absolute -left-2 top-6 -rotate-90 origin-left z-10">
-                    <span className="font-mono text-micro uppercase tracking-wider bg-mono-100 text-mono-0 px-2 py-1 inline-block">
+                    <span className="font-display text-xs font-medium bg-neutral-800 text-white px-3 py-1 inline-block rounded-sm">
                         {match.date}
                     </span>
                 </div>
 
                 {/* Main Content - Horizontal Layout */}
-                <div className="flex items-center justify-between p-8 min-h-[180px]">
+                <div className="flex items-center justify-between p-8 min-h-[140px]">
 
                     {/* Home Team - Left */}
                     <div className="flex flex-col items-center gap-3 w-[100px] flex-shrink-0">
@@ -52,35 +52,35 @@ export const MatchCard = React.memo(function MatchCard({ match }: MatchCardProps
                                 src={getImageUrl(match.homeTeamImage)}
                                 alt={match.homeTeam}
                                 fill
-                                className="object-contain grayscale group-hover:grayscale-0 transition-all"
+                                className="object-contain transition-transform group-hover:scale-105"
                                 sizes="80px"
                                 loading="lazy"
                             />
                         </div>
-                        <span className="font-display text-sm font-bold uppercase text-center leading-tight">
+                        <span className="font-display text-sm font-semibold text-center leading-tight text-neutral-800">
                             {match.homeTeam}
                         </span>
                     </div>
 
-                    {/* Score - Giant Typography Center */}
+                    {/* Score - Moderate Typography Center */}
                     <div className="flex flex-col items-center flex-1 mx-4">
                         {match.status === 'upcoming' ? (
-                            <div className="font-mono text-h3 font-medium tracking-wider">
+                            <div className="font-display text-2xl font-semibold text-neutral-700">
                                 {match.time}
                             </div>
                         ) : (
                             <>
-                                <div className={`font-display font-bold tracking-tighter ${
+                                <div className={`font-display font-bold tracking-tight ${
                                     match.status === 'live'
-                                        ? 'text-accent-red animate-pulse text-[7rem] md:text-[8rem] leading-none'
-                                        : 'text-[7rem] md:text-[8rem] leading-none'
+                                        ? 'text-accent-red animate-pulse text-hero leading-none'
+                                        : 'text-hero leading-none text-neutral-900'
                                 }`}>
                                     {match.homeScore}
-                                    <span className="mx-2 md:mx-4">—</span>
+                                    <span className="mx-3">—</span>
                                     {match.awayScore}
                                 </div>
                                 {match.status === 'live' && (
-                                    <div className="mt-2 bg-accent-red text-mono-0 px-3 py-1 font-mono text-micro uppercase">
+                                    <div className="mt-2 bg-accent-green text-white px-3 py-1 rounded font-display text-xs font-semibold">
                                         LIVE
                                     </div>
                                 )}
@@ -95,21 +95,21 @@ export const MatchCard = React.memo(function MatchCard({ match }: MatchCardProps
                                 src={getImageUrl(match.awayTeamImage)}
                                 alt={match.awayTeam}
                                 fill
-                                className="object-contain grayscale group-hover:grayscale-0 transition-all"
+                                className="object-contain transition-transform group-hover:scale-105"
                                 sizes="80px"
                                 loading="lazy"
                             />
                         </div>
-                        <span className="font-display text-sm font-bold uppercase text-center leading-tight">
+                        <span className="font-display text-sm font-semibold text-center leading-tight text-neutral-800">
                             {match.awayTeam}
                         </span>
                     </div>
 
                 </div>
 
-                {/* Stadium Bar - Bottom with Monospace */}
-                <div className="border-t-2 border-mono-100 bg-mono-5 px-8 py-3">
-                    <span className="font-mono text-micro uppercase tracking-wider text-mono-100">
+                {/* Stadium Bar - Bottom */}
+                <div className="border-t border-neutral-200 bg-neutral-50 px-8 py-3 rounded-b-lg">
+                    <span className="font-display text-sm text-neutral-600">
                         {match.stadium}
                     </span>
                 </div>
