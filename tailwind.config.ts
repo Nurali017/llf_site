@@ -8,17 +8,17 @@ const config: Config = {
     ],
     theme: {
         extend: {
-            // Minimalist Typography System
+            // Modern Compact Typography System (qjl.kz style) - 20% reduced
             fontSize: {
-                'hero': ['4rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],      // 64px - Match scores (was 112px)
-                'display': ['3rem', { lineHeight: '1.15', letterSpacing: '-0.01em' }],  // 48px - Hero headlines (was 80px)
-                'h1': ['2.5rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],      // 40px - Section headers (was 56px)
-                'h2': ['1.875rem', { lineHeight: '1.3', letterSpacing: '0' }],          // 30px - Card headers (was 40px)
-                'h3': ['1.5rem', { lineHeight: '1.4', letterSpacing: '0' }],            // 24px - Subsections (was 28px)
-                'body-lg': ['1.125rem', { lineHeight: '1.7', letterSpacing: '0' }],     // 18px - Large body
-                'body': ['1rem', { lineHeight: '1.7', letterSpacing: '0' }],            // 16px - Default
-                'label': ['0.875rem', { lineHeight: '1.5', letterSpacing: '0' }],       // 14px - Labels
-                'micro': ['0.75rem', { lineHeight: '1.4', letterSpacing: '0' }],        // 12px - Metadata
+                'hero': ['1.6rem', { lineHeight: '1.2', letterSpacing: '-0.01em' }],       // 25.6px - Match scores
+                'display': ['1.4rem', { lineHeight: '1.3', letterSpacing: '-0.01em' }],    // 22.4px - Hero headlines
+                'h1': ['1.2rem', { lineHeight: '1.4', letterSpacing: '0' }],               // 19.2px - Section headers
+                'h2': ['1rem', { lineHeight: '1.4', letterSpacing: '0' }],                 // 16px - Card headers
+                'h3': ['0.9rem', { lineHeight: '1.4', letterSpacing: '0' }],               // 14.4px - Subsections
+                'body-lg': ['0.8rem', { lineHeight: '1.5', letterSpacing: '0' }],          // 12.8px - Large body
+                'body': ['0.7rem', { lineHeight: '1.5', letterSpacing: '0' }],             // 11.2px - Default
+                'label': ['0.65rem', { lineHeight: '1.4', letterSpacing: '0' }],           // 10.4px - Labels
+                'micro': ['0.6rem', { lineHeight: '1.4', letterSpacing: '0' }],            // 9.6px - Metadata
             },
 
             // Minimalist Blue Color System
@@ -94,11 +94,20 @@ const config: Config = {
 
             // Font families
             fontFamily: {
-                display: ["var(--font-display)"],  // Space Grotesk
+                display: ["var(--font-display)"],  // Unbounded
                 mono: ["var(--font-mono)"],        // JetBrains Mono
-                sans: ["var(--font-display)"],     // Default to Space Grotesk
+                sans: ["var(--font-display)"],     // Default to Unbounded
                 // Legacy (for gradual migration)
                 montserrat: ["var(--font-display)"],
+            },
+
+            // Font weights - Lighter like qjl.kz (minimalist transformation)
+            fontWeight: {
+                light: '300',
+                normal: '400',
+                medium: '500',
+                semibold: '500',    // Reduced from 600 to 500 for lighter feel
+                bold: '600',        // Reduced from 700 to 600 for lighter feel
             },
 
             // Brutalist borders (thick, sharp)
@@ -107,29 +116,29 @@ const config: Config = {
                 '4': '4px',
             },
 
-            // Minimalist rounded corners
+            // Minimalist rounded corners - reduced for flatter look
             borderRadius: {
                 'none': '0',
                 'sm': '4px',      // Small elements (badges, tags)
-                DEFAULT: '8px',   // Standard cards, buttons
-                'md': '12px',     // Medium cards
-                'lg': '16px',     // Large cards, sections
-                'xl': '20px',     // Hero sections
-                '2xl': '24px',    // Special features
-                '3xl': '32px',    // Extra large
+                DEFAULT: '6px',   // Reduced from 8px - Standard cards, buttons
+                'md': '8px',      // Reduced from 12px - Medium cards
+                'lg': '12px',     // Reduced from 16px - Large cards, sections
+                'xl': '16px',     // Reduced from 20px - Hero sections
+                '2xl': '20px',    // Reduced from 24px - Special features
+                '3xl': '24px',    // Reduced from 32px - Extra large
                 'full': '9999px', // Pills, avatars, circles
             },
 
-            // Soft shadows for depth
+            // Minimalist shadows - much lighter for qjl.kz style
             boxShadow: {
                 'none': 'none',
-                'sm': '0 1px 2px 0 rgb(0 0 0 / 0.05)',
-                DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
-                'md': '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
-                'lg': '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
-                'xl': '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
-                '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
-                'inner': 'inset 0 2px 4px 0 rgb(0 0 0 / 0.05)',
+                'sm': '0 1px 2px 0 rgb(0 0 0 / 0.03)',
+                DEFAULT: '0 1px 3px 0 rgb(0 0 0 / 0.05), 0 1px 2px -1px rgb(0 0 0 / 0.05)',
+                'md': '0 2px 4px -1px rgb(0 0 0 / 0.06), 0 1px 2px -1px rgb(0 0 0 / 0.06)',
+                'lg': '0 4px 6px -2px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.07)',
+                'xl': '0 8px 12px -4px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.08)',
+                '2xl': '0 12px 24px -8px rgb(0 0 0 / 0.10)',
+                'inner': 'inset 0 2px 4px 0 rgb(0 0 0 / 0.03)',
             },
 
             // Smooth transitions

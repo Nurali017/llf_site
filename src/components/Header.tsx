@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { useOrganization } from '@/contexts/OrganizationContext';
@@ -15,54 +16,73 @@ const Header = () => {
     };
 
     return (
-        <header className="bg-white/90 backdrop-blur-md sticky top-0 z-50 border-b border-neutral-200 shadow-sm">
+        <header className="bg-kmff-dark sticky top-0 z-50 border-b border-white/10">
             <div className="container mx-auto px-4">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo - Minimalist */}
-                    <Link href="/" className="flex-shrink-0 transition-colors hover:text-primary-600">
-                        <h1 className="font-display text-2xl font-bold tracking-tight text-neutral-900">
-                            КФМФ
-                        </h1>
+                <div className="flex items-center justify-between h-14">
+                    {/* Logos */}
+                    <Link href="/" className="flex-shrink-0 flex items-center gap-3 transition-opacity hover:opacity-80">
+                        <Image
+                            src="/kmff-logo.jpg"
+                            alt="KMFF Logo"
+                            width={40}
+                            height={40}
+                            priority
+                            className="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover"
+                        />
+                        <Image
+                            src="/llf-logo.png"
+                            alt="LLF Logo"
+                            width={80}
+                            height={40}
+                            priority
+                            className="h-6 md:h-8 w-auto object-contain"
+                        />
                     </Link>
 
                     {/* Desktop Navigation - Minimalist */}
-                    <div className="hidden md:flex items-center gap-8">
-                        <nav className="flex items-center gap-6">
+                    <div className="hidden md:flex items-center gap-4">
+                        <nav className="flex items-center gap-5">
                             <Link
                                 href="/news"
-                                className="font-display text-sm font-medium text-neutral-600 transition-colors hover:text-primary-600"
+                                className="font-display text-body font-medium text-white/90 transition-colors hover:text-white"
                             >
                                 Новости
                             </Link>
                             <Link
                                 href="/matches"
-                                className="font-display text-sm font-medium text-neutral-600 transition-colors hover:text-primary-600"
+                                className="font-display text-body font-medium text-white/90 transition-colors hover:text-white"
                             >
                                 Матчи
                             </Link>
                             <Link
                                 href="/tournaments"
-                                className="font-display text-sm font-medium text-neutral-600 transition-colors hover:text-primary-600"
+                                className="font-display text-body font-medium text-white/90 transition-colors hover:text-white"
                             >
                                 Турниры
                             </Link>
                             <Link
                                 href="/hall-of-fame"
-                                className="font-display text-sm font-medium text-neutral-600 transition-colors hover:text-primary-600"
+                                className="font-display text-body font-medium text-white/90 transition-colors hover:text-white"
                             >
                                 Зал славы
                             </Link>
                             <Link
                                 href="/about"
-                                className="font-display text-sm font-medium text-neutral-600 transition-colors hover:text-primary-600"
+                                className="font-display text-body font-medium text-white/90 transition-colors hover:text-white"
                             >
                                 О нас
+                            </Link>
+                            <Link
+                                href="/news?category=dk"
+                                className="font-display text-body font-medium text-white/90 transition-colors hover:text-white"
+                            >
+                                Решения КДК
                             </Link>
                             <a
                                 href="https://minifootball.eu/"
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="font-display text-sm font-medium text-neutral-600 transition-colors hover:text-primary-600"
+                                className="font-display text-sm font-medium text-white/90 transition-colors hover:text-white"
                             >
                                 EMF
                             </a>
@@ -71,16 +91,16 @@ const Header = () => {
                         {/* City Selector - Rounded */}
                         <div className="relative">
                             {isLoading ? (
-                                <div className="w-32 h-10 bg-neutral-200 animate-pulse rounded-lg"></div>
+                                <div className="w-32 h-10 bg-white/20 animate-pulse rounded-lg"></div>
                             ) : (
                                 <button
                                     onClick={() => setIsCityDropdownOpen(!isCityDropdownOpen)}
-                                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-neutral-300 bg-white shadow-sm transition-shadow hover:shadow-md"
+                                    className="flex items-center gap-2 px-4 py-2 rounded-lg border border-white/30 bg-white/10 backdrop-blur-sm shadow-sm transition-all hover:bg-white/20"
                                 >
-                                    <span className="font-display text-sm font-medium text-neutral-700">
+                                    <span className="font-display text-sm font-medium text-white">
                                         {selectedOrganization?.name || 'Город'}
                                     </span>
-                                    <ChevronDown className={`w-4 h-4 text-neutral-600 transition-transform ${isCityDropdownOpen ? 'rotate-180' : ''}`} />
+                                    <ChevronDown className={`w-4 h-4 text-white transition-transform ${isCityDropdownOpen ? 'rotate-180' : ''}`} />
                                 </button>
                             )}
 
@@ -115,11 +135,11 @@ const Header = () => {
                     {/* Mobile Menu Button */}
                     <div className="md:hidden flex items-center gap-3">
                         {isLoading ? (
-                            <div className="w-20 h-8 bg-neutral-200 animate-pulse rounded"></div>
+                            <div className="w-20 h-8 bg-white/20 animate-pulse rounded"></div>
                         ) : (
                             <button
                                 onClick={toggleMenu}
-                                className="px-3 py-1.5 rounded border border-neutral-300 font-display text-xs text-neutral-700 font-medium"
+                                className="px-3 py-1.5 rounded border border-white/30 font-display text-xs text-white font-medium bg-white/10"
                             >
                                 <span className="max-w-[80px] truncate">{selectedOrganization?.name || 'Город'}</span>
                             </button>
@@ -127,7 +147,7 @@ const Header = () => {
 
                         <button
                             onClick={toggleMenu}
-                            className="text-neutral-700 p-1 transition-colors hover:text-primary-600"
+                            className="text-white p-1 transition-opacity hover:opacity-80"
                         >
                             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
                         </button>
@@ -194,6 +214,13 @@ const Header = () => {
                         onClick={() => setIsMenuOpen(false)}
                     >
                         О нас
+                    </Link>
+                    <Link
+                        href="/news?category=dk"
+                        className="text-neutral-700 font-display text-sm font-medium py-2.5 px-2 transition-colors hover:text-primary-600"
+                        onClick={() => setIsMenuOpen(false)}
+                    >
+                        Решения КДК
                     </Link>
                     <a
                         href="https://minifootball.eu/"

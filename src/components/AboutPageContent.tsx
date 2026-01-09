@@ -53,11 +53,12 @@ export default function AboutPageContent() {
                                     src="/llf-logo.png"
                                     alt="KLLF Logo"
                                     fill
+                                    sizes="64px"
                                     className="object-contain"
                                 />
                             </div>
                             <div>
-                                <div className="font-bold text-lg">KLLF</div>
+                                <div className="font-semibold text-lg">KLLF</div>
                                 <div className="text-blue-300 text-sm">Kazakhstan League of Fans of Football</div>
                             </div>
                         </div>
@@ -71,7 +72,7 @@ export default function AboutPageContent() {
                     {stats.map((stat, index) => (
                         <div
                             key={index}
-                            className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 text-center hover:shadow-xl transition-shadow"
+                            className="bg-white rounded-lg p-4 shadow-lg border border-gray-100 text-center hover:shadow-xl transition-shadow"
                         >
                             <stat.icon className="w-8 h-8 text-kmff-blue mx-auto mb-3" />
                             <div className="text-3xl md:text-4xl font-black text-kmff-dark mb-1">
@@ -86,7 +87,7 @@ export default function AboutPageContent() {
             {/* Mission Section */}
             <div className="container mx-auto px-4 py-16">
                 <div className="max-w-4xl mx-auto">
-                    <h2 className="text-3xl font-bold text-kmff-dark mb-8 flex items-center gap-3">
+                    <h2 className="text-3xl font-semibold text-kmff-dark mb-8 flex items-center gap-3">
                         <span className="w-1.5 h-10 bg-kmff-blue rounded-full"></span>
                         О нас
                     </h2>
@@ -114,20 +115,20 @@ export default function AboutPageContent() {
             {/* Features Section */}
             <div className="bg-white py-16">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-kmff-dark mb-12 text-center">
+                    <h2 className="text-3xl font-semibold text-kmff-dark mb-12 text-center">
                         Наши принципы
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto">
                         {features.map((feature, index) => (
                             <div
                                 key={index}
-                                className="text-center p-6 rounded-2xl hover:bg-gray-50 transition-colors"
+                                className="text-center p-4 rounded-lg hover:bg-gray-50 transition-colors"
                             >
-                                <div className="w-16 h-16 bg-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <div className="w-16 h-16 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                                     <feature.icon className="w-8 h-8 text-kmff-blue" />
                                 </div>
-                                <h3 className="text-xl font-bold text-kmff-dark mb-3">
+                                <h3 className="text-xl font-semibold text-kmff-dark mb-3">
                                     {feature.title}
                                 </h3>
                                 <p className="text-gray-500">
@@ -141,12 +142,12 @@ export default function AboutPageContent() {
 
             {/* Cities Section */}
             <div className="container mx-auto px-4 py-16">
-                <h2 className="text-3xl font-bold text-kmff-dark mb-8 flex items-center gap-3">
+                <h2 className="text-3xl font-semibold text-kmff-dark mb-8 flex items-center gap-3">
                     <span className="w-1.5 h-10 bg-kmff-blue rounded-full"></span>
                     География
                 </h2>
 
-                <div className="bg-gradient-to-br from-[#1e3a8a] via-[#172554] to-[#1e3a8a] rounded-2xl p-8 text-white">
+                <div className="bg-gradient-to-br from-[#1e3a8a] via-[#172554] to-[#1e3a8a] rounded-lg p-5 text-white">
                     <p className="text-blue-200 mb-6">
                         Лига проводит турниры в следующих городах Казахстана:
                     </p>
@@ -168,35 +169,35 @@ export default function AboutPageContent() {
             {/* Contact Section */}
             <div className="bg-white py-16">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl font-bold text-kmff-dark mb-8 flex items-center gap-3">
+                    <h2 className="text-3xl font-semibold text-kmff-dark mb-8 flex items-center gap-3">
                         <span className="w-1.5 h-10 bg-kmff-blue rounded-full"></span>
                         Контакты
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
                         <a
                             href="mailto:info@kllf.kz"
-                            className="flex items-center gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors group"
+                            className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                         >
-                            <div className="w-12 h-12 bg-kmff-blue rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div className="w-12 h-12 bg-kmff-blue rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <Mail className="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <div className="text-sm text-gray-500">Email</div>
-                                <div className="font-bold text-kmff-dark">info@kllf.kz</div>
+                                <div className="font-semibold text-kmff-dark">info@kllf.kz</div>
                             </div>
                         </a>
 
                         <a
                             href="tel:+77001234567"
-                            className="flex items-center gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors group"
+                            className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                         >
-                            <div className="w-12 h-12 bg-kmff-blue rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div className="w-12 h-12 bg-kmff-blue rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <Phone className="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <div className="text-sm text-gray-500">Телефон</div>
-                                <div className="font-bold text-kmff-dark">+7 700 123 45 67</div>
+                                <div className="font-semibold text-kmff-dark">+7 700 123 45 67</div>
                             </div>
                         </a>
 
@@ -204,14 +205,14 @@ export default function AboutPageContent() {
                             href="https://1sportkz.com"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="flex items-center gap-4 p-6 bg-gray-50 rounded-xl hover:bg-gray-100 transition-colors group"
+                            className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                         >
-                            <div className="w-12 h-12 bg-kmff-blue rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                            <div className="w-12 h-12 bg-kmff-blue rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                                 <Globe className="w-6 h-6 text-white" />
                             </div>
                             <div>
                                 <div className="text-sm text-gray-500">Сайт</div>
-                                <div className="font-bold text-kmff-dark">1sportkz.com</div>
+                                <div className="font-semibold text-kmff-dark">1sportkz.com</div>
                             </div>
                         </a>
                     </div>
@@ -220,8 +221,8 @@ export default function AboutPageContent() {
 
             {/* CTA Section */}
             <div className="container mx-auto px-4 py-16">
-                <div className="bg-gradient-to-r from-kmff-blue to-blue-700 rounded-2xl p-8 md:p-12 text-center text-white">
-                    <h2 className="text-2xl md:text-3xl font-bold mb-4">
+                <div className="bg-gradient-to-r from-kmff-blue to-blue-700 rounded-lg p-5 md:p-12 text-center text-white">
+                    <h2 className="text-2xl md:text-3xl font-semibold mb-4">
                         Хотите участвовать в турнирах?
                     </h2>
                     <p className="text-blue-100 mb-8 max-w-2xl mx-auto">
@@ -232,7 +233,7 @@ export default function AboutPageContent() {
                         href="https://1sportkz.com"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-block bg-white text-kmff-blue px-8 py-3 rounded-lg font-bold hover:bg-blue-50 transition-colors"
+                        className="inline-block bg-white text-kmff-blue px-5 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"
                     >
                         Зарегистрировать команду
                     </a>

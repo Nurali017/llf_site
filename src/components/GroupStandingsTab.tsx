@@ -8,14 +8,14 @@ interface GroupStandingsTabProps {
 
 const GroupStandingsTab = ({ groups }: GroupStandingsTabProps) => {
     if (!groups || groups.length === 0) {
-        return <div className="text-center py-8 text-gray-400">Нет данных о группах</div>;
+        return <div className="text-center py-5 text-gray-400">Нет данных о группах</div>;
     }
 
     return (
         <div className="space-y-8">
             {groups.map((groupData) => (
                 <div key={groupData.group.id} className="space-y-2">
-                    <h3 className="text-lg font-bold text-white px-3 mb-2">{groupData.group.name}</h3>
+                    <h3 className="text-lg font-semibold text-white px-3 mb-2">{groupData.group.name}</h3>
 
                     {/* Table Header */}
                     <div className="grid grid-cols-[24px_1fr_28px_44px_32px] gap-2 items-center text-xs text-gray-400 font-medium px-2 py-2 border-b border-white/10">
@@ -56,10 +56,10 @@ const GroupStandingsTab = ({ groups }: GroupStandingsTabProps) => {
                                                     }}
                                                 />
                                             </span>
-                                            <span className="text-gray-200 font-bold text-sm truncate group-hover:text-white transition-colors">{standing.team.name}</span>
+                                            <span className="text-gray-200 font-semibold text-sm truncate group-hover:text-white transition-colors">{standing.team.name}</span>
                                         </div>
                                         <div className="text-gray-400 text-xs text-center">{standing.game_count}</div>
-                                        <div className={`text-xs font-bold text-center ${diffColor}`}>
+                                        <div className={`text-xs font-medium text-center ${diffColor}`}>
                                             {diffText}
                                         </div>
                                         <div className="text-white font-black text-base text-center">{standing.point}</div>

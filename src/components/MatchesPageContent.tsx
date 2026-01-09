@@ -15,9 +15,9 @@ import { mutate } from 'swr';
 
 function MatchGridSkeleton() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="h-[200px] bg-white rounded-xl p-5 border border-gray-100">
+                <div key={i} className="h-[200px] bg-white rounded-lg p-5 border border-gray-100">
                     <div className="animate-pulse flex flex-col h-full items-center justify-between">
                         <Skeleton className="h-4 w-24" />
                         <div className="flex items-center justify-between w-full px-4">
@@ -35,7 +35,7 @@ function MatchGridSkeleton() {
 
 function EmptyState() {
     return (
-        <div className="text-center py-12 bg-gray-50 rounded-xl border border-gray-100">
+        <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-100">
             <div className="text-6xl mb-4">&#9917;</div>
             <p className="text-gray-500 font-medium">Матчи не найдены</p>
             <p className="text-gray-400 text-sm mt-2">Попробуйте изменить фильтр</p>
@@ -45,7 +45,7 @@ function EmptyState() {
 
 function ErrorState({ onRetry }: { onRetry: () => void }) {
     return (
-        <div className="text-center py-12 bg-red-50 rounded-xl border border-red-100">
+        <div className="text-center py-12 bg-red-50 rounded-lg border border-red-100">
             <div className="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-8 h-8">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
@@ -167,11 +167,11 @@ export default function MatchesPageContent() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-5">
                 <Breadcrumbs />
 
                 <div className="mb-8">
-                    <h1 className="text-3xl md:text-4xl font-bold text-kmff-dark flex items-center gap-3">
+                    <h1 className="text-3xl md:text-4xl font-semibold text-kmff-dark flex items-center gap-3">
                         <span className="w-1.5 h-10 bg-kmff-blue rounded-full"></span>
                         Матчи
                     </h1>
@@ -211,7 +211,7 @@ export default function MatchesPageContent() {
                     <EmptyState />
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {visibleMatches.map((match) => (
                                 <div key={match.id} className="h-full">
                                     <MatchCard match={match} />
@@ -223,7 +223,7 @@ export default function MatchesPageContent() {
                             <div className="text-center mt-8">
                                 <button
                                     onClick={handleLoadMore}
-                                    className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-8 py-3 rounded-lg font-medium hover:bg-gray-50 hover:border-kmff-blue/30 transition-all duration-300"
+                                    className="inline-flex items-center gap-2 bg-white border border-gray-200 text-gray-700 px-5 py-3 rounded-lg font-medium hover:bg-gray-50 hover:border-kmff-blue/30 transition-all duration-300"
                                 >
                                     Показать ещё
                                 </button>

@@ -349,6 +349,73 @@ export interface Team {
   players: TeamPlayer[];
 }
 
+// Team page data from /api/page/teams/{id}
+export interface TeamPagePlayer {
+  player: {
+    id: number;
+    firstname: string;
+    lastname: string;
+    image: string | null;
+    birthday: string | null;
+    goldCardStatus: boolean;
+    position: 'FORWARD' | 'DEFENDER' | 'MIDFIELDER' | 'GOALKEEPER' | null;
+  };
+}
+
+export interface TeamPageMatchResult {
+  id: number;
+  time: string;
+  type: string;
+  chess_result_type: string | null;
+  team_1: {
+    id: number;
+    name: string;
+    goals: number;
+    image: string;
+  };
+  team_2: {
+    id: number;
+    name: string;
+    goals: number;
+    image: string;
+  };
+}
+
+export interface TeamPageCalendarMatch {
+  id: number;
+  type: string;
+  time: string;
+  team_1: { id: number; name: string; image: string };
+  team_2: { id: number; name: string; image: string };
+  address: { id: number; name: string } | null;
+}
+
+export interface TeamPageStats {
+  match_count: number;
+  wins: number;
+  draws: number;
+  defeats: number;
+  tournaments: number;
+  goals: number;
+  missed_goals: number;
+  red_count: number;
+  yellow_count: number;
+  no_misses_count: number;
+  avg_team_player_age: number;
+}
+
+export interface TeamPageData {
+  id: number;
+  name: string;
+  image: string | null;
+  instagram: string | null;
+  uniform_color: string | null;
+  players: TeamPagePlayer[];
+  results: TeamPageMatchResult[];
+  calendar: TeamPageCalendarMatch[];
+  stats: TeamPageStats;
+}
+
 export interface TeamStats {
   teamId: number;
   teamName: string;

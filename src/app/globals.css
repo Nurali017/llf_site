@@ -58,6 +58,16 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-display);
+  font-weight: 400;
+}
+
+/* Lighter font weights like qjl.kz - minimalist transformation */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 500;  /* Reduced from 600 to 500 for lighter, cleaner look */
+}
+
+strong, b {
+  font-weight: 500;  /* Reduced from 600 to 500 for lighter emphasis */
 }
 
 /* ҚЛЛF Logo Styling */
@@ -99,6 +109,29 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-600);
+}
+
+/* Custom Scrollbar for Dark Background */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* Smooth transitions */

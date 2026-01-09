@@ -20,7 +20,7 @@ const Partners = () => {
     return (
         <section className="py-12 bg-kmff-dark border-t border-gray-800">
             <div className="container mx-auto px-4 overflow-hidden">
-                <h3 className="text-center text-gray-400 text-sm font-bold uppercase tracking-widest mb-8">
+                <h3 className="text-center text-gray-400 text-sm font-semibold uppercase tracking-widest mb-8">
                     Официальные партнеры
                 </h3>
                 <div className="flex items-center gap-16 animate-marquee whitespace-nowrap w-max">

@@ -26,11 +26,11 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
     const { data: matches, isLoading: matchesLoading } = usePlayoffResults(selectedStageId);
 
     if (stagesLoading) {
-        return <div className="text-center py-8 text-gray-400">Загрузка стадий...</div>;
+        return <div className="text-center py-5 text-gray-400">Загрузка стадий...</div>;
     }
 
     if (!stages || stages.length === 0) {
-        return <div className="text-center py-8 text-gray-400">Нет данных о плей-офф</div>;
+        return <div className="text-center py-5 text-gray-400">Нет данных о плей-офф</div>;
     }
 
     return (
@@ -41,7 +41,7 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                     <button
                         key={stage.id}
                         onClick={() => setSelectedStageId(stage.id)}
-                        className={`px-4 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all duration-300 flex-shrink-0 ${selectedStageId === stage.id
+                        className={`px-4 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-300 flex-shrink-0 ${selectedStageId === stage.id
                             ? 'bg-blue-500 text-white shadow-md'
                             : 'bg-white/10 text-gray-400 hover:bg-white/20 hover:text-white'
                             }`}
@@ -53,13 +53,13 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
 
             {/* Matches List */}
             {matchesLoading ? (
-                <div className="text-center py-8 text-gray-400">Загрузка матчей...</div>
+                <div className="text-center py-5 text-gray-400">Загрузка матчей...</div>
             ) : matches && matches.length > 0 ? (
                 <div className="space-y-3">
                     {matches.map((match) => (
                         <div
                             key={match.id}
-                            className="bg-white/5 border border-white/10 rounded-xl p-4 hover:shadow-md hover:border-blue-400/30 transition-all duration-300 group"
+                            className="bg-white/5 border border-white/10 rounded-lg p-4 hover:shadow-md hover:border-blue-400/30 transition-all duration-300 group"
                         >
                             <div className="flex items-center justify-between gap-4">
                                 {/* Team 1 */}
@@ -75,7 +75,7 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                                             }}
                                         />
                                     </div>
-                                    <span className="font-bold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
+                                    <span className="font-semibold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
                                         {match.team_1.name}
                                     </span>
                                 </div>
@@ -86,7 +86,7 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                                         {match.team_1.goals} <span className="text-gray-500 mx-1">:</span> {match.team_2.goals}
                                     </div>
                                     {match.penalty_status && (
-                                        <div className="text-[10px] text-gray-400 font-bold uppercase tracking-wider mt-1 bg-white/5 px-2 py-0.5 rounded-full">
+                                        <div className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mt-1 bg-white/5 px-2 py-0.5 rounded-full">
                                             пен. {match.team_1.penalty_goals}:{match.team_2.penalty_goals}
                                         </div>
                                     )}
@@ -105,7 +105,7 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                                             }}
                                         />
                                     </div>
-                                    <span className="font-bold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
+                                    <span className="font-semibold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
                                         {match.team_2.name}
                                     </span>
                                 </div>
@@ -114,7 +114,7 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
                     ))}
                 </div>
             ) : (
-                <div className="text-center py-8 text-gray-400">Нет матчей для этой стадии</div>
+                <div className="text-center py-5 text-gray-400">Нет матчей для этой стадии</div>
             )}
         </div>
     );

@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useOrganization } from '@/contexts/OrganizationContext';
 import { useStandings } from '@/hooks/useStandings';
 import { useScorers } from '@/hooks/useScorers';
@@ -13,7 +14,7 @@ import { Breadcrumbs } from '@/components/Breadcrumbs';
 import { Skeleton } from '@/components/ui/Skeleton';
 import { getImageUrl } from '@/utils/image';
 import { Trophy, ChevronDown, Users } from 'lucide-react';
-import { StandingTeam, CupGroup, PlayoffStage, PlayoffMatch } from '@/types/api';
+import { CupGroup, PlayoffStage } from '@/types/api';
 
 // Tournament Selector for page
 function PageTournamentSelector() {
@@ -22,7 +23,7 @@ function PageTournamentSelector() {
 
     if (tournaments.length <= 1) {
         return activeTournament ? (
-            <div className="flex items-center gap-3 px-4 py-2 bg-white rounded-xl border border-gray-200">
+            <div className="flex items-center gap-3 px-4 py-2 bg-white rounded-lg border border-gray-200">
                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                     {activeTournament.image ? (
                         <img
@@ -34,7 +35,7 @@ function PageTournamentSelector() {
                         <Trophy size={16} className="text-gray-400" />
                     )}
                 </div>
-                <span className="font-bold text-gray-900">{activeTournament.name}</span>
+                <span className="font-semibold text-gray-900">{activeTournament.name}</span>
             </div>
         ) : null;
     }
@@ -43,7 +44,7 @@ function PageTournamentSelector() {
         <div className="relative">
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="flex items-center gap-3 px-4 py-2 bg-white rounded-xl border border-gray-200 hover:border-kmff-blue/30 transition-colors shadow-sm"
+                className="flex items-center gap-3 px-4 py-2 bg-white rounded-lg border border-gray-200 hover:border-kmff-blue/30 transition-colors shadow-sm"
             >
                 <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
                     {activeTournament?.image ? (
@@ -56,12 +57,12 @@ function PageTournamentSelector() {
                         <Trophy size={16} className="text-gray-400" />
                     )}
                 </div>
-                <span className="font-bold text-gray-900">{activeTournament?.name || 'Выберите турнир'}</span>
+                <span className="font-semibold text-gray-900">{activeTournament?.name || 'Выберите турнир'}</span>
                 <ChevronDown size={18} className={`text-gray-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
             </button>
 
             {isOpen && (
-                <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50">
+                <div className="absolute top-full left-0 mt-2 w-72 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-50">
                     {tournaments.map((tournament) => (
                         <button
                             key={`${tournament.type}-${tournament.id}`}
@@ -160,7 +161,7 @@ function FullStandingsTable({ leagueId }: { leagueId: number }) {
                             >
                                 <td className="py-3 px-2 text-center text-gray-400 font-medium">{index + 1}</td>
                                 <td className="py-3 px-2">
-                                    <div className="flex items-center gap-3">
+                                    <Link href={`/team/${standing.team.id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                                         <span className="w-8 h-8 flex-shrink-0 flex items-center justify-center bg-white rounded-full p-1 overflow-hidden">
                                             <img
                                                 src={getImageUrl(standing.team.image)}
@@ -171,8 +172,8 @@ function FullStandingsTable({ leagueId }: { leagueId: number }) {
                                                 }}
                                             />
                                         </span>
-                                        <span className="text-white font-bold">{standing.team.name}</span>
-                                    </div>
+                                        <span className="text-white font-semibold hover:text-blue-400 transition-colors">{standing.team.name}</span>
+                                    </Link>
                                 </td>
                                 <td className="py-3 px-2 text-center text-gray-300">{standing.game_count}</td>
                                 <td className="py-3 px-2 text-center text-emerald-400">{standing.wins}</td>
@@ -180,7 +181,7 @@ function FullStandingsTable({ leagueId }: { leagueId: number }) {
                                 <td className="py-3 px-2 text-center text-red-400">{standing.defeat}</td>
                                 <td className="py-3 px-2 text-center text-gray-300">{standing.scored}</td>
                                 <td className="py-3 px-2 text-center text-gray-300">{standing.missed}</td>
-                                <td className={`py-3 px-2 text-center font-bold ${diffColor}`}>{diffText}</td>
+                                <td className={`py-3 px-2 text-center font-semibold ${diffColor}`}>{diffText}</td>
                                 <td className="py-3 px-2 text-center text-white font-black text-lg">{standing.point}</td>
                             </tr>
                         );
@@ -250,7 +251,7 @@ function FullCupStandings({ cupId }: { cupId: number }) {
                 {hasGroups && (
                     <button
                         onClick={() => setActiveTab('groups')}
-                        className={`px-6 py-2 rounded-lg font-bold text-sm transition-all ${
+                        className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all ${
                             activeTab === 'groups'
                                 ? 'bg-blue-500 text-white'
                                 : 'bg-white/10 text-gray-400 hover:bg-white/20'
@@ -262,7 +263,7 @@ function FullCupStandings({ cupId }: { cupId: number }) {
                 {hasPlayoff && (
                     <button
                         onClick={() => setActiveTab('playoff')}
-                        className={`px-6 py-2 rounded-lg font-bold text-sm transition-all ${
+                        className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all ${
                             activeTab === 'playoff'
                                 ? 'bg-blue-500 text-white'
                                 : 'bg-white/10 text-gray-400 hover:bg-white/20'
@@ -283,10 +284,10 @@ function FullCupStandings({ cupId }: { cupId: number }) {
 // Cup Groups Tables
 function CupGroupsTables({ groups }: { groups: CupGroup[] }) {
     return (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             {groups.map((group) => (
-                <div key={group.group.id} className="bg-white/5 rounded-xl p-4 border border-white/10">
-                    <h4 className="font-bold text-white mb-4">{group.group.name}</h4>
+                <div key={group.group.id} className="bg-white/5 rounded-lg p-4 border border-white/10">
+                    <h4 className="font-semibold text-white mb-4">{group.group.name}</h4>
                     <table className="w-full text-sm">
                         <thead>
                             <tr className="text-xs text-gray-400 border-b border-white/10">
@@ -310,7 +311,7 @@ function CupGroupsTables({ groups }: { groups: CupGroup[] }) {
                                     >
                                         <td className="py-2 px-1 text-center text-gray-400">{idx + 1}</td>
                                         <td className="py-2 px-1">
-                                            <div className="flex items-center gap-2">
+                                            <Link href={`/team/${team.team.id}`} className="flex items-center gap-2 hover:opacity-80 transition-opacity">
                                                 <span className="w-5 h-5 flex-shrink-0 bg-white rounded-full p-0.5 overflow-hidden">
                                                     <img
                                                         src={getImageUrl(team.team.image)}
@@ -318,12 +319,12 @@ function CupGroupsTables({ groups }: { groups: CupGroup[] }) {
                                                         className="w-full h-full object-contain"
                                                     />
                                                 </span>
-                                                <span className="text-gray-200 font-medium truncate">{team.team.name}</span>
-                                            </div>
+                                                <span className="text-gray-200 font-medium truncate hover:text-blue-400 transition-colors">{team.team.name}</span>
+                                            </Link>
                                         </td>
                                         <td className="py-2 px-1 text-center text-gray-400">{team.game_count}</td>
                                         <td className="py-2 px-1 text-center text-gray-400">{diffText}</td>
-                                        <td className="py-2 px-1 text-center text-white font-bold">{team.point}</td>
+                                        <td className="py-2 px-1 text-center text-white font-semibold">{team.point}</td>
                                     </tr>
                                 );
                             })}
@@ -379,15 +380,16 @@ function PlayoffMatches({ playoffId }: { playoffId: number }) {
     }
 
     if (!matches || matches.length === 0) {
-        return <div className="text-center py-8 text-gray-400">Нет матчей</div>;
+        return <div className="text-center py-5 text-gray-400">Нет матчей</div>;
     }
 
     return (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {matches.map((match) => (
-                <div
+                <Link
                     key={match.id}
-                    className="bg-white/5 rounded-xl p-4 border border-white/10 hover:border-white/20 transition-colors"
+                    href={`/match/${match.id}`}
+                    className="bg-white/5 rounded-lg p-4 border border-white/10 hover:border-blue-500/50 hover:bg-white/10 transition-all block"
                 >
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2 flex-1 min-w-0">
@@ -401,9 +403,9 @@ function PlayoffMatches({ playoffId }: { playoffId: number }) {
                             <span className="text-gray-200 font-medium truncate text-sm">{match.team_1.name}</span>
                         </div>
                         <div className="flex items-center gap-2 px-3">
-                            <span className="text-white font-bold text-lg">{match.team_1.goals}</span>
+                            <span className="text-white font-semibold text-lg">{match.team_1.goals}</span>
                             <span className="text-gray-500">-</span>
-                            <span className="text-white font-bold text-lg">{match.team_2.goals}</span>
+                            <span className="text-white font-semibold text-lg">{match.team_2.goals}</span>
                         </div>
                         <div className="flex items-center gap-2 flex-1 min-w-0 justify-end">
                             <span className="text-gray-200 font-medium truncate text-sm">{match.team_2.name}</span>
@@ -421,7 +423,7 @@ function PlayoffMatches({ playoffId }: { playoffId: number }) {
                             ({match.team_1.penalty_goals} - {match.team_2.penalty_goals} пен.)
                         </div>
                     )}
-                </div>
+                </Link>
             ))}
         </div>
     );
@@ -458,7 +460,7 @@ function FullScorersTable({ leagueId, cupId }: { leagueId?: number; cupId?: numb
 
     if (isError || scorers.length === 0) {
         return (
-            <div className="text-center py-8 text-gray-400">
+            <div className="text-center py-5 text-gray-400">
                 {isError ? 'Ошибка загрузки' : 'Нет данных'}
             </div>
         );
@@ -467,11 +469,11 @@ function FullScorersTable({ leagueId, cupId }: { leagueId?: number; cupId?: numb
     return (
         <div className="space-y-4">
             {/* Top Scorer Card */}
-            <div className="relative bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl p-5 overflow-hidden">
+            <Link href={`/player/${scorers[0].id}`} className="relative bg-gradient-to-br from-blue-600 to-blue-800 rounded-lg p-5 overflow-hidden block hover:from-blue-500 hover:to-blue-700 transition-all">
                 <div className="relative z-10 w-2/3">
                     <div className="text-5xl font-black text-white mb-1">{scorers[0].goals}</div>
                     <div className="text-sm text-blue-200 mb-3">голов</div>
-                    <div className="font-bold text-xl text-white mb-1">{scorers[0].name}</div>
+                    <div className="font-semibold text-xl text-white mb-1">{scorers[0].name}</div>
                     <div className="text-sm text-blue-200">{scorers[0].team}</div>
                     <div className="text-xs text-blue-300 mt-2">{scorers[0].games} игр</div>
                 </div>
@@ -487,10 +489,10 @@ function FullScorersTable({ leagueId, cupId }: { leagueId?: number; cupId?: numb
                         }}
                     />
                 </div>
-            </div>
+            </Link>
 
             {/* Rest of scorers */}
-            <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+            <div className="bg-white rounded-lg border border-gray-100 overflow-hidden">
                 <table className="w-full">
                     <thead>
                         <tr className="text-xs text-gray-400 border-b border-gray-100 bg-gray-50">
@@ -506,7 +508,7 @@ function FullScorersTable({ leagueId, cupId }: { leagueId?: number; cupId?: numb
                             <tr key={player.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                                 <td className="py-3 px-3 text-center text-gray-400 font-medium">{index + 2}</td>
                                 <td className="py-3 px-3">
-                                    <div className="flex items-center gap-3">
+                                    <Link href={`/player/${player.id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                                         <div className="w-8 h-8 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
                                             {player.image ? (
                                                 <img
@@ -520,12 +522,12 @@ function FullScorersTable({ leagueId, cupId }: { leagueId?: number; cupId?: numb
                                                 </div>
                                             )}
                                         </div>
-                                        <span className="font-medium text-gray-900">{player.name}</span>
-                                    </div>
+                                        <span className="font-medium text-gray-900 hover:text-blue-600 transition-colors">{player.name}</span>
+                                    </Link>
                                 </td>
                                 <td className="py-3 px-3 text-gray-500 text-sm">{player.team}</td>
                                 <td className="py-3 px-3 text-center text-gray-500">{player.games}</td>
-                                <td className="py-3 px-3 text-center font-bold text-blue-600">{player.goals}</td>
+                                <td className="py-3 px-3 text-center font-semibold text-blue-600">{player.goals}</td>
                             </tr>
                         ))}
                     </tbody>
@@ -556,12 +558,12 @@ function FullCardsTable({ leagueId }: { leagueId?: number }) {
     }, [apiCards]);
 
     return (
-        <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+        <div className="bg-white rounded-lg border border-gray-100 overflow-hidden">
             {/* Tabs */}
             <div className="flex border-b border-gray-100">
                 <button
                     onClick={() => setCardType('yellow')}
-                    className={`flex-1 py-3 text-sm font-bold transition-colors ${
+                    className={`flex-1 py-3 text-sm font-semibold transition-colors ${
                         cardType === 'yellow'
                             ? 'bg-yellow-50 text-yellow-700 border-b-2 border-yellow-400'
                             : 'text-gray-500 hover:bg-gray-50'
@@ -571,7 +573,7 @@ function FullCardsTable({ leagueId }: { leagueId?: number }) {
                 </button>
                 <button
                     onClick={() => setCardType('red')}
-                    className={`flex-1 py-3 text-sm font-bold transition-colors ${
+                    className={`flex-1 py-3 text-sm font-semibold transition-colors ${
                         cardType === 'red'
                             ? 'bg-red-50 text-red-700 border-b-2 border-red-400'
                             : 'text-gray-500 hover:bg-gray-50'
@@ -608,7 +610,7 @@ function FullCardsTable({ leagueId }: { leagueId?: number }) {
                             <tr key={player.id} className="border-b border-gray-50 hover:bg-gray-50 transition-colors">
                                 <td className="py-3 px-3 text-center text-gray-400 font-medium">{index + 1}</td>
                                 <td className="py-3 px-3">
-                                    <div className="flex items-center gap-3">
+                                    <Link href={`/player/${player.id}`} className="flex items-center gap-3 hover:opacity-80 transition-opacity">
                                         <div className="w-8 h-8 rounded-full bg-gray-100 overflow-hidden flex-shrink-0">
                                             {player.image ? (
                                                 <img
@@ -622,12 +624,12 @@ function FullCardsTable({ leagueId }: { leagueId?: number }) {
                                                 </div>
                                             )}
                                         </div>
-                                        <span className="font-medium text-gray-900">{player.name}</span>
-                                    </div>
+                                        <span className="font-medium text-gray-900 hover:text-blue-600 transition-colors">{player.name}</span>
+                                    </Link>
                                 </td>
                                 <td className="py-3 px-3 text-gray-500 text-sm">{player.team}</td>
                                 <td className="py-3 px-3 text-center text-gray-500">{player.games}</td>
-                                <td className={`py-3 px-3 text-center font-bold ${cardType === 'yellow' ? 'text-yellow-600' : 'text-red-600'}`}>
+                                <td className={`py-3 px-3 text-center font-semibold ${cardType === 'yellow' ? 'text-yellow-600' : 'text-red-600'}`}>
                                     {player.count}
                                 </td>
                             </tr>
@@ -644,7 +646,7 @@ function TournamentsSkeleton() {
     return (
         <div className="space-y-6">
             <Skeleton className="h-12 w-64" />
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                 <div className="lg:col-span-2 space-y-4">
                     {Array.from({ length: 8 }).map((_, i) => (
                         <Skeleton key={i} className="h-12 w-full" />
@@ -669,12 +671,12 @@ export default function TournamentsPageContent() {
 
     return (
         <div className="min-h-screen bg-gray-50">
-            <div className="container mx-auto px-4 py-8">
+            <div className="container mx-auto px-4 py-5">
                 <Breadcrumbs />
 
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="text-3xl md:text-4xl font-bold text-kmff-dark flex items-center gap-3">
+                    <h1 className="text-3xl md:text-4xl font-semibold text-kmff-dark flex items-center gap-3">
                         <span className="w-1.5 h-10 bg-kmff-blue rounded-full"></span>
                         Турниры
                     </h1>
@@ -686,7 +688,7 @@ export default function TournamentsPageContent() {
                 {orgLoading ? (
                     <TournamentsSkeleton />
                 ) : tournaments.length === 0 ? (
-                    <div className="text-center py-12 bg-white rounded-xl border border-gray-100">
+                    <div className="text-center py-12 bg-white rounded-lg border border-gray-100">
                         <Trophy className="w-16 h-16 text-gray-300 mx-auto mb-4" />
                         <p className="text-gray-500 font-medium">Турниры не найдены</p>
                         <p className="text-gray-400 text-sm mt-2">Попробуйте выбрать другой город</p>
@@ -699,11 +701,11 @@ export default function TournamentsPageContent() {
                         </div>
 
                         {/* Main Content */}
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
                             {/* Left Column - Standings */}
                             <div className="lg:col-span-2">
-                                <div className="bg-gradient-to-br from-[#1e3a8a] via-[#172554] to-[#1e3a8a] rounded-2xl p-6 shadow-lg">
-                                    <h2 className="text-lg font-bold text-white mb-6 flex items-center gap-2">
+                                <div className="bg-gradient-to-br from-[#1e3a8a] via-[#172554] to-[#1e3a8a] rounded-lg p-4 shadow-lg">
+                                    <h2 className="text-lg font-semibold text-white mb-6 flex items-center gap-2">
                                         <span className="w-1 h-6 bg-blue-400 rounded-full"></span>
                                         Турнирная таблица
                                     </h2>
@@ -716,7 +718,7 @@ export default function TournamentsPageContent() {
                             <div className="space-y-6">
                                 {/* Scorers */}
                                 <div>
-                                    <h2 className="text-lg font-bold text-kmff-dark mb-4 flex items-center gap-2">
+                                    <h2 className="text-lg font-semibold text-kmff-dark mb-4 flex items-center gap-2">
                                         <span className="w-1 h-6 bg-kmff-blue rounded-full"></span>
                                         Бомбардиры
                                     </h2>
@@ -726,7 +728,7 @@ export default function TournamentsPageContent() {
                                 {/* Cards - only for leagues */}
                                 {leagueId && (
                                     <div>
-                                        <h2 className="text-lg font-bold text-kmff-dark mb-4 flex items-center gap-2">
+                                        <h2 className="text-lg font-semibold text-kmff-dark mb-4 flex items-center gap-2">
                                             <span className="w-1 h-6 bg-kmff-blue rounded-full"></span>
                                             Карточки
                                         </h2>

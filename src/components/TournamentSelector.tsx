@@ -51,8 +51,8 @@ export default function TournamentSelector() {
             </button>
 
             {isOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50 animate-in fade-in slide-in-from-top-2">
-                    <div className="px-3 py-2 text-xs font-bold text-gray-400 uppercase tracking-wider">
+                <div className="absolute top-full left-0 mt-2 w-64 bg-kmff-dark rounded-lg shadow-lg border border-white/20 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+                    <div className="px-3 py-2 text-xs font-medium text-white/40 uppercase tracking-wider">
                         Турниры
                     </div>
                     {tournaments.map((tournament) => (
@@ -62,12 +62,12 @@ export default function TournamentSelector() {
                                 setActiveTournament(tournament);
                                 setIsOpen(false);
                             }}
-                            className={`w-full text-left px-4 py-2 text-sm hover:bg-gray-50 transition-colors flex items-center gap-3 ${activeTournament?.id === tournament.id && activeTournament?.type === tournament.type
-                                ? 'text-kmff-blue font-bold bg-blue-50'
-                                : 'text-gray-700'
+                            className={`w-full text-left px-4 py-2 text-sm hover:bg-white/5 transition-colors flex items-center gap-3 ${activeTournament?.id === tournament.id && activeTournament?.type === tournament.type
+                                ? 'text-primary-400 font-semibold bg-primary-900/30'
+                                : 'text-white/80'
                                 }`}
                         >
-                            <div className="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 overflow-hidden">
+                            <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center flex-shrink-0 overflow-hidden">
                                 {tournament.image ? (
                                     <img
                                         src={getImageUrl(tournament.image)}
@@ -76,7 +76,7 @@ export default function TournamentSelector() {
                                         onError={handleImageError}
                                     />
                                 ) : (
-                                    <Trophy size={12} className="text-gray-400" />
+                                    <Trophy size={12} className="text-white/40" />
                                 )}
                             </div>
                             <span className="truncate">{tournament.name}</span>

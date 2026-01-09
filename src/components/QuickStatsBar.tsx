@@ -37,35 +37,31 @@ export default function QuickStatsBar() {
     ];
 
     return (
-        <div className="bg-mono-100 border-y-2 border-mono-0 py-4">
+        <div className="bg-kmff-dark shadow-md">
             <div className="container mx-auto px-4">
-                {/* Brutalist Stats Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-1">
+                {/* Compact Inline Stats */}
+                <div className="flex items-center justify-center gap-5 h-12">
                     {stats.map((stat, i) => (
                         <div
                             key={i}
-                            className={`flex flex-col items-center justify-center py-4 border-2 border-mono-0 ${
-                                stat.isLive && stat.pulse ? 'bg-accent-lime' : 'bg-mono-100'
-                            }`}
+                            className="flex items-center gap-1.5"
                         >
                             {/* Icon */}
                             <stat.icon
-                                className={`w-6 h-6 mb-3 ${
-                                    stat.isLive && stat.pulse ? 'text-mono-100 animate-pulse' : 'text-mono-0'
+                                className={`w-4 h-4 ${
+                                    stat.isLive && stat.pulse ? 'text-accent-green animate-pulse' : 'text-white/60'
                                 }`}
                             />
 
-                            {/* Giant Number - Monospace */}
-                            <span className={`font-mono text-h1 font-bold leading-none mb-2 ${
-                                stat.isLive && stat.pulse ? 'text-mono-100' : 'text-mono-0'
+                            {/* Number */}
+                            <span className={`font-display text-lg font-semibold ${
+                                stat.isLive && stat.pulse ? 'text-accent-green' : 'text-white'
                             }`}>
                                 {stat.value}
                             </span>
 
-                            {/* Label - Uppercase Monospace */}
-                            <span className={`font-mono text-micro uppercase tracking-wider ${
-                                stat.isLive && stat.pulse ? 'text-mono-100 opacity-80' : 'text-mono-0 opacity-70'
-                            }`}>
+                            {/* Label */}
+                            <span className="font-display text-micro text-white/80">
                                 {stat.label}
                             </span>
                         </div>

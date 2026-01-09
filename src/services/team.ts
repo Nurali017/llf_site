@@ -1,10 +1,9 @@
 import { fetchAPI } from './api';
-import { Team, TeamStats } from '@/types/api';
+import { TeamPageData } from '@/types/api';
 
-export async function fetchTeam(teamId: number): Promise<Team> {
-  return fetchAPI<Team>(`/api/teams/${teamId}`);
-}
-
-export async function fetchTeamStats(teamId: number): Promise<TeamStats> {
-  return fetchAPI<TeamStats>(`/api/page/table/team?id=${teamId}`);
+/**
+ * Fetch team page data (basic info + stats + results + calendar)
+ */
+export async function fetchTeamPage(teamId: number): Promise<TeamPageData> {
+  return fetchAPI<TeamPageData>(`/api/page/teams/${teamId}`);
 }

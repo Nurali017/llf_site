@@ -150,12 +150,12 @@ const MatchWidget = () => {
     };
 
     return (
-        <section className="py-8 bg-mono-0">
+        <section className="py-5">
             <div className="w-full">
-                {/* Brutalist Header with Filters */}
-                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-6 mb-8 pb-6 border-b-4 border-mono-100">
-                    <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8">
-                        <h2 className="font-display text-h1 font-bold uppercase tracking-tight whitespace-nowrap">
+                {/* Header with Filters */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 md:gap-4 mb-8 pb-6 border-b border-neutral-200">
+                    <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-5">
+                        <h2 className="font-display text-h1 font-semibold text-neutral-900 whitespace-nowrap">
                             Матч-центр
                         </h2>
 
@@ -163,17 +163,17 @@ const MatchWidget = () => {
                         <MatchFilters currentFilter={activeFilter} onFilterChange={setActiveFilter} />
                     </div>
 
-                    {/* Navigation Arrows - Brutalist Square */}
+                    {/* Navigation Arrows - Rounded */}
                     <div className="flex gap-2 hidden md:flex">
                         <button
                             onClick={() => scroll('left')}
-                            className="w-12 h-12 bg-mono-0 border-2 border-mono-100 flex items-center justify-center text-mono-100 hover:bg-mono-100 hover:text-mono-0 transition-colors duration-150"
+                            className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-neutral-700 hover:bg-primary-700 hover:text-white transition-all duration-200"
                         >
                             <ChevronLeft size={24} strokeWidth={2} />
                         </button>
                         <button
                             onClick={() => scroll('right')}
-                            className="w-12 h-12 bg-mono-0 border-2 border-mono-100 flex items-center justify-center text-mono-100 hover:bg-mono-100 hover:text-mono-0 transition-colors duration-150"
+                            className="w-12 h-12 bg-white rounded-full shadow-md flex items-center justify-center text-neutral-700 hover:bg-primary-700 hover:text-white transition-all duration-200"
                         >
                             <ChevronRight size={24} strokeWidth={2} />
                         </button>
@@ -184,24 +184,24 @@ const MatchWidget = () => {
                     {isLoading ? (
                         <div className="flex gap-4 overflow-hidden">
                             {[1, 2, 3, 4].map((i) => (
-                                <div key={i} className="min-w-[280px] md:min-w-[300px] h-[240px] border-2 border-mono-100 p-5">
+                                <div key={i} className="min-w-[280px] md:min-w-[300px] h-[240px] rounded-lg shadow-md bg-white p-5">
                                     <div className="animate-pulse flex flex-col h-full items-center justify-between">
-                                        <div className="h-4 w-24 bg-mono-10"></div>
+                                        <div className="h-4 w-24 bg-neutral-200 rounded"></div>
                                         <div className="flex items-center justify-between w-full px-4">
-                                            <div className="w-16 h-16 bg-mono-10"></div>
-                                            <div className="w-12 h-8 bg-mono-10"></div>
-                                            <div className="w-16 h-16 bg-mono-10"></div>
+                                            <div className="w-16 h-16 bg-neutral-200 rounded"></div>
+                                            <div className="w-12 h-8 bg-neutral-200 rounded"></div>
+                                            <div className="w-16 h-16 bg-neutral-200 rounded"></div>
                                         </div>
-                                        <div className="h-4 w-32 bg-mono-10"></div>
+                                        <div className="h-4 w-32 bg-neutral-200 rounded"></div>
                                     </div>
                                 </div>
                             ))}
                         </div>
                     ) : filteredMatches.length === 0 ? (
-                        <div className="text-center py-16 border-2 border-mono-100">
+                        <div className="text-center py-16 rounded-lg shadow-md bg-white">
                             <div className="text-6xl mb-4">⚽</div>
-                            <p className="font-display text-body font-bold mb-2">Матчи пока не запланированы</p>
-                            <p className="font-mono text-micro uppercase opacity-60">Следите за обновлениями</p>
+                            <p className="font-display text-base font-semibold mb-2 text-neutral-900">Матчи пока не запланированы</p>
+                            <p className="font-display text-sm text-neutral-600">Следите за обновлениями</p>
                         </div>
                     ) : (
                         <div

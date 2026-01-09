@@ -1,20 +1,32 @@
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, MapPin, Phone } from 'lucide-react';
 
 const Footer = () => {
     return (
-        <footer className="bg-neutral-900 text-white pt-16 pb-8 border-t-2 border-neutral-800">
+        <footer className="bg-kmff-dark text-white pt-16 pb-8 border-t-2 border-white/10">
             <div className="container mx-auto px-4">
 
                 {/* Top Section: Logo & About */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
 
-                    {/* Brand - Text Only */}
+                    {/* Brand - Logos */}
                     <div className="col-span-1 md:col-span-1">
-                        <div className="mb-6">
-                            <h2 className="font-display text-2xl font-bold tracking-tight mb-2">
-                                КФМФ
-                            </h2>
+                        <div className="mb-6 flex items-center gap-4">
+                            <Image
+                                src="/kmff-logo.jpg"
+                                alt="KMFF Logo"
+                                width={70}
+                                height={70}
+                                className="h-14 w-14 md:h-16 md:w-16 rounded-full object-cover"
+                            />
+                            <Image
+                                src="/llf-logo.png"
+                                alt="LLF Logo"
+                                width={120}
+                                height={60}
+                                className="h-10 md:h-12 w-auto object-contain"
+                            />
                         </div>
                         <p className="font-display text-sm leading-relaxed mb-6 text-neutral-300">
                             Официальный сайт Казахстанской федерации мини-футбола. Развитие и популяризация мини-футбола в Казахстане.
@@ -34,7 +46,7 @@ const Footer = () => {
 
                     {/* Links Column */}
                     <div>
-                        <h4 className="font-display text-base font-semibold mb-6 text-white">Федерация</h4>
+                        <h4 className="font-display text-base font-medium mb-6 text-white">Федерация</h4>
                         <ul className="space-y-3 font-display text-sm text-neutral-300">
                             <li>
                                 <Link href="/about" className="transition-colors hover:text-primary-400">
@@ -61,7 +73,7 @@ const Footer = () => {
 
                     {/* Contacts */}
                     <div>
-                        <h4 className="font-display text-base font-semibold mb-6 text-white">Контакты</h4>
+                        <h4 className="font-display text-base font-medium mb-6 text-white">Контакты</h4>
                         <ul className="space-y-4 font-display text-sm text-neutral-300">
                             <li className="flex items-start gap-3">
                                 <MapPin size={18} className="mt-0.5 flex-shrink-0" />
@@ -80,7 +92,7 @@ const Footer = () => {
 
                     {/* Mobile App */}
                     <div>
-                        <h4 className="font-display text-base font-semibold mb-6 text-white">Приложение</h4>
+                        <h4 className="font-display text-base font-medium mb-6 text-white">Приложение</h4>
                         <p className="font-display text-sm mb-4 text-neutral-300">
                             Скачайте наше приложение для удобного доступа к матчам и статистике
                         </p>
@@ -94,7 +106,7 @@ const Footer = () => {
                                 </svg>
                                 <div className="text-left">
                                     <div className="font-display text-[10px] text-neutral-400">Загрузите в</div>
-                                    <div className="font-display text-sm font-semibold">App Store</div>
+                                    <div className="font-display text-sm font-medium">App Store</div>
                                 </div>
                             </a>
                             <a
@@ -106,7 +118,7 @@ const Footer = () => {
                                 </svg>
                                 <div className="text-left">
                                     <div className="font-display text-[10px] text-neutral-400">Доступно в</div>
-                                    <div className="font-display text-sm font-semibold">Google Play</div>
+                                    <div className="font-display text-sm font-medium">Google Play</div>
                                 </div>
                             </a>
                         </div>
@@ -119,7 +131,7 @@ const Footer = () => {
                 {/* Bottom Section */}
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-display text-sm text-neutral-400">
                     <p>© 2025 КФМФ. Все права защищены.</p>
-                    <div className="flex gap-6">
+                    <div className="flex gap-4">
                         <Link href="#" className="transition-colors hover:text-primary-400">
                             Конфиденциальность
                         </Link>

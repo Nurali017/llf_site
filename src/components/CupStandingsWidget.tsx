@@ -32,8 +32,8 @@ const CupStandingsWidget = ({ cupId }: CupStandingsWidgetProps) => {
 
     if (groupsLoading && playoffLoading) {
         return (
-            <div className="border-2 border-mono-100 p-8">
-                <div className="font-mono text-micro uppercase tracking-wider text-center">
+            <div className="rounded-lg shadow-md bg-kmff-dark p-5">
+                <div className="font-display text-sm text-center text-white/60">
                     Загрузка...
                 </div>
             </div>
@@ -42,8 +42,8 @@ const CupStandingsWidget = ({ cupId }: CupStandingsWidgetProps) => {
 
     if (!hasGroups && !hasPlayoff) {
         return (
-            <div className="border-2 border-mono-100 p-8">
-                <div className="font-mono text-micro uppercase tracking-wider text-center">
+            <div className="rounded-lg shadow-md bg-kmff-dark p-5">
+                <div className="font-display text-sm text-center text-white/60">
                     Нет данных
                 </div>
             </div>
@@ -51,16 +51,16 @@ const CupStandingsWidget = ({ cupId }: CupStandingsWidgetProps) => {
     }
 
     return (
-        <div className="space-y-0">
-            {/* Brutalist Tabs */}
-            <div className="flex border-2 border-mono-100 border-b-0">
+        <div className="rounded-lg shadow-md bg-kmff-dark overflow-hidden">
+            {/* Tabs */}
+            <div className="flex border-b border-white/10">
                 {hasGroups && (
                     <button
                         onClick={() => setActiveTab('groups')}
-                        className={`flex-1 px-6 py-3 font-mono text-micro font-bold uppercase tracking-wider transition-colors duration-150 border-r-2 border-mono-100 last:border-r-0 ${
+                        className={`flex-1 px-6 py-3 font-display text-sm font-medium transition-all duration-200 ${
                             activeTab === 'groups'
-                                ? 'bg-accent-lime text-mono-100'
-                                : 'bg-mono-0 text-mono-100 hover:bg-mono-10'
+                                ? 'bg-primary-700 text-white'
+                                : 'bg-kmff-dark text-white/70 hover:bg-white/5'
                         }`}
                     >
                         Группы
@@ -69,10 +69,10 @@ const CupStandingsWidget = ({ cupId }: CupStandingsWidgetProps) => {
                 {hasPlayoff && (
                     <button
                         onClick={() => setActiveTab('playoff')}
-                        className={`flex-1 px-6 py-3 font-mono text-micro font-bold uppercase tracking-wider transition-colors duration-150 ${
+                        className={`flex-1 px-6 py-3 font-display text-sm font-medium transition-all duration-200 ${
                             activeTab === 'playoff'
-                                ? 'bg-accent-lime text-mono-100'
-                                : 'bg-mono-0 text-mono-100 hover:bg-mono-10'
+                                ? 'bg-primary-700 text-white'
+                                : 'bg-kmff-dark text-white/70 hover:bg-white/5'
                         }`}
                     >
                         Плэй-офф

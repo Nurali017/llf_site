@@ -26,7 +26,7 @@ export function ErrorState({
   className = '',
 }: ErrorStateProps) {
   return (
-    <div className={`text-center py-12 bg-red-50 rounded-xl border border-red-100 ${className}`}>
+    <div className={`text-center py-12 bg-red-50 rounded-lg border border-red-100 ${className}`}>
       <div className="w-16 h-16 bg-red-100 text-red-500 rounded-full flex items-center justify-center mx-auto mb-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
