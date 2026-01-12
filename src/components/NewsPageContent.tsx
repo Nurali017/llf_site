@@ -9,23 +9,21 @@ import { NewsItem } from '@/types/api';
 import { getImageUrl } from '@/utils/image';
 import { ITEMS_PER_PAGE } from '@/utils/constants';
 import Image from 'next/image';
-import { Calendar } from 'lucide-react';
 import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { mutate } from 'swr';
+import Link from 'next/link';
 
 function NewsGridSkeleton() {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
             {Array.from({ length: 6 }).map((_, i) => (
-                <div key={i} className="bg-white rounded-lg border border-gray-100 overflow-hidden">
-                    <Skeleton className="h-48 md:h-56 w-full" />
-                    <div className="p-5">
-                        <Skeleton className="h-5 w-full mb-2" />
-                        <Skeleton className="h-5 w-3/4 mb-4" />
-                        <Skeleton className="h-4 w-full mb-2" />
-                        <Skeleton className="h-4 w-2/3 mb-4" />
-                        <Skeleton className="h-3 w-24" />
+                <div key={i} className="flex gap-3 bg-white overflow-hidden">
+                    <Skeleton className="flex-shrink-0 w-24 md:w-32 aspect-square" />
+                    <div className="flex-1 flex flex-col justify-center py-2 pr-3">
+                        <Skeleton className="h-4 w-full mb-1" />
+                        <Skeleton className="h-4 w-3/4 mb-2" />
+                        <Skeleton className="h-3 w-16" />
                     </div>
                 </div>
             ))}
@@ -68,37 +66,41 @@ function ErrorState({ onRetry }: { onRetry: () => void }) {
  * Обернута в React.memo для оптимизации производительности
  */
 const NewsCard = React.memo(function NewsCard({ item }: { item: NewsItem }) {
+    const imageUrl = typeof item.image === 'string'
+        ? getImageUrl(item.image)
+        : Array.isArray(item.image) && item.image.length > 0
+            ? getImageUrl(item.image[0].url)
+            : '/placeholder-news.jpg';
+
     return (
-        <article className="group bg-white rounded-lg border border-gray-100 overflow-hidden hover:shadow-lg hover:border-kmff-blue/20 transition-all duration-300">
-            <div className="relative h-48 md:h-56 overflow-hidden bg-gray-100">
-                <Image
-                    src={getImageUrl(item.image)}
-                    alt={item.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, 50vw"
-                />
-            </div>
+        <Link href={`/news/${item.id}`}>
+            <article className="group flex gap-3 bg-white overflow-hidden hover:shadow-md transition-all duration-300 cursor-pointer">
+                <div className="relative flex-shrink-0 w-24 md:w-32 aspect-square overflow-hidden bg-gray-100">
+                    <Image
+                        src={imageUrl}
+                        alt={item.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                        sizes="(max-width: 768px) 96px, 128px"
+                        onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/placeholder-news.jpg';
+                        }}
+                    />
+                </div>
 
-            <div className="p-5">
-                <h3 className="text-lg font-semibold text-gray-900 group-hover:text-kmff-blue transition-colors line-clamp-2 mb-3">
-                    {item.title}
-                </h3>
+                <div className="flex-1 flex flex-col justify-center py-2 pr-3">
+                    <h3 className="text-sm md:text-base font-semibold text-gray-900 group-hover:text-kmff-blue transition-colors line-clamp-2 mb-1">
+                        {item.title}
+                    </h3>
 
-                {item.description && (
-                    <p className="text-gray-600 text-sm line-clamp-2 mb-4">
-                        {item.description}
-                    </p>
-                )}
-
-                {item.date && (
-                    <div className="flex items-center gap-1.5 text-gray-400 text-xs font-medium">
-                        <Calendar className="w-3.5 h-3.5" />
-                        {item.date}
-                    </div>
-                )}
-            </div>
-        </article>
+                    {item.date && (
+                        <p className="text-gray-400 text-xs">
+                            {item.date}
+                        </p>
+                    )}
+                </div>
+            </article>
+        </Link>
     );
 });
 
@@ -120,7 +122,8 @@ export default function NewsPageContent() {
 
     const handleRetry = () => {
         if (selectedOrganization?.id) {
-            mutate(`/api/page/tape?organization=${selectedOrganization.id}`);
+            const cacheKey = `news-${selectedOrganization.id}${category ? `-${category}` : ''}`;
+            mutate(cacheKey);
         }
     };
 
@@ -149,7 +152,7 @@ export default function NewsPageContent() {
                     <EmptyState isDK={isDKCategory} />
                 ) : (
                     <>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-2 md:grid-cols-3 gap-2 md:gap-3">
                             {visibleNews.map((item) => (
                                 <NewsCard key={item.id} item={item} />
                             ))}

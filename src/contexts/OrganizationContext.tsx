@@ -3,19 +3,14 @@
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { mutate } from 'swr';
 import { useOrganizations } from '@/hooks/useOrganizations';
-import { getCurrentSeason } from '@/services/seasons';
-import { OrganizationWithSlug, SeasonLeague, SeasonCup } from '@/types/api';
+import { getTournaments, Tournament } from '@/services/tournaments';
+import { OrganizationWithSlug } from '@/types/api';
 import { getStoredOrgSlug, setStoredOrgSlug, removeStoredOrgSlug } from '@/utils/localStorage';
 
 export type TournamentType = 'league' | 'cup';
 
-export interface Tournament {
-    id: number;
-    name: string;
-    type: TournamentType;
-    image?: string;
-    priority?: number;
-}
+// Re-export Tournament for backward compatibility
+export type { Tournament };
 
 interface OrganizationContextType {
     selectedOrganization: OrganizationWithSlug | null;
@@ -115,56 +110,29 @@ export const OrganizationProvider: React.FC<OrganizationProviderProps> = ({
 
     useEffect(() => {
         if (selectedOrganization) {
-            getCurrentSeason(selectedOrganization.id)
-                .then((response) => {
-                    if (response && response.length > 0) {
-                        const currentSeason = response[0];
+            getTournaments(selectedOrganization.id)
+                .then((allTournaments) => {
+                    // Sort by priority (ascending - lower number = higher priority)
+                    // Priority 1 = highest, should be first in list
+                    allTournaments.sort((a, b) => a.priority - b.priority);
 
+                    setTournaments(allTournaments);
 
-                        // Collect all tournaments
-                        const leagues: Tournament[] = (currentSeason.leagues || []).map(l => ({
-                            id: l.id,
-                            name: l.name,
-                            type: 'league',
-                            image: l.image,
-                            priority: l.priority
-                        }));
-
-                        const cups: Tournament[] = (currentSeason.cups || []).map(c => ({
-                            id: c.id,
-                            name: c.name,
-                            type: 'cup',
-                            image: c.image,
-                            priority: c.priority
-                        }));
-
-                        const allTournaments = [...leagues, ...cups];
-
-                        // Sort by priority (descending), then by name (optional fallback)
-                        allTournaments.sort((a, b) => (b.priority || 0) - (a.priority || 0));
-
-                        setTournaments(allTournaments);
-
-                        // Set initial active tournament (highest priority)
-                        if (allTournaments.length > 0) {
-                            setActiveTournament(allTournaments[0]);
-                        } else {
-                            setActiveTournament(null);
-                        }
-
-                        // Keep legacy IDs for backward compatibility if needed, 
-                        // but primarily rely on activeTournament now
-                        setLeagueId(currentSeason.leagues?.[0]?.id);
-                        setCupId(currentSeason.cups?.[0]?.id);
+                    // Set initial active tournament (highest priority = lowest number)
+                    if (allTournaments.length > 0) {
+                        setActiveTournament(allTournaments[0]);
                     } else {
-                        setLeagueId(undefined);
-                        setCupId(undefined);
-                        setTournaments([]);
                         setActiveTournament(null);
                     }
+
+                    // Keep legacy IDs for backward compatibility if needed
+                    const firstLeague = allTournaments.find(t => t.type === 'league');
+                    const firstCup = allTournaments.find(t => t.type === 'cup');
+                    setLeagueId(firstLeague?.id);
+                    setCupId(firstCup?.id);
                 })
                 .catch((error) => {
-
+                    console.error('Failed to load tournaments:', error);
                     setLeagueId(undefined);
                     setCupId(undefined);
                     setTournaments([]);

@@ -479,13 +479,13 @@ function FullScorersTable({ leagueId, cupId }: { leagueId?: number; cupId?: numb
                 </div>
                 <div className="absolute -bottom-4 -right-4 w-36 h-44">
                     <Image
-                        src={getImageUrl(scorers[0].image) || '/player-1.png'}
+                        src={getImageUrl(scorers[0].image) || '/player-default.png'}
                         alt={scorers[0].name}
                         fill
                         sizes="150px"
                         className="object-contain object-bottom"
                         onError={(e) => {
-                            (e.target as HTMLImageElement).src = '/player-1.png';
+                            (e.target as HTMLImageElement).src = '/player-default.png';
                         }}
                     />
                 </div>

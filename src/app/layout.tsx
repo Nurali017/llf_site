@@ -3,6 +3,7 @@ import { Manrope, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { OrganizationProvider } from "@/contexts/OrganizationContext";
 import { ErrorBoundary } from '@/components/ErrorBoundary';
+import { APP_CONFIG } from '@/config/constants';
 
 // Brutally Minimal Typography System
 // Manrope: Geometric display font with full Kazakh Cyrillic support
@@ -21,7 +22,7 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://llfsite.vercel.app'), // TODO: Replace with real domain
+  metadataBase: new URL(APP_CONFIG.siteUrl),
   title: "KMFF - Казахстанская Лига Любительского Футбола",
   description: "Результаты матчей, турнирные таблицы, новости и статистика KMFF.",
   icons: {
@@ -42,20 +43,15 @@ export default function RootLayout({
     '@type': 'SportsOrganization',
     name: 'Казахстанская Федерация Мини-Футбола',
     alternateName: 'КФМФ',
-    url: 'https://llfsite.vercel.app',
-    logo: 'https://llfsite.vercel.app/kmff-logo.jpg',
+    url: APP_CONFIG.siteUrl,
+    logo: `${APP_CONFIG.siteUrl}/kmff-logo.jpg`,
     description: 'Официальная платформа Казахстанской Федерации Мини-Футбола. Результаты матчей, турнирные таблицы и статистика.',
     foundingDate: '2010',
     address: {
       '@type': 'PostalAddress',
       addressCountry: 'KZ',
     },
-    // TODO: Add real social media links
-    sameAs: [
-      // 'https://facebook.com/kmff',
-      // 'https://instagram.com/kmff_kz',
-      // 'https://vk.com/kmff',
-    ],
+    sameAs: [],
     sport: 'Futsal',
   };
 

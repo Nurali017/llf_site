@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
+import { APP_CONFIG } from '@/config/constants';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-    const baseUrl = 'https://llfsite.vercel.app';
+    const baseUrl = APP_CONFIG.siteUrl;
 
     // Статические страницы
     const staticPages: MetadataRoute.Sitemap = [

@@ -51,3 +51,48 @@ export async function fetchAPI<T>(endpoint: string): Promise<T> {
     );
   }
 }
+
+// Hall of Fame Types
+export interface HallOfFameTeam {
+  id: number;
+  name: string;
+  image: string;
+}
+
+export interface HallOfFameTournament {
+  id: number;
+  name: string;
+  sport_type: string;
+}
+
+export interface HallOfFameItem {
+  team: HallOfFameTeam;
+  tournament: HallOfFameTournament;
+  trophy_photo: string;
+  place: number;
+  year: number;
+}
+
+export interface HallOfFameResponse {
+  data: HallOfFameItem[];
+  pagination: {
+    total: number;
+    page: number;
+    limit: number;
+    totalPages: number;
+  };
+}
+
+export interface HallOfFameParams {
+  page?: number;
+  limit?: number;
+  place?: number;
+  year?: number;
+  sport_type?: string;
+}
+
+// Hall of Fame API (organizationId = 1)
+export async function getHallOfFame(params?: HallOfFameParams): Promise<HallOfFameResponse> {
+  const query = buildQueryString(params as Record<string, string | number | undefined> || {});
+  return fetchAPI<HallOfFameResponse>(`/api/organizations/1/hall-of-fame${query}`);
+}

@@ -90,10 +90,12 @@ export interface LiveMatch extends Match {
 // News
 export interface NewsItem {
   id: number;
-  image: string;
+  image: string | { url: string }[];
   title: string;
   description: string;
   date?: string;
+  category?: string;
+  created_at?: string;
 }
 
 export interface NewsResponse {

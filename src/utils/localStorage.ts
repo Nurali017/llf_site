@@ -13,7 +13,9 @@ export function getStoredOrgSlug(): string | null {
     return localStorage.getItem(STORAGE_KEY);
   } catch (error) {
     // Обработка случаев когда localStorage заблокирован (инкогнито и т.д.)
-    console.warn('Failed to read from localStorage:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Failed to read from localStorage:', error);
+    }
     return null;
   }
 }
@@ -27,7 +29,9 @@ export function setStoredOrgSlug(slug: string): void {
   try {
     localStorage.setItem(STORAGE_KEY, slug);
   } catch (error) {
-    console.warn('Failed to write to localStorage:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Failed to write to localStorage:', error);
+    }
   }
 }
 
@@ -40,6 +44,8 @@ export function removeStoredOrgSlug(): void {
   try {
     localStorage.removeItem(STORAGE_KEY);
   } catch (error) {
-    console.warn('Failed to remove from localStorage:', error);
+    if (process.env.NODE_ENV === 'development') {
+      console.warn('Failed to remove from localStorage:', error);
+    }
   }
 }

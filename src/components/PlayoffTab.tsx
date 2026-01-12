@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { usePlayoffStages } from '@/hooks/usePlayoffStages';
 import { usePlayoffResults } from '@/hooks/usePlayoffResults';
 import { getImageUrl } from '@/utils/image';
@@ -57,60 +58,63 @@ const PlayoffTab = ({ cupId }: PlayoffTabProps) => {
             ) : matches && matches.length > 0 ? (
                 <div className="space-y-3">
                     {matches.map((match) => (
-                        <div
+                        <Link
                             key={match.id}
-                            className="bg-white/5 border border-white/10 rounded-lg p-4 hover:shadow-md hover:border-blue-400/30 transition-all duration-300 group"
+                            href={`/match/${match.id}`}
+                            className="block"
                         >
-                            <div className="flex items-center justify-between gap-4">
-                                {/* Team 1 */}
-                                <div className="flex flex-col items-center gap-2 flex-1 min-w-0">
-                                    <div className="w-12 h-12 flex-shrink-0 bg-gray-50 rounded-full p-2 border border-gray-100 group-hover:border-kmff-blue/20 transition-colors">
-                                        <img
-                                            src={getImageUrl(match.team_1.image)}
-                                            alt={match.team_1.name}
-                                            className="w-full h-full object-contain"
-                                            onError={(e) => {
-                                                const target = e.target as HTMLImageElement;
-                                                target.src = '/llf-logo.png';
-                                            }}
-                                        />
-                                    </div>
-                                    <span className="font-semibold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
-                                        {match.team_1.name}
-                                    </span>
-                                </div>
-
-                                {/* Score */}
-                                <div className="flex flex-col items-center shrink-0">
-                                    <div className="text-3xl font-black text-white whitespace-nowrap tracking-tight">
-                                        {match.team_1.goals} <span className="text-gray-500 mx-1">:</span> {match.team_2.goals}
-                                    </div>
-                                    {match.penalty_status && (
-                                        <div className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mt-1 bg-white/5 px-2 py-0.5 rounded-full">
-                                            пен. {match.team_1.penalty_goals}:{match.team_2.penalty_goals}
+                            <div className="bg-white/5 border border-white/10 rounded-lg p-4 hover:shadow-md hover:border-blue-400/30 transition-all duration-300 group cursor-pointer">
+                                <div className="flex items-center justify-between gap-4">
+                                    {/* Team 1 */}
+                                    <div className="flex flex-col items-center gap-2 flex-1 min-w-0">
+                                        <div className="w-12 h-12 flex-shrink-0 bg-gray-50 rounded-full p-2 border border-gray-100 group-hover:border-kmff-blue/20 transition-colors">
+                                            <img
+                                                src={getImageUrl(match.team_1.image)}
+                                                alt={match.team_1.name}
+                                                className="w-full h-full object-contain"
+                                                onError={(e) => {
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.src = '/llf-logo.png';
+                                                }}
+                                            />
                                         </div>
-                                    )}
-                                </div>
-
-                                {/* Team 2 */}
-                                <div className="flex flex-col items-center gap-2 flex-1 min-w-0">
-                                    <div className="w-12 h-12 flex-shrink-0 bg-gray-50 rounded-full p-2 border border-gray-100 group-hover:border-kmff-blue/20 transition-colors">
-                                        <img
-                                            src={getImageUrl(match.team_2.image)}
-                                            alt={match.team_2.name}
-                                            className="w-full h-full object-contain"
-                                            onError={(e) => {
-                                                const target = e.target as HTMLImageElement;
-                                                target.src = '/llf-logo.png';
-                                            }}
-                                        />
+                                        <span className="font-semibold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
+                                            {match.team_1.name}
+                                        </span>
                                     </div>
-                                    <span className="font-semibold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
-                                        {match.team_2.name}
-                                    </span>
+
+                                    {/* Score */}
+                                    <div className="flex flex-col items-center shrink-0">
+                                        <div className="text-3xl font-black text-white whitespace-nowrap tracking-tight">
+                                            {match.team_1.goals} <span className="text-gray-500 mx-1">:</span> {match.team_2.goals}
+                                        </div>
+                                        {match.penalty_status && (
+                                            <div className="text-[10px] text-gray-400 font-semibold uppercase tracking-wider mt-1 bg-white/5 px-2 py-0.5 rounded-full">
+                                                пен. {match.team_1.penalty_goals}:{match.team_2.penalty_goals}
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    {/* Team 2 */}
+                                    <div className="flex flex-col items-center gap-2 flex-1 min-w-0">
+                                        <div className="w-12 h-12 flex-shrink-0 bg-gray-50 rounded-full p-2 border border-gray-100 group-hover:border-kmff-blue/20 transition-colors">
+                                            <img
+                                                src={getImageUrl(match.team_2.image)}
+                                                alt={match.team_2.name}
+                                                className="w-full h-full object-contain"
+                                                onError={(e) => {
+                                                    const target = e.target as HTMLImageElement;
+                                                    target.src = '/llf-logo.png';
+                                                }}
+                                            />
+                                        </div>
+                                        <span className="font-semibold text-xs text-gray-200 text-center leading-tight line-clamp-2 h-8 flex items-center justify-center w-full group-hover:text-white transition-colors">
+                                            {match.team_2.name}
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             ) : (

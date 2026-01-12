@@ -37,8 +37,8 @@ export default function HomeContent() {
                 <div className="flex flex-col lg:flex-row gap-4">
                     {/* Main Content LEFT (70%) */}
                     <div className="w-full lg:w-[70%] flex flex-col gap-5">
-                        {/* Champions Section - Hall of Fame */}
-                        <ChampionsSection />
+                        {/* Featured Match - SLIDER (большой) */}
+                        <FeaturedMatch />
 
                         {/* Match Widget */}
                         <ErrorBoundary
@@ -53,8 +53,8 @@ export default function HomeContent() {
                             <MatchWidget />
                         </ErrorBoundary>
 
-                        {/* Featured Match - SLIDER category */}
-                        <FeaturedMatch />
+                        {/* Champions Section - Hall of Fame (компактный) */}
+                        <ChampionsSection />
                     </div>
 
                     {/* Sidebar RIGHT (30%) - Desktop only */}

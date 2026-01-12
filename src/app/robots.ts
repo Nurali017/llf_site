@@ -1,4 +1,5 @@
 import { MetadataRoute } from 'next';
+import { APP_CONFIG } from '@/config/constants';
 
 export default function robots(): MetadataRoute.Robots {
     return {
@@ -23,6 +24,6 @@ export default function robots(): MetadataRoute.Robots {
                 disallow: ['/api/', '/debug/'],
             },
         ],
-        sitemap: 'https://llfsite.vercel.app/sitemap.xml',
+        sitemap: `${APP_CONFIG.siteUrl}/sitemap.xml`,
     };
 }

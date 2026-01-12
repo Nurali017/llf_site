@@ -98,14 +98,14 @@ const TopScorers = () => {
                         {/* Player Image - Bottom Right */}
                         <div className="absolute -bottom-2 -right-4 w-32 h-40">
                             <Image
-                                src={getImageUrl(scorers[0].image) || '/player-1.png'}
+                                src={getImageUrl(scorers[0].image) || '/player-default.png'}
                                 alt={scorers[0].name}
                                 fill
                                 sizes="128px"
                                 className="object-contain object-bottom"
                                 onError={(e) => {
                                     const target = e.target as HTMLImageElement;
-                                    target.src = '/player-1.png';
+                                    target.src = '/player-default.png';
                                 }}
                             />
                         </div>

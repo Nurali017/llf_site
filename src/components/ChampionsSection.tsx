@@ -3,316 +3,344 @@
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Trophy, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Trophy, ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { getHallOfFame, HallOfFameItem } from '@/services/api';
+import { getImageUrl } from '@/utils/image';
 
-type SportType = 'minifootball' | 'futsal';
-type AgeCategory = 'youth' | '35+' | '40+' | '45+';
-
-interface Champion {
-    id: number;
-    teamName: string;
-    teamImage: string;
-    celebrationPhoto: string;
-    category: AgeCategory;
-    sport: SportType;
-    year: number;
-}
-
-// Mock данные чемпионов 2025
-const mockChampions: Champion[] = [
-    // Минифутбол
-    { id: 1, teamName: "ФК Астана", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "youth", sport: "minifootball", year: 2025 },
-    { id: 2, teamName: "ФК Алматы", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "35+", sport: "minifootball", year: 2025 },
-    { id: 3, teamName: "ФК Шымкент", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "40+", sport: "minifootball", year: 2025 },
-    { id: 4, teamName: "ФК Караганда", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "45+", sport: "minifootball", year: 2025 },
-
-    // Futsal
-    { id: 5, teamName: "Futsal Астана", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "youth", sport: "futsal", year: 2025 },
-    { id: 6, teamName: "Futsal Алматы", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "35+", sport: "futsal", year: 2025 },
-    { id: 7, teamName: "Futsal Актау", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "40+", sport: "futsal", year: 2025 },
-    { id: 8, teamName: "Futsal Атырау", teamImage: "/kmff-logo.jpg", celebrationPhoto: "/news-2.png", category: "45+", sport: "futsal", year: 2025 },
-];
-
-const categoryLabels: Record<AgeCategory, string> = {
-    'youth': 'Молодежь',
-    '35+': '35+',
-    '40+': '40+',
-    '45+': '45+'
-};
-
-const sportLabels: Record<SportType, string> = {
-    'minifootball': 'MiniFootball',
-    'futsal': 'Футзал'
-};
-
-// Header Component
-function Header({
-    selectedCategory,
-    onCategoryChange
-}: {
-    selectedCategory: AgeCategory;
-    onCategoryChange: (category: AgeCategory) => void;
-}) {
-    const categories: AgeCategory[] = ['youth', '35+', '40+', '45+'];
-
-    return (
-        <div className="bg-kmff-dark px-6 py-4 relative overflow-hidden">
-            {/* Background pattern */}
-            <div
-                className="absolute inset-0 opacity-10"
-                style={{
-                    backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)',
-                    backgroundSize: '16px 16px'
-                }}
-            />
-
-            <div className="relative z-10">
-                {/* Title row */}
-                <div className="flex items-center justify-between mb-3">
-                    <div className="flex items-center gap-3">
-                        <div className="flex items-center gap-2">
-                            <Trophy className="w-6 h-6 text-yellow-300" />
-                            <Trophy className="w-5 h-5 text-yellow-400" />
-                        </div>
-                        <h2 className="font-display text-h1 font-semibold text-white">
-                            Зал славы 2025
-                        </h2>
-                    </div>
-
-                    <Link
-                        href="/hall-of-fame"
-                        className="font-display text-sm text-white/90 hover:text-white transition-colors flex items-center gap-1"
-                    >
-                        Все чемпионы
-                        <ChevronRight className="w-4 h-4" />
-                    </Link>
-                </div>
-
-                {/* Age category filters */}
-                <div className="flex gap-2">
-                    {categories.map((category) => (
-                        <button
-                            key={category}
-                            onClick={() => onCategoryChange(category)}
-                            className={`flex-1 px-3 py-2 rounded-lg font-display text-sm font-medium transition-all duration-200 ${selectedCategory === category
-                                    ? 'bg-primary-900 text-white shadow-md scale-105'
-                                    : 'bg-white/10 text-white hover:bg-white/20'
-                                }`}
-                        >
-                            {categoryLabels[category]}
-                        </button>
-                    ))}
-                </div>
-            </div>
-        </div>
-    );
-}
-
-// Champion Card Component
-function ChampionCard({
-    champion,
-    isActive,
-    onClick
-}: {
-    champion: Champion;
-    isActive: boolean;
-    onClick: () => void;
-}) {
-    return (
-        <button
-            onClick={onClick}
-            className={`relative p-2 md:p-3 rounded-lg transition-all duration-200 cursor-pointer text-left w-32 md:w-40 ${isActive
-                    ? 'border-2 border-primary-600 bg-primary-50 shadow-md scale-105'
-                    : 'border-2 border-neutral-200 bg-white hover:border-primary-600 hover:bg-primary-50 hover:scale-102'
-                }`}
-        >
-            {/* Team logo */}
-            <div className="w-10 h-10 md:w-12 md:h-12 mx-auto mb-2 bg-white rounded-full shadow-md ring-2 ring-primary-300 p-1.5">
-                <div className="relative w-full h-full">
-                    <Image
-                        src={champion.teamImage}
-                        alt={champion.teamName}
-                        fill
-                        sizes="48px"
-                        className="object-contain"
-                        onError={(e) => {
-                            const target = e.target as HTMLImageElement;
-                            target.src = '/kmff-logo.jpg';
-                        }}
-                    />
-                </div>
-            </div>
-
-            {/* Team name */}
-            <h4 className="font-display text-xs font-medium text-neutral-900 text-center mb-1.5 line-clamp-2">
-                {champion.teamName}
-            </h4>
-
-            {/* Sport badge */}
-            <div className="flex justify-center">
-                <span className="px-1.5 py-0.5 bg-primary-900 text-white text-[10px] font-medium rounded-full">
-                    {sportLabels[champion.sport]}
-                </span>
-            </div>
-        </button>
-    );
-}
+type AgeGroup = 'молодежь' | '35+' | '40+' | '45+';
 
 // Main Component
-export default function HallOfFame2025() {
+export default function ChampionsSection() {
     // State
-    const [selectedCategory, setSelectedCategory] = useState<AgeCategory>('youth');
+    const [allChampions, setAllChampions] = useState<HallOfFameItem[]>([]);
+    const [filteredChampions, setFilteredChampions] = useState<HallOfFameItem[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [selectedAgeGroup, setSelectedAgeGroup] = useState<AgeGroup>('молодежь');
+    const currentYear = 2025; // Данные за 2025 год
+
+    // Slider state
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPaused, setIsPaused] = useState(false);
 
-    // Filtered champions
-    const filteredChampions = mockChampions.filter(c => c.category === selectedCategory);
+    // Touch state
+    const [touchStart, setTouchStart] = useState<number | null>(null);
+    const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+    // Fetch all champions
+    useEffect(() => {
+        async function fetchData() {
+            setLoading(true);
+            try {
+                const response = await getHallOfFame({
+                    year: currentYear,
+                    place: 1,
+                    limit: 20,
+                });
+                setAllChampions(response.data);
+            } catch (err) {
+                console.error('Failed to fetch champions:', err);
+            } finally {
+                setLoading(false);
+            }
+        }
+        fetchData();
+    }, [currentYear]);
+
+    // Filter champions by age group
+    useEffect(() => {
+        const filtered = allChampions.filter(item => {
+            const tournamentName = item.tournament.name;
+
+            switch(selectedAgeGroup) {
+                case 'молодежь':
+                    return !tournamentName.includes('35+') &&
+                           !tournamentName.includes('40+') &&
+                           !tournamentName.includes('45+');
+                case '35+':
+                    return tournamentName.includes('35+');
+                case '40+':
+                    return tournamentName.includes('40+');
+                case '45+':
+                    return tournamentName.includes('45+');
+                default:
+                    return true;
+            }
+        });
+
+        // Сортировка: MINIFOOTBALL первым, затем FUTSAL
+        const sorted = filtered.sort((a, b) => {
+            if (a.tournament.sport_type === 'MINIFOOTBALL' && b.tournament.sport_type === 'FUTSAL') {
+                return -1;
+            }
+            if (a.tournament.sport_type === 'FUTSAL' && b.tournament.sport_type === 'MINIFOOTBALL') {
+                return 1;
+            }
+            return 0;
+        });
+
+        setFilteredChampions(sorted);
+        setCurrentIndex(0);
+    }, [selectedAgeGroup, allChampions]);
 
     // Navigation handlers
     const nextSlide = () => {
-        setCurrentIndex((prev) => (prev + 1) % filteredChampions.length);
+        if (filteredChampions.length > 0) {
+            setCurrentIndex((prev) => (prev + 1) % filteredChampions.length);
+        }
     };
 
     const prevSlide = () => {
-        setCurrentIndex((prev) => (prev - 1 + filteredChampions.length) % filteredChampions.length);
+        if (filteredChampions.length > 0) {
+            setCurrentIndex((prev) => (prev - 1 + filteredChampions.length) % filteredChampions.length);
+        }
     };
 
-    const goToChampion = (index: number) => {
+    const goToSlide = (index: number) => {
         setCurrentIndex(index);
         setIsPaused(true);
-        setTimeout(() => setIsPaused(false), 10000); // Resume after 10s
+        setTimeout(() => setIsPaused(false), 10000);
     };
 
-    // Auto-slide effect
+    // Touch handlers
+    const handleTouchStart = (e: React.TouchEvent) => {
+        setTouchStart(e.touches[0].clientX);
+        setTouchEnd(null);
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        setTouchEnd(e.touches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        if (!touchStart || !touchEnd) return;
+        const distance = touchStart - touchEnd;
+        const isLeftSwipe = distance > 50;
+        const isRightSwipe = distance < -50;
+
+        if (isLeftSwipe) nextSlide();
+        if (isRightSwipe) prevSlide();
+
+        setTouchStart(null);
+        setTouchEnd(null);
+    };
+
+    // Auto-slide
     useEffect(() => {
         if (isPaused || filteredChampions.length <= 1) return;
         const interval = setInterval(nextSlide, 5000);
         return () => clearInterval(interval);
-    }, [isPaused, filteredChampions.length, currentIndex]);
-
-    // Reset index when category changes
-    useEffect(() => {
-        setCurrentIndex(0);
-    }, [selectedCategory]);
+    }, [isPaused, filteredChampions, currentIndex]);
 
     return (
         <section className="bg-white rounded-lg border border-neutral-200 overflow-hidden">
-            {/* Header with filters */}
-            <Header selectedCategory={selectedCategory} onCategoryChange={setSelectedCategory} />
-
-            {/* Main photo slider */}
-            <div
-                className="p-2 md:p-4"
-                onMouseEnter={() => setIsPaused(true)}
-                onMouseLeave={() => setIsPaused(false)}
-            >
-                <div className="relative w-full">
-                    {/* Photo container with fade transition */}
-                    <div className="relative h-[500px] md:h-[600px] rounded-lg overflow-hidden shadow-md">
-                        {filteredChampions.map((champion, index) => (
-                            <div
-                                key={champion.id}
-                                className={`absolute inset-0 transition-opacity duration-700 ${index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                    }`}
-                            >
-                                <img
-                                    src={champion.celebrationPhoto}
-                                    alt={champion.teamName}
-                                    className="w-full h-full object-cover"
-                                    onError={(e) => {
-                                        const target = e.target as HTMLImageElement;
-                                        target.src = '/news-2.png';
-                                    }}
-                                />
-                                {/* Gradient overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-transparent to-transparent" />
-                                {/* Team info overlay */}
-                                <div className="absolute bottom-0 left-0 right-0 p-4 md:p-6 z-10">
-                                    <div className="flex items-center gap-4">
-                                        {/* Team logo */}
-                                        <div className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white p-2 shadow-lg flex-shrink-0">
-                                            <img
-                                                src={champion.teamImage}
-                                                alt={champion.teamName}
-                                                className="w-full h-full object-contain"
-                                                onError={(e) => {
-                                                    const target = e.target as HTMLImageElement;
-                                                    target.src = '/kmff-logo.jpg';
-                                                }}
-                                            />
-                                        </div>
-                                        {/* Team name and category */}
-                                        <div className="flex-1">
-                                            <h3 className="text-white font-display font-semibold text-xl md:text-2xl mb-2">
-                                                {champion.teamName}
-                                            </h3>
-                                            <div className="flex items-center gap-2">
-                                                <span className="px-3 py-1 bg-primary-700 text-white text-sm font-medium rounded-full">
-                                                    {sportLabels[champion.sport]}
-                                                </span>
-                                                <span className="px-3 py-1 bg-yellow-500 text-neutral-900 text-sm font-medium rounded-full">
-                                                    {champion.year}
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
+            {/* Header */}
+            <div className="bg-kmff-dark px-4 py-3">
+                <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                        <Trophy className="w-5 h-5 text-yellow-400" />
+                        <Trophy className="w-5 h-5 text-yellow-400" />
+                        <h2 className="font-display text-lg font-semibold text-white">
+                            Зал славы {currentYear}
+                        </h2>
                     </div>
-
-                    {/* Navigation arrows */}
-                    {filteredChampions.length > 1 && (
-                        <>
-                            <button
-                                onClick={prevSlide}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-primary-700 hover:text-white transition-all duration-200 md:flex hidden"
-                                aria-label="Previous champion"
-                            >
-                                <ChevronLeft size={24} />
-                            </button>
-                            <button
-                                onClick={nextSlide}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 rounded-full shadow-lg flex items-center justify-center hover:bg-primary-700 hover:text-white transition-all duration-200 md:flex hidden"
-                                aria-label="Next champion"
-                            >
-                                <ChevronRight size={24} />
-                            </button>
-                        </>
-                    )}
-
-                    {/* Navigation dots */}
-                    {filteredChampions.length > 1 && (
-                        <div className="flex justify-center gap-2 mt-6">
-                            {filteredChampions.map((_, index) => (
-                                <button
-                                    key={index}
-                                    onClick={() => goToChampion(index)}
-                                    className={`transition-all duration-200 rounded-full ${index === currentIndex
-                                            ? 'w-8 h-3 bg-primary-700'
-                                            : 'w-3 h-3 bg-neutral-300 hover:bg-neutral-400'
-                                        }`}
-                                    aria-label={`Go to champion ${index + 1}`}
-                                />
-                            ))}
-                        </div>
-                    )}
+                    <Link
+                        href="/hall-of-fame"
+                        className="font-display text-xs text-white/90 hover:text-white transition-colors flex items-center gap-1"
+                    >
+                        Все чемпионы
+                        <ChevronRight className="w-3 h-3" />
+                    </Link>
                 </div>
-            </div>
 
-            {/* Champion cards grid */}
-            <div className="px-4 pb-4 pt-2">
-                <div className="flex justify-center gap-2 md:gap-3">
-                    {filteredChampions.map((champion, index) => (
-                        <ChampionCard
-                            key={champion.id}
-                            champion={champion}
-                            isActive={index === currentIndex}
-                            onClick={() => goToChampion(index)}
-                        />
+                {/* Age group tabs */}
+                <div className="flex gap-1.5">
+                    {(['молодежь', '35+', '40+', '45+'] as AgeGroup[]).map((ageGroup) => (
+                        <button
+                            key={ageGroup}
+                            onClick={() => setSelectedAgeGroup(ageGroup)}
+                            className={`flex-1 px-2 py-1.5 rounded-md font-display text-xs font-medium transition-all duration-200 ${
+                                selectedAgeGroup === ageGroup
+                                    ? 'bg-primary-900 text-white shadow-md'
+                                    : 'bg-white/10 text-white hover:bg-white/20'
+                            }`}
+                        >
+                            {ageGroup === 'молодежь' ? 'Молодежь' : ageGroup}
+                        </button>
                     ))}
                 </div>
             </div>
+
+            {/* Main Content */}
+            {loading ? (
+                <div className="flex items-center justify-center py-20">
+                    <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+                </div>
+            ) : filteredChampions.length === 0 ? (
+                <div className="flex items-center justify-center py-20">
+                    <div className="text-center">
+                        <Trophy className="w-12 h-12 text-gray-300 mx-auto mb-2" />
+                        <p className="text-gray-500">Нет данных о чемпионах</p>
+                    </div>
+                </div>
+            ) : (
+                <>
+                    {/* Main slider */}
+                    <div
+                        className="p-2"
+                        onMouseEnter={() => setIsPaused(true)}
+                        onMouseLeave={() => setIsPaused(false)}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                    >
+                        <div className="relative w-full">
+                            {/* Slider container */}
+                            <div className="relative h-[280px] md:h-[350px] rounded-lg overflow-hidden shadow-md">
+                                {filteredChampions.map((item, index) => (
+                                    <div
+                                        key={`${item.team.id}-${item.tournament.id}`}
+                                        className={`absolute inset-0 transition-opacity duration-700 ${
+                                            index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                        }`}
+                                    >
+                                        <img
+                                            src={getImageUrl(item.trophy_photo || item.team.image)}
+                                            alt={item.team.name}
+                                            className="w-full h-full object-cover"
+                                            onError={(e) => {
+                                                const target = e.target as HTMLImageElement;
+                                                target.src = '/llf-logo.png';
+                                            }}
+                                        />
+                                        {/* Gradient overlay */}
+                                        <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/80 via-transparent to-transparent" />
+
+                                        {/* Team info overlay */}
+                                        <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 z-10">
+                                            <div className="flex items-center gap-3">
+                                                {/* Team logo */}
+                                                <div className="w-12 h-12 md:w-14 md:h-14 rounded-full bg-white p-1.5 shadow-lg flex-shrink-0">
+                                                    <img
+                                                        src={getImageUrl(item.team.image)}
+                                                        alt={item.team.name}
+                                                        className="w-full h-full object-contain"
+                                                        onError={(e) => {
+                                                            const target = e.target as HTMLImageElement;
+                                                            target.src = '/llf-logo.png';
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                {/* Team name and info */}
+                                                <div className="flex-1 min-w-0">
+                                                    <h3 className="text-white font-display font-semibold text-base md:text-lg mb-1 truncate">
+                                                        {item.team.name}
+                                                    </h3>
+                                                    <div className="flex items-center gap-1.5 flex-wrap">
+                                                        <span className="px-2 py-0.5 bg-primary-700 text-white text-xs font-medium rounded-full">
+                                                            {item.tournament.sport_type === 'MINIFOOTBALL' ? 'MiniFootball' : 'Футзал'}
+                                                        </span>
+                                                        <span className="px-2 py-0.5 bg-yellow-500 text-neutral-900 text-xs font-medium rounded-full">
+                                                            {item.year}
+                                                        </span>
+                                                        <span className="px-2 py-0.5 bg-white/20 text-white text-xs font-medium rounded-full truncate max-w-[180px]">
+                                                            {item.tournament.name}
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Navigation arrows */}
+                            {filteredChampions.length > 1 && (
+                                <>
+                                    <button
+                                        onClick={prevSlide}
+                                        className="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 rounded-full shadow-md flex items-center justify-center hover:bg-primary-700 hover:text-white transition-all duration-200 md:flex hidden"
+                                        aria-label="Previous champion"
+                                    >
+                                        <ChevronLeft size={18} />
+                                    </button>
+                                    <button
+                                        onClick={nextSlide}
+                                        className="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-8 h-8 bg-white/90 rounded-full shadow-md flex items-center justify-center hover:bg-primary-700 hover:text-white transition-all duration-200 md:flex hidden"
+                                        aria-label="Next champion"
+                                    >
+                                        <ChevronRight size={18} />
+                                    </button>
+                                </>
+                            )}
+
+                            {/* Navigation dots */}
+                            {filteredChampions.length > 1 && (
+                                <div className="flex justify-center gap-1.5 mt-3">
+                                    {filteredChampions.map((_, index) => (
+                                        <button
+                                            key={index}
+                                            onClick={() => goToSlide(index)}
+                                            className={`transition-all duration-200 rounded-full ${
+                                                index === currentIndex
+                                                    ? 'w-5 h-2 bg-primary-700'
+                                                    : 'w-2 h-2 bg-neutral-300 hover:bg-neutral-400'
+                                            }`}
+                                            aria-label={`Go to slide ${index + 1}`}
+                                        />
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* Mini cards - команды внизу */}
+                    <div className="px-3 pb-3 pt-1">
+                        <div className="flex justify-center gap-2 overflow-x-auto">
+                            {filteredChampions.map((item, index) => (
+                                <button
+                                    key={`card-${item.team.id}-${item.tournament.id}`}
+                                    onClick={() => goToSlide(index)}
+                                    className={`relative p-2 rounded-lg transition-all duration-200 cursor-pointer text-left min-w-[120px] ${
+                                        index === currentIndex
+                                            ? 'border-2 border-primary-600 bg-primary-50 shadow-md'
+                                            : 'border border-neutral-200 bg-white hover:border-primary-600 hover:bg-primary-50'
+                                    }`}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        {/* Team logo */}
+                                        <div className="w-10 h-10 rounded-full bg-white shadow-sm ring-1 ring-primary-300 p-1 flex-shrink-0">
+                                            <div className="relative w-full h-full">
+                                                <Image
+                                                    src={getImageUrl(item.team.image)}
+                                                    alt={item.team.name}
+                                                    fill
+                                                    sizes="40px"
+                                                    className="object-contain"
+                                                    onError={(e) => {
+                                                        const target = e.target as HTMLImageElement;
+                                                        target.src = '/llf-logo.png';
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+
+                                        {/* Team info */}
+                                        <div className="flex-1 min-w-0">
+                                            <h4 className="font-display text-xs font-medium text-neutral-900 truncate">
+                                                {item.team.name}
+                                            </h4>
+                                            <span className="inline-block px-1.5 py-0.5 bg-primary-600 text-white text-[10px] font-medium rounded mt-0.5">
+                                                {item.tournament.sport_type === 'MINIFOOTBALL' ? 'MiniFootball' : 'Футзал'}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </button>
+                            ))}
+                        </div>
+                    </div>
+                </>
+            )}
         </section>
     );
 }

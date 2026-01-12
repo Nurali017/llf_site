@@ -107,31 +107,39 @@ export default function FeaturedMatch() {
             <div className="flex flex-col md:flex-row gap-4 md:gap-6">
                 {/* Image Slider */}
                 <div
-                    className="relative md:w-1/2 lg:w-2/5"
+                    className="relative md:w-3/4"
                     onTouchStart={onTouchStart}
                     onTouchMove={onTouchMove}
                     onTouchEnd={onTouchEnd}
                 >
-                    <div className="relative aspect-[4/3] w-full rounded-lg shadow-md overflow-hidden">
-                        {slidesData.map((news, index) => (
-                            <div
-                                key={news.id}
-                                className={`absolute inset-0 transition-opacity duration-700 ${
-                                    index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
-                                }`}
-                            >
-                                <Link href={`/news/${news.id}`} className="block h-full w-full group">
-                                    <img
-                                        src={getImageUrl(news.image)}
-                                        alt={news.title}
-                                        className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"
-                                        onError={(e) => {
-                                            (e.target as HTMLImageElement).src = '/llf-logo.png';
-                                        }}
-                                    />
-                                </Link>
-                            </div>
-                        ))}
+                    <div className="relative aspect-square w-full rounded-lg shadow-md overflow-hidden">
+                        {slidesData.map((news, index) => {
+                            const imageUrl = typeof news.image === 'string'
+                                ? getImageUrl(news.image)
+                                : Array.isArray(news.image) && news.image.length > 0
+                                    ? getImageUrl(news.image[0].url)
+                                    : '/placeholder-news.jpg';
+
+                            return (
+                                <div
+                                    key={news.id}
+                                    className={`absolute inset-0 transition-opacity duration-700 ${
+                                        index === currentIndex ? 'opacity-100 z-10' : 'opacity-0 z-0'
+                                    }`}
+                                >
+                                    <Link href={`/news/${news.id}`} className="block h-full w-full group">
+                                        <img
+                                            src={imageUrl}
+                                            alt={news.title}
+                                            className="w-full h-full object-cover transition-transform group-hover:scale-105 duration-300"
+                                            onError={(e) => {
+                                                (e.target as HTMLImageElement).src = '/placeholder-news.jpg';
+                                            }}
+                                        />
+                                    </Link>
+                                </div>
+                            );
+                        })}
                     </div>
 
                     {/* Navigation Buttons */}
@@ -163,11 +171,6 @@ export default function FeaturedMatch() {
                             <h3 className="font-display font-medium text-lg sm:text-xl md:text-2xl leading-tight text-neutral-900 group-hover:text-primary-700 transition-colors mb-3 md:mb-4">
                                 {currentNews.title}
                             </h3>
-                            {currentNews.description && (
-                                <p className="font-display text-sm sm:text-base text-neutral-600 line-clamp-3 md:line-clamp-4 mb-3 md:mb-4">
-                                    {currentNews.description}
-                                </p>
-                            )}
                             {currentNews.date && (
                                 <div className="flex items-center gap-2 font-display text-xs sm:text-sm text-neutral-500">
                                     <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4" />

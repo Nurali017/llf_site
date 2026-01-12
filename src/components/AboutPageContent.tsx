@@ -6,10 +6,10 @@ import { Trophy, Users, MapPin, Calendar, Mail, Phone, Globe } from 'lucide-reac
 
 // Statistics data
 const stats = [
-    { icon: MapPin, value: '10+', label: 'Городов' },
-    { icon: Users, value: '500+', label: 'Команд' },
-    { icon: Trophy, value: '50+', label: 'Турниров в год' },
-    { icon: Calendar, value: '10 000+', label: 'Матчей' },
+    { icon: MapPin, value: '30+', label: 'Городов' },
+    { icon: Users, value: '5000+', label: 'Команд' },
+    { icon: Trophy, value: '500+', label: 'Турниров в год' },
+    { icon: Calendar, value: '15 000+', label: 'Матчей' },
 ];
 
 // Values/Features
@@ -41,25 +41,33 @@ export default function AboutPageContent() {
 
                     <div className="max-w-4xl mt-8">
                         <h1 className="text-4xl md:text-5xl font-black mb-6">
-                            Казахстанская Лига Любителей Футбола
+                            Казахстанская Федерация Мини-Футбола
                         </h1>
                         <p className="text-xl md:text-2xl text-blue-200 mb-8 leading-relaxed">
-                            Развиваем любительский мини-футбол по всему Казахстану,
-                            объединяя тысячи игроков и болельщиков
+                            Развиваем любительский мини-футбол по всему Казахстану, объединяя тысячи игроков и болельщиков
                         </p>
                         <div className="flex items-center gap-4">
                             <div className="w-16 h-16 relative">
                                 <Image
+                                    src="/kmff-logo.jpg"
+                                    alt="KMFF Logo"
+                                    fill
+                                    sizes="64px"
+                                    className="object-cover rounded-full"
+                                />
+                            </div>
+                            <div className="w-16 h-16 relative">
+                                <Image
                                     src="/llf-logo.png"
-                                    alt="KLLF Logo"
+                                    alt="LLF Logo"
                                     fill
                                     sizes="64px"
                                     className="object-contain"
                                 />
                             </div>
                             <div>
-                                <div className="font-semibold text-lg">KLLF</div>
-                                <div className="text-blue-300 text-sm">Kazakhstan League of Fans of Football</div>
+                                <div className="font-semibold text-lg">КФМФ & LLF</div>
+                                <div className="text-blue-300 text-sm">Казахстанская Федерация Мини-Футбола & Лига Любителей Футбола</div>
                             </div>
                         </div>
                     </div>
@@ -94,19 +102,22 @@ export default function AboutPageContent() {
 
                     <div className="prose prose-lg max-w-none">
                         <p className="text-gray-600 leading-relaxed mb-6">
-                            Казахстанская Лига Любителей Футбола (KLLF) — это крупнейшая организация,
-                            объединяющая любительские команды по мини-футболу по всему Казахстану.
-                            Мы проводим регулярные чемпионаты, кубковые турниры и специальные соревнования
-                            в более чем 10 городах страны.
+                            <strong>Казахстанская Федерация Мини-Футбола (КФМФ)</strong> — организация,
+                            управляющая развитием мини-футбола в Республике Казахстан, координируя деятельность
+                            региональных федераций и обеспечивая проведение соревнований на высоком профессиональном уровне.
                         </p>
                         <p className="text-gray-600 leading-relaxed mb-6">
-                            Наша миссия — сделать мини-футбол доступным для каждого, кто любит эту игру.
-                            Мы верим, что спорт объединяет людей, укрепляет здоровье и создает
-                            незабываемые эмоции для участников и болельщиков.
+                            <strong>Казахстанская Лига Любителей Футбола</strong> — развиваем любительский мини-футбол
+                            по всему Казахстану, объединяя тысячи игроков и болельщиков.
+                        </p>
+                        <p className="text-gray-600 leading-relaxed mb-6">
+                            Наша миссия — популяризация и развитие мини-футбола в стране, поддержка спортивного
+                            движения на массовом уровне, воспитание здорового образа жизни и выявление талантливых
+                            игроков для профессионального спорта.
                         </p>
                         <p className="text-gray-600 leading-relaxed">
-                            Присоединяйтесь к нам — регистрируйте свою команду и участвуйте
-                            в турнирах вашего города!
+                            Присоединяйтесь к нам — регистрируйте свою команду, участвуйте в турнирах и станьте
+                            частью большой футбольной семьи!
                         </p>
                     </div>
                 </div>
@@ -140,32 +151,6 @@ export default function AboutPageContent() {
                 </div>
             </div>
 
-            {/* Cities Section */}
-            <div className="container mx-auto px-4 py-16">
-                <h2 className="text-3xl font-semibold text-kmff-dark mb-8 flex items-center gap-3">
-                    <span className="w-1.5 h-10 bg-kmff-blue rounded-full"></span>
-                    География
-                </h2>
-
-                <div className="bg-gradient-to-br from-[#1e3a8a] via-[#172554] to-[#1e3a8a] rounded-lg p-5 text-white">
-                    <p className="text-blue-200 mb-6">
-                        Лига проводит турниры в следующих городах Казахстана:
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-                        {['Астана', 'Алматы', 'Шымкент', 'Караганда', 'Актобе',
-                          'Павлодар', 'Семей', 'Атырау', 'Костанай', 'Кокшетау'].map((city) => (
-                            <div
-                                key={city}
-                                className="flex items-center gap-2 bg-white/10 rounded-lg px-4 py-3"
-                            >
-                                <MapPin className="w-4 h-4 text-blue-300" />
-                                <span className="font-medium">{city}</span>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </div>
-
             {/* Contact Section */}
             <div className="bg-white py-16">
                 <div className="container mx-auto px-4">
@@ -174,9 +159,9 @@ export default function AboutPageContent() {
                         Контакты
                     </h2>
 
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-4xl">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-4xl">
                         <a
-                            href="mailto:info@kllf.kz"
+                            href="mailto:kmff.kz@gmail.com"
                             className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                         >
                             <div className="w-12 h-12 bg-kmff-blue rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -184,12 +169,12 @@ export default function AboutPageContent() {
                             </div>
                             <div>
                                 <div className="text-sm text-gray-500">Email</div>
-                                <div className="font-semibold text-kmff-dark">info@kllf.kz</div>
+                                <div className="font-semibold text-kmff-dark">kmff.kz@gmail.com</div>
                             </div>
                         </a>
 
                         <a
-                            href="tel:+77001234567"
+                            href="tel:+77753130805"
                             className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
                         >
                             <div className="w-12 h-12 bg-kmff-blue rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -197,22 +182,7 @@ export default function AboutPageContent() {
                             </div>
                             <div>
                                 <div className="text-sm text-gray-500">Телефон</div>
-                                <div className="font-semibold text-kmff-dark">+7 700 123 45 67</div>
-                            </div>
-                        </a>
-
-                        <a
-                            href="https://1sportkz.com"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors group"
-                        >
-                            <div className="w-12 h-12 bg-kmff-blue rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-                                <Globe className="w-6 h-6 text-white" />
-                            </div>
-                            <div>
-                                <div className="text-sm text-gray-500">Сайт</div>
-                                <div className="font-semibold text-kmff-dark">1sportkz.com</div>
+                                <div className="font-semibold text-kmff-dark">+7 775 313 0805</div>
                             </div>
                         </a>
                     </div>
@@ -230,7 +200,7 @@ export default function AboutPageContent() {
                         Играйте, побеждайте, получайте удовольствие!
                     </p>
                     <a
-                        href="https://1sportkz.com"
+                        href="https://wa.me/77753130805"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-block bg-white text-kmff-blue px-5 py-3 rounded-lg font-semibold hover:bg-blue-50 transition-colors"

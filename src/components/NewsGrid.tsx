@@ -28,22 +28,29 @@ const NewsGrid = ({ news }: NewsGridProps) => {
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {news.map((item) => (
-                            <div key={item.id} className="group">
-                                <article className="flex items-start p-5 rounded-lg border border-neutral-200 bg-white hover:border-primary-500 transition-colors h-full">
-                                    {/* Image - Rounded */}
-                                    <div className="relative w-28 h-28 flex-shrink-0 overflow-hidden rounded-lg">
-                                        <Image
-                                            src={getImageUrl(item.image)}
-                                            alt={item.title}
-                                            fill
-                                            className="object-cover transition-transform group-hover:scale-105"
-                                            sizes="(max-width: 768px) 100px, 112px"
-                                            onError={(e) => {
-                                                // Fallback handled by next/image
-                                            }}
-                                        />
-                                    </div>
+                        {news.map((item) => {
+                            const imageUrl = typeof item.image === 'string'
+                                ? getImageUrl(item.image)
+                                : Array.isArray(item.image) && item.image.length > 0
+                                    ? getImageUrl(item.image[0].url)
+                                    : '/placeholder-news.jpg';
+
+                            return (
+                                <div key={item.id} className="group">
+                                    <article className="flex items-start p-5 rounded-lg border border-neutral-200 bg-white hover:border-primary-500 transition-colors h-full">
+                                        {/* Image - Rounded */}
+                                        <div className="relative w-28 h-28 flex-shrink-0 overflow-hidden rounded-lg">
+                                            <Image
+                                                src={imageUrl}
+                                                alt={item.title}
+                                                fill
+                                                className="object-cover transition-transform group-hover:scale-105"
+                                                sizes="(max-width: 768px) 100px, 112px"
+                                                onError={(e) => {
+                                                    (e.target as HTMLImageElement).src = '/placeholder-news.jpg';
+                                                }}
+                                            />
+                                        </div>
 
                                     {/* Content */}
                                     <div className="flex flex-col justify-between pl-5 h-28">
@@ -62,7 +69,8 @@ const NewsGrid = ({ news }: NewsGridProps) => {
                                     </div>
                                 </article>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 )}
             </div>

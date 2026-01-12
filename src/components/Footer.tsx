@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, Phone } from 'lucide-react';
 
 const Footer = () => {
     return (
@@ -28,20 +28,9 @@ const Footer = () => {
                                 className="h-10 md:h-12 w-auto object-contain"
                             />
                         </div>
-                        <p className="font-display text-sm leading-relaxed mb-6 text-neutral-300">
+                        <p className="font-display text-sm leading-relaxed text-neutral-300">
                             Официальный сайт Казахстанской федерации мини-футбола. Развитие и популяризация мини-футбола в Казахстане.
                         </p>
-                        <div className="flex gap-3">
-                            <a href="#" className="font-display text-sm font-medium rounded-lg border border-neutral-700 px-4 py-2 transition-colors hover:bg-neutral-800 hover:border-primary-500">
-                                IG
-                            </a>
-                            <a href="#" className="font-display text-sm font-medium rounded-lg border border-neutral-700 px-4 py-2 transition-colors hover:bg-neutral-800 hover:border-primary-500">
-                                FB
-                            </a>
-                            <a href="#" className="font-display text-sm font-medium rounded-lg border border-neutral-700 px-4 py-2 transition-colors hover:bg-neutral-800 hover:border-primary-500">
-                                YT
-                            </a>
-                        </div>
                     </div>
 
                     {/* Links Column */}
@@ -54,18 +43,18 @@ const Footer = () => {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="#" className="transition-colors hover:text-primary-400">
-                                    Документы
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="#" className="transition-colors hover:text-primary-400">
-                                    Контакты
-                                </Link>
-                            </li>
-                            <li>
                                 <Link href="/news" className="transition-colors hover:text-primary-400">
                                     Новости
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/matches" className="transition-colors hover:text-primary-400">
+                                    Матчи
+                                </Link>
+                            </li>
+                            <li>
+                                <Link href="/tournaments" className="transition-colors hover:text-primary-400">
+                                    Турниры
                                 </Link>
                             </li>
                         </ul>
@@ -75,17 +64,17 @@ const Footer = () => {
                     <div>
                         <h4 className="font-display text-base font-medium mb-6 text-white">Контакты</h4>
                         <ul className="space-y-4 font-display text-sm text-neutral-300">
-                            <li className="flex items-start gap-3">
-                                <MapPin size={18} className="mt-0.5 flex-shrink-0" />
-                                <span>г. Астана, ул. Примерная 123, офис 45</span>
-                            </li>
                             <li className="flex items-center gap-3">
                                 <Phone size={18} className="flex-shrink-0" />
-                                <span>+7 (777) 123-45-67</span>
+                                <a href="tel:+77753130805" className="transition-colors hover:text-primary-400">
+                                    +7 775 313 0805
+                                </a>
                             </li>
                             <li className="flex items-center gap-3">
                                 <Mail size={18} className="flex-shrink-0" />
-                                <span>info@kmff.kz</span>
+                                <a href="mailto:kmff.kz@gmail.com" className="transition-colors hover:text-primary-400">
+                                    kmff.kz@gmail.com
+                                </a>
                             </li>
                         </ul>
                     </div>
@@ -98,7 +87,9 @@ const Footer = () => {
                         </p>
                         <div className="flex flex-col gap-3">
                             <a
-                                href="#"
+                                href="https://apps.apple.com/kz/app/minifootball/id6449434914"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="rounded-lg border border-neutral-700 px-4 py-3 transition-colors hover:bg-neutral-800 hover:border-primary-500 flex items-center gap-3"
                             >
                                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -110,7 +101,9 @@ const Footer = () => {
                                 </div>
                             </a>
                             <a
-                                href="#"
+                                href="https://play.google.com/store/apps/details?id=kz.llf.onesportone"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="rounded-lg border border-neutral-700 px-4 py-3 transition-colors hover:bg-neutral-800 hover:border-primary-500 flex items-center gap-3"
                             >
                                 <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -129,16 +122,8 @@ const Footer = () => {
                 <div className="border-t border-neutral-800 my-8"></div>
 
                 {/* Bottom Section */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-4 font-display text-sm text-neutral-400">
+                <div className="flex flex-col md:flex-row justify-center items-center gap-4 font-display text-sm text-neutral-400">
                     <p>© 2025 КФМФ. Все права защищены.</p>
-                    <div className="flex gap-4">
-                        <Link href="#" className="transition-colors hover:text-primary-400">
-                            Конфиденциальность
-                        </Link>
-                        <Link href="#" className="transition-colors hover:text-primary-400">
-                            Условия
-                        </Link>
-                    </div>
                 </div>
             </div>
         </footer>
