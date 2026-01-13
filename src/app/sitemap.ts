@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next';
 import { APP_CONFIG } from '@/config/constants';
+import { getOrganizations } from '@/services/organizations';
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const baseUrl = APP_CONFIG.siteUrl;
 
     // Статические страницы
@@ -50,26 +51,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
         },
     ];
 
-    // Городские страницы
-    const cities = [
-        'astana',
-        'almaty',
-        'shymkent',
-        'karaganda',
-        'aktobe',
-        'taraz',
-        'atyrau',
-        'kostanay',
-        'pavlodar',
-        'semey',
-    ];
-
-    const cityPages: MetadataRoute.Sitemap = cities.map(city => ({
-        url: `${baseUrl}/${city}`,
-        lastModified: new Date(),
-        changeFrequency: 'daily',
-        priority: 0.9,
-    }));
+    // Динамические страницы организаций из API
+    let organizationPages: MetadataRoute.Sitemap = [];
+    try {
+        const organizations = await getOrganizations();
+        organizationPages = organizations.map(org => ({
+            url: `${baseUrl}/${org.slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'daily' as const,
+            priority: 0.9,
+        }));
+    } catch (error) {
+        console.error('Error fetching organizations for sitemap:', error);
+        // Fallback: используем slug из всех организаций в базе
+        const fallbackSlugs = [
+            'astana', 'balkhash', 'karagandy', 'kokshetau', 'ulytau',
+            'qyzylorda', 'uralsk', 'shymkent', 'turkestan', 'aktobe',
+            'taldykorgan', 'turkestan-region', 'kulsary', 'schuchinsk',
+            'oskemen', 'kostanay', 'freedom-bfl', 'qazaly-region'
+        ];
+        organizationPages = fallbackSlugs.map(slug => ({
+            url: `${baseUrl}/${slug}`,
+            lastModified: new Date(),
+            changeFrequency: 'daily' as const,
+            priority: 0.9,
+        }));
+    }
 
     // TODO: Add dynamic match pages when API is integrated
     // const matches = await getMatches();
@@ -80,5 +87,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     //   priority: 0.7,
     // }));
 
-    return [...staticPages, ...cityPages];
+    return [...staticPages, ...organizationPages];
 }

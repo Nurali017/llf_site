@@ -40,26 +40,24 @@ const championsData: Record<string, Champion[]> = {
         { year: 2023, category: 'mini', ageGroup: '40+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Astana Мини 40+' },
         { year: 2023, category: 'mini', ageGroup: '45+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Astana Мини 45+' },
     ],
-    almaty: [
-        // 2024 - Футзал
-        { year: 2024, category: 'futsal', ageGroup: 'молодежь', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Футзал Молодежь' },
-        { year: 2024, category: 'futsal', ageGroup: '35+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Футзал 35+' },
-        { year: 2024, category: 'futsal', ageGroup: '40+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Футзал 40+' },
-        { year: 2024, category: 'futsal', ageGroup: '45+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Футзал 45+' },
-        // 2024 - Мини
-        { year: 2024, category: 'mini', ageGroup: 'молодежь', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Мини Молодежь' },
-        { year: 2024, category: 'mini', ageGroup: '35+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Мини 35+' },
-        { year: 2024, category: 'mini', ageGroup: '40+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Мини 40+' },
-        { year: 2024, category: 'mini', ageGroup: '45+', team: { id: 0, name: 'TBD', image: '' }, tournament: 'league', tournamentName: 'LLF Almaty Мини 45+' },
-    ],
+    // Остальные организации из API (пока без данных)
+    balkhash: [],
+    karagandy: [], // Исправлено с 'karaganda' на 'karagandy'
+    kokshetau: [],
+    ulytau: [],
+    qyzylorda: [],
+    uralsk: [],
     shymkent: [],
-    karaganda: [],
+    turkestan: [],
     aktobe: [],
-    taraz: [],
-    atyrau: [],
+    taldykorgan: [],
+    'turkestan-region': [],
+    kulsary: [],
+    schuchinsk: [],
+    oskemen: [],
     kostanay: [],
-    pavlodar: [],
-    semey: [],
+    'freedom-bfl': [],
+    'qazaly-region': [],
 };
 
 export function getChampionsByCity(citySlug: string): Champion[] {

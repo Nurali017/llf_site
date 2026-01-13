@@ -4,13 +4,15 @@ import { Organization, OrganizationWithSlug } from '@/types/api';
 /**
  * Генерирует slug из названия организации
  * Пример: "LLF ASTANA" -> "astana"
+ * Пример: "LLF TURKESTAN " (с пробелом в конце) -> "turkestan"
  */
 export function generateSlug(organizationName: string): string {
   return organizationName
+    .trim()                  // Убираем пробелы по краям сначала
     .replace(/^LLF\s+/i, '') // Убираем префикс "LLF "
     .replace(/\s+/g, '-')    // Заменяем пробелы на дефисы
     .toLowerCase()
-    .trim();
+    .replace(/^-+|-+$/g, ''); // Убираем дефисы по краям
 }
 
 /**

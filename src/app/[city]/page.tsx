@@ -1,5 +1,7 @@
 import CityPageContent from "@/components/CityPageContent";
 import type { Metadata } from 'next';
+import { BRANCHES } from '@/lib/branches';
+import { APP_CONFIG } from '@/config/constants';
 
 interface CityPageProps {
     params: {
@@ -7,33 +9,17 @@ interface CityPageProps {
     };
 }
 
-// Маппинг городов на читаемые названия
-const cityNames: Record<string, string> = {
-    'astana': 'Астана',
-    'almaty': 'Алматы',
-    'shymkent': 'Шымкент',
-    'karaganda': 'Караганда',
-    'aktobe': 'Актобе',
-    'taraz': 'Тараз',
-    'atyrau': 'Атырау',
-    'kostanay': 'Костанай',
-    'pavlodar': 'Павлодар',
-    'semey': 'Семей',
-};
+// Получаем маппинг из branches.ts (динамически из API)
+const cityNames: Record<string, string> = BRANCHES.reduce((acc, branch) => {
+    acc[branch.slug] = branch.displayName;
+    return acc;
+}, {} as Record<string, string>);
 
-// Описания для каждого города
-const cityDescriptions: Record<string, string> = {
-    'astana': 'Любительская лига футбола Астана. Результаты матчей, турнирная таблица и статистика команд столицы Казахстана в режиме реального времени.',
-    'almaty': 'Любительская лига футбола Алматы. Актуальные результаты матчей, турнирные таблицы, бомбардиры и последние новости южной столицы.',
-    'shymkent': 'Любительская лига футбола Шымкент. Результаты игр, турнирная таблица, статистика команд и игроков города Шымкент.',
-    'karaganda': 'Любительская лига футбола Караганда. Расписание матчей, турнирные таблицы, результаты и статистика команд региона.',
-    'aktobe': 'Любительская лига футбола Актобе. Результаты, турнирная таблица, календарь матчей и статистика лучших игроков.',
-    'taraz': 'Любительская лига футбола Тараз. Актуальные результаты матчей, турнирные позиции команд и статистика игроков.',
-    'atyrau': 'Любительская лига футбола Атырау. Результаты матчей, турнирная таблица и новости команд.',
-    'kostanay': 'Любительская лига футбола Костанай. Расписание, результаты матчей и турнирная таблица команд региона.',
-    'pavlodar': 'Любительская лига футбола Павлодар. Результаты игр, статистика и турнирная таблица чемпионата.',
-    'semey': 'Любительская лига футбола Семей. Актуальные результаты матчей, турнирная таблица и статистика игроков.',
-};
+// Генерируем описания для каждой организации
+const cityDescriptions: Record<string, string> = BRANCHES.reduce((acc, branch) => {
+    acc[branch.slug] = `Любительская лига футбола ${branch.displayName}. Результаты матчей, турнирная таблица и статистика команд в режиме реального времени.`;
+    return acc;
+}, {} as Record<string, string>);
 
 export async function generateMetadata({ params }: CityPageProps): Promise<Metadata> {
     const citySlug = params.city;
@@ -57,13 +43,13 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
         openGraph: {
             title: `Мини-футбол ${cityName} | КФМФ`,
             description: description,
-            url: `https://llfsite.vercel.app/${citySlug}`,
+            url: `${APP_CONFIG.siteUrl}/${citySlug}`,
             type: 'website',
             locale: 'ru_RU',
             siteName: 'КФМФ',
             images: [
                 {
-                    url: `https://llfsite.vercel.app/og-image.png`,
+                    url: `${APP_CONFIG.siteUrl}/og-image.png`,
                     width: 1200,
                     height: 630,
                     alt: `Мини-футбол ${cityName}`,
@@ -78,17 +64,15 @@ export async function generateMetadata({ params }: CityPageProps): Promise<Metad
         },
 
         alternates: {
-            canonical: `https://llfsite.vercel.app/${citySlug}`,
+            canonical: `${APP_CONFIG.siteUrl}/${citySlug}`,
         },
     };
 }
 
-// Генерация статических путей для лучшего SEO
+// Генерация статических путей для лучшего SEO (из API)
 export async function generateStaticParams() {
-    const cities = Object.keys(cityNames);
-
-    return cities.map(city => ({
-        city: city,
+    return BRANCHES.map(branch => ({
+        city: branch.slug,
     }));
 }
 

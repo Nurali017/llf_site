@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { BRANCHES } from '@/lib/branches';
+import { APP_CONFIG } from '@/config/constants';
 
 interface BreadcrumbItem {
     label: string;
@@ -21,7 +23,7 @@ export function Breadcrumbs() {
             '@type': 'ListItem',
             position: index + 1,
             name: item.label,
-            item: `https://llfsite.vercel.app${item.href}`,
+            item: `${APP_CONFIG.siteUrl}${item.href}`,
         })),
     };
 
@@ -64,24 +66,19 @@ function getBreadcrumbs(pathname: string): BreadcrumbItem[] {
 
     let currentPath = '';
 
-    // Маппинг путей на читаемые названия
+    // Маппинг путей на читаемые названия (динамически из API + статические страницы)
     const labels: Record<string, string> = {
-        'astana': 'Астана',
-        'almaty': 'Алматы',
-        'shymkent': 'Шымкент',
-        'karaganda': 'Караганда',
-        'aktobe': 'Актобе',
-        'taraz': 'Тараз',
-        'atyrau': 'Атырау',
-        'kostanay': 'Костанай',
-        'pavlodar': 'Павлодар',
-        'semey': 'Семей',
+        ...BRANCHES.reduce((acc, branch) => {
+            acc[branch.slug] = branch.displayName;
+            return acc;
+        }, {} as Record<string, string>),
         'news': 'Новости',
         'matches': 'Матчи',
         'match': 'Матч',
         'about': 'О нас',
         'tournaments': 'Турниры',
         'register': 'Регистрация',
+        'hall-of-fame': 'Зал славы',
     };
 
     paths.forEach((path) => {

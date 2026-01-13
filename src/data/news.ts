@@ -47,7 +47,7 @@ export const newsData: NewsItem[] = [
     image: "/news-2-optimized.png",
     description: "Завершился яркий сезон любительской лиги мини-футбола Казахстана",
     featured: true,
-    branch: 'almaty'
+    branch: 'astana' // Изменено с 'almaty' на существующий филиал
   },
   {
     id: 4,
@@ -77,7 +77,7 @@ export const newsData: NewsItem[] = [
     image: "/news-1-optimized.png",
     description: "Караганда празднует победу в чемпионате Казахстана по мини-футболу",
     featured: true,
-    branch: 'karaganda'
+    branch: 'karagandy' // Исправлено с 'karaganda' на 'karagandy' (правильный slug из API)
   },
   {
     id: 8,
@@ -87,7 +87,7 @@ export const newsData: NewsItem[] = [
     image: "/news-2-optimized.png",
     description: "Павлодарский Иртыш продолжает радовать болельщиков яркой игрой",
     featured: true,
-    branch: 'pavlodar'
+    branch: 'kostanay' // Изменено с 'pavlodar' на существующий филиал
   }
 ];
 
