@@ -4,6 +4,7 @@ import "./globals.css";
 import { OrganizationProvider } from "@/contexts/OrganizationContext";
 import { ErrorBoundary } from '@/components/ErrorBoundary';
 import { APP_CONFIG } from '@/config/constants';
+import { GoogleAnalytics, YandexMetrika } from '@/components/Analytics';
 
 // Brutally Minimal Typography System
 // Manrope: Geometric display font with full Kazakh Cyrillic support
@@ -23,12 +24,57 @@ const jetBrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(APP_CONFIG.siteUrl),
-  title: "KMFF - Казахстанская Лига Любительского Футбола",
-  description: "Результаты матчей, турнирные таблицы, новости и статистика KMFF.",
+  title: {
+    default: "KMFF - Казахстанская Федерация Мини-Футбола",
+    template: "%s | KMFF"
+  },
+  description: "Официальная платформа КФМФ. Результаты матчей, турнирные таблицы, новости, статистика игроков и команд мини-футбола Казахстана.",
+  keywords: ["мини-футбол Казахстан", "КФМФ", "KMFF", "футзал", "результаты матчей", "турнирная таблица", "футбол Алматы", "любительский футбол"],
+  authors: [{ name: "KMFF" }],
+  creator: "KMFF",
+  publisher: "KMFF",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "ru_RU",
+    url: APP_CONFIG.siteUrl,
+    title: "KMFF - Казахстанская Федерация Мини-Футбола",
+    description: "Результаты матчей, турнирные таблицы, новости и статистика мини-футбола Казахстана",
+    siteName: "KMFF",
+    images: [
+      {
+        url: "/kmff-logo.jpg",
+        width: 1200,
+        height: 630,
+        alt: "KMFF Logo"
+      }
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "KMFF - Казахстанская Федерация Мини-Футбола",
+    description: "Результаты матчей, турнирные таблицы, новости и статистика",
+    images: ["/kmff-logo.jpg"],
+  },
   icons: {
     icon: "/kmff-logo.jpg",
     shortcut: "/kmff-logo.jpg",
     apple: "/kmff-logo.jpg",
+  },
+  verification: {
+    // Добавьте после регистрации в Google Search Console
+    google: "",
+    yandex: "",
   },
 };
 
@@ -73,6 +119,8 @@ export default function RootLayout({
       <body
         className={`${manrope.variable} ${jetBrainsMono.variable} antialiased font-display`}
       >
+        <GoogleAnalytics />
+        <YandexMetrika />
         <ErrorBoundary>
           <OrganizationProvider>
             {children}

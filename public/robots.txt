@@ -1,0 +1,17 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+
+# Яндекс
+User-agent: Yandex
+Allow: /
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://kmff.kz/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1
