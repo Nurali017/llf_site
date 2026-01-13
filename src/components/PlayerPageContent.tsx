@@ -59,36 +59,6 @@ function ErrorState({ onRetry }: { onRetry: () => void }) {
     );
 }
 
-function TeamBadge({ teamId }: { teamId: number }) {
-    const { team, isLoading } = useTeamPage(teamId);
-
-    if (isLoading) {
-        return <Skeleton className="h-12 w-48 rounded-lg bg-white/20" />;
-    }
-
-    if (!team) return null;
-
-    return (
-        <Link href={`/team/${teamId}`}>
-            <div className="inline-flex items-center gap-3 bg-white rounded-lg px-4 py-2 hover:bg-gray-50 transition-colors">
-                <div className="w-8 h-8 relative flex-shrink-0">
-                    <Image
-                        src={getImageUrl(team.image)}
-                        alt={team.name}
-                        fill
-                        className="object-contain"
-                        sizes="32px"
-                    />
-                </div>
-                <div className="text-left">
-                    <p className="font-semibold text-gray-900 text-sm">{team.name}</p>
-                    <p className="text-gray-500 text-xs">LLF 2024</p>
-                </div>
-            </div>
-        </Link>
-    );
-}
-
 function StatBox({ value, label }: { value: number | string; label: string }) {
     return (
         <div className="text-center">
@@ -192,12 +162,6 @@ export default function PlayerPageContent({ playerId }: PlayerPageContentProps) 
                                         {player.firstname} {player.lastname}
                                     </h1>
 
-                                    {/* Team Badge */}
-                                    {player.teams && player.teams.length > 0 && (
-                                        <div className="mb-4">
-                                            <TeamBadge teamId={player.teams[0].team_id} />
-                                        </div>
-                                    )}
 
                                     {/* Position */}
                                     {stats?.position && (

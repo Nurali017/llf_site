@@ -203,13 +203,13 @@ function HeroSection({
             </div>
 
             {/* Back Button */}
-            <Link
-                href="/"
+            <button
+                onClick={() => window.history.back()}
                 className="absolute top-4 left-4 text-white/80 hover:text-white flex items-center gap-2 z-20 transition-colors"
             >
                 <ArrowLeft className="w-5 h-5" />
                 <span className="text-sm font-medium">Назад</span>
-            </Link>
+            </button>
 
             {/* Social Links */}
             {team.instagram && (
