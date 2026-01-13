@@ -72,8 +72,7 @@ export const metadata: Metadata = {
     apple: "/kmff-logo.jpg",
   },
   verification: {
-    // Добавьте после регистрации в Google Search Console
-    google: "",
+    google: "_Ffqhw-M5ya1w85K9tZxqXd3zJrC1hvFNZ_Foxq_-Nw",
     yandex: "",
   },
 };
