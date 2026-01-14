@@ -2,13 +2,19 @@
 
 import { useOrganization, Tournament } from '@/contexts/OrganizationContext';
 import { ChevronDown, Trophy } from 'lucide-react';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { getImageUrl, handleImageError } from '@/utils/image';
 
 export default function TournamentSelector() {
     const { tournaments, activeTournament, setActiveTournament } = useOrganization();
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+
+    // Handle touch scroll inside dropdown
+    const handleTouchMove = useCallback((e: React.TouchEvent) => {
+        e.stopPropagation();
+    }, []);
 
     // Close dropdown when clicking outside
     useEffect(() => {
@@ -51,7 +57,11 @@ export default function TournamentSelector() {
             </button>
 
             {isOpen && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-kmff-dark rounded-lg shadow-lg border border-white/20 py-2 z-50 animate-in fade-in slide-in-from-top-2">
+                <div
+                    ref={listRef}
+                    onTouchMove={handleTouchMove}
+                    className="absolute top-full left-0 mt-2 w-64 bg-kmff-dark rounded-lg shadow-lg border border-white/20 py-2 z-50 animate-in fade-in slide-in-from-top-2 max-h-[60vh] overflow-y-auto scrollbar-thin"
+                    style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}>
                     <div className="px-3 py-2 text-xs font-medium text-white/40 uppercase tracking-wider">
                         Турниры
                     </div>
